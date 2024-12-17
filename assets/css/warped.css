@@ -1,24 +1,79 @@
-.description.p-note,
-body#collection .dt-published,
-body#subpage .dt-published,
-body#post .dt-published {
-    font-family: Monaco, Menlo, 'Lucida Console', monospace;
-    text-transform: uppercase !important;
-    font-size: .7em !important;
-    text-align: center;
-    letter-spacing: 1px;
-    opacity: .7 !important;
+header nav div.logo p.tagline {
+    display: block;
+    position: relative;
+    top: 2px;
+    right: -150px;
 }
-body#collection .dt-published,
-body#subpage .dt-published,
-body#post .dt-published {
-    text-align: left;
-    color: rgb(17, 17, 17) !important;
+header nav div.logo > a {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    display: block;
+    opacity: 0.95 !important;
 }
 
-h2#title {
-    margin-bottom: .25em !important;
-    color: rgb(17, 17, 17);
+header nav div.logo p.tagline,
+.post-meta,
+.entry-footer {
+    font-family: Monaco, Menlo, "Lucida Console", monospace;
+    text-transform: uppercase !important;
+    font-size: 0.6em !important;
+    text-align: center;
+    letter-spacing: 1px;
+    opacity: 0.75 !important;
+}
+.entry-footer {
+    text-align: left;
+}
+
+.post-content dl,
+.post-content ol,
+.post-content p,
+.post-content figure,
+.post-content ul,
+.post-entry .entry-content p {
+    font-family: "Lora", serif;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 1em;
+    line-height: 1.65em;
+    opacity: 0.95 !important;
+}
+.post-entry .entry-content p {
+    font-size: 1.1em;
+}
+main.main > article h1,
+main.main > article h2,
+main.main > article h3,
+main.main > article h4,
+main.main > article h5 {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 0.25em;
+    opacity: 0.95 !important;
+}
+main.main > article > header.post-header h1 {
+    font-size: 1.65em;
+    font-weight: 600;
+    margin-bottom: 0em;
+}
+main.main > article h1 {
+    font-size: 1.6em;
+    font-weight: 500;
+}
+main.main > article h2 {
+    font-size: 1.3em;
+    font-weight: 500;
+}
+main.main > article h3 {
+    font-size: 1.1em;
+}
+main.main > article h4 {
+    font-size: 1.1em;
+    font-weight: 300;
+}
+main.main > article h5 {
+    font-weight: 300;
 }
 
 /* Hide nav on main page only */
@@ -26,11 +81,11 @@ body#collection header > nav {
     display: none;
 }
 
-body#collection .authors, 
-body#collection time, 
-body#subpage .authors, 
+body#collection .authors,
+body#collection time,
+body#subpage .authors,
 body#subpage time {
-    font-size: .7em !important;
+    font-size: 0.7em !important;
 }
 
 body#collection article,
@@ -38,12 +93,12 @@ body#post article {
     font-size: 1.1em;
 }
 
-body#collection h2, 
+body#collection h2,
 body#subpage h2 {
     margin-top: 1em !important;
     margin-bottom: 0 !important;
 }
-body#collection h3, 
+body#collection h3,
 body#subpage h3 {
     margin-top: 1em !important;
     margin-bottom: 0 !important;
@@ -52,29 +107,29 @@ body#subpage h3 {
 /* Branded links */
 .description.p-note a,
 .description.p-note a:active,
-article p>a,
-article p>a:active,
-article p>a span,
-article p>a:active span,
-article li>a,
-article li>a:active {
+article p > a,
+article p > a:active,
+article p > a span,
+article p > a:active span,
+article li > a,
+article li > a:active {
     -webkit-transition: all 0.2s ease-out;
     -moz-transition: all 0.2s ease-out;
     -o-transition: all 0.2s ease-out;
     transition: all 0.2s ease-out;
-    border-bottom: 4px solid rgba(104, 159, 214, 0.35);
+    border-bottom: 6px solid rgba(104, 159, 214, 0.35);
     transition: border 200ms ease-in-out;
-    color: rgb(17, 17, 17);
     border-bottom-style: solid;
     text-decoration: none !important;
+    box-shadow: none !important;
 }
 
-article p>a.hashtag {
-    font-family: Monaco, Menlo, 'Lucida Console', monospace;
-    font-size: .9em;
+article p > a.hashtag {
+    font-family: Monaco, Menlo, "Lucida Console", monospace;
+    font-size: 0.9em;
     text-align: center;
     letter-spacing: 1px;
-    opacity: .7;
+    opacity: 0.7;
     margin-right: 1em;
 }
 
@@ -84,17 +139,17 @@ span.p-category {
 
 /* Simple dash lists */
 article ul {
-  margin: 0;
+    margin: 0;
 }
 article ul {
-  list-style-type: none;
+    list-style-type: none;
 }
 article ul > li {
-  text-indent: -5px;
+    text-indent: -5px;
 }
 article ul > li:before {
-  content: "- ";
-  text-indent: -5px;
+    content: "- ";
+    text-indent: -5px;
 }
 
 body#post p {
@@ -111,61 +166,64 @@ body#post p > img {
 .top.warped-bar,
 .bottom.warped-bar {
     width: 100%;
-    height: 4px;
+    height: 15px;
     background-color: #689fd6;
 }
 .top.warped-bar {
-    position: fixed; left: 0; top: 0;
+    position: fixed;
+    left: 0;
+    top: 0;
 }
 .bottom.warped-bar {
-    position: fixed; left: 0; bottom: 0;
+    position: fixed;
+    left: 0;
+    bottom: 0;
 }
 .warped-bar .flourish hr {
-  width: 20px;
-  height: 4px;
-  float: left;
+    width: 30px;
+    height: 15px;
+    float: left;
 }
 .warped-bar.bottom .flourish hr {
-    height: 10px;
+    height: 15px;
 }
 .flourish hr:nth-child(1) {
-  background-color: #68d6a1;
+    background-color: #68d6a1;
 }
 .flourish hr:nth-child(2) {
-  background-color: #d6cb68;
+    background-color: #d6cb68;
 }
 .flourish hr:nth-child(3) {
-  background-color: #d6a668;
+    background-color: #d6a668;
 }
 .flourish hr:nth-child(4) {
-  background-color: #d68168;
+    background-color: #d68168;
 }
 .flourish.left {
-  left: 0;
+    left: 0;
 }
 .flourish.right {
-  right: 0;
-  width: auto;
-  float: right;
+    right: 0;
+    width: auto;
+    float: right;
 }
 .flourish.right hr:nth-child(1) {
-  background-color: #d68168;
+    background-color: #d68168;
 }
 .flourish.right hr:nth-child(2) {
-  background-color: #d6a668;
+    background-color: #d6a668;
 }
 .flourish.right hr:nth-child(3) {
-  background-color: #d6cb68;
+    background-color: #d6cb68;
 }
 .flourish.right hr:nth-child(4) {
-  background-color: #68d6a1;
+    background-color: #68d6a1;
 }
 .flourish hr {
-  border: 0;
-  display: block;
-  content: ' ';
-  margin: 0;
-  padding: 0;
-  max-width: auto;
+    border: 0;
+    display: block;
+    content: " ";
+    margin: 0;
+    padding: 0;
+    max-width: auto;
 }
-
