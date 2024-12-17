@@ -67,6 +67,13 @@ footer.footer span,
 .post-entry .entry-content p {
     font-size: 1.15em;
 }
+.first-entry .entry-content {
+    height: 13em;
+    -webkit-line-clamp: 55;
+}
+.first-entry .entry-content p {
+    height: auto;
+}
 .post-content blockquote p,
 .post-entry blockquote p {
     font-style: italic;
@@ -84,11 +91,24 @@ main.main > article h5 {
     margin-top: 2.2em;
     opacity: 0.9 !important;
 }
+body.list main.main > article h1,
+body.list main.main > article h2 {
+    margin-top: 0em;
+}
 main.main > article > header.post-header h1 {
     font-size: 1.3em;
     font-weight: 600;
     margin-bottom: 0em;
     opacity: 0.95 !important;
+}
+body.list main.main > article {
+    position: relative;
+}
+body.list main.main > article footer {
+    position: absolute;
+    bottom: 0.5em;
+    right: 1em;
+    font-size: 0.5em;
 }
 main.main > article h1 {
     font-size: 1.2em;
@@ -202,6 +222,7 @@ body#post p > img {
     width: 100%;
     height: 15px;
     background-color: #689fd6;
+    z-index: 999;
 }
 .top.warped-bar {
     position: fixed;
