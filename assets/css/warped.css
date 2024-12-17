@@ -36,7 +36,8 @@ header nav div.logo p.tagline {
 header nav div.logo p.tagline,
 footer.footer span,
 .post-meta,
-.entry-footer {
+.entry-footer,
+ul.post-tags li a {
     font-family: Monaco, Menlo, "Lucida Console", monospace;
     text-transform: uppercase !important;
     text-align: center;
@@ -128,6 +129,15 @@ main.main > article h5 {
     font-size: 0.8em;
     font-weight: 300;
     text-transform: uppercase !important;
+}
+ul.post-tags ul li {
+    list-style-type: none;
+}
+article ul.post-tags li:before {
+    content: "" !important;
+}
+ul.post-tags li a {
+    font-size: 0.7em;
 }
 
 /* Hide nav on main page only */
