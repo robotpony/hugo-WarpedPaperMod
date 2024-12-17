@@ -74,7 +74,7 @@
 <link crossorigin="anonymous" href="{{ $stylesheet.RelPermalink }}" rel="preload stylesheet" as="style">
 {{- end }}
 
-{{- /* Search */}}
+{{- /* Search */ -}}
 {{- if (eq .Layout `search`) -}}
 <link crossorigin="anonymous" rel="preload" as="fetch" href="../index.json">
 {{- $fastsearch := resources.Get "js/fastsearch.js" | js.Build (dict "params" (dict "fuseOpts" site.Params.fuseOpts)) | resources.Minify }}
@@ -88,6 +88,17 @@
 <script defer crossorigin="anonymous" src="{{ $search.RelPermalink }}"></script>
 {{- end }}
 {{- end -}}
+
+{{- /* warped resources */ -}}
+{{- with resources.Get site.Params.warpedScript -}}
+<script defer crossorigin="anonymous" src="{{ .RelPermalink }}"></script>
+
+{{- end -}}
+{{- with resources.Get site.Params.warpedStyle -}}
+<link crossorigin="anonymous" href="{{ .RelPermalink }}" rel="preload stylesheet" as="style">
+
+{{- end -}}
+
 
 {{- /* Favicons */}}
 <link rel="icon" href="{{ site.Params.assets.favicon | default "favicon.ico" | absURL }}">
