@@ -2,6 +2,7 @@ header nav div.logo p.tagline {
     display: block;
     position: relative;
     top: 2px;
+    font-size: 0.6em !important;
     right: -150px;
 }
 header nav div.logo > a {
@@ -12,14 +13,17 @@ header nav div.logo > a {
 }
 
 header nav div.logo p.tagline,
+footer.footer span,
 .post-meta,
 .entry-footer {
     font-family: Monaco, Menlo, "Lucida Console", monospace;
     text-transform: uppercase !important;
-    font-size: 0.6em !important;
     text-align: center;
     letter-spacing: 1px;
     opacity: 0.75 !important;
+}
+.post-meta {
+    font-size: 0.65em;
 }
 .entry-footer {
     text-align: left;
@@ -34,9 +38,9 @@ header nav div.logo p.tagline,
     font-family: "Lora", serif;
     font-weight: 300;
     font-style: normal;
-    font-size: 1em;
-    line-height: 1.65em;
-    opacity: 0.95 !important;
+    font-size: 1.05em;
+    line-height: 1.7em;
+    opacity: 0.9 !important;
 }
 .post-entry .entry-content p {
     font-size: 1.1em;
@@ -47,7 +51,7 @@ main.main > article h3,
 main.main > article h4,
 main.main > article h5 {
     font-family: "Montserrat", sans-serif;
-    font-weight: 500;
+    font-weight: 600;
     display: block;
     margin-bottom: 0.25em;
     opacity: 0.95 !important;
@@ -56,14 +60,13 @@ main.main > article > header.post-header h1 {
     font-size: 1.65em;
     font-weight: 600;
     margin-bottom: 0em;
+    opacity: 0.95 !important;
 }
 main.main > article h1 {
     font-size: 1.6em;
-    font-weight: 500;
 }
 main.main > article h2 {
     font-size: 1.3em;
-    font-weight: 500;
 }
 main.main > article h3 {
     font-size: 1.1em;
