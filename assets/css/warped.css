@@ -49,18 +49,6 @@ header nav div.logo p.tagline a {
 .dark header nav div.logo p.tagline a {
     background-color: #555;
 }
-@media screen and (max-width: 480px) {
-    header nav div.logo > a {
-        letter-spacing: 1px;
-    }
-    header nav div.logo div.logo-switches {
-        top: 12px;
-        right: 2px;
-    }
-    header nav div.logo p.tagline {
-        line-height: 1.5em;
-    }
-}
 
 header nav div.logo p.tagline a,
 header nav div.logo p.tagline,
@@ -74,8 +62,14 @@ ul.post-tags li a {
     letter-spacing: 1px;
     opacity: 0.75 !important;
 }
-.post-meta {
-    font-size: 0.65em;
+article.post-single header {
+    position: relative;
+}
+header .post-meta {
+    position: absolute;
+    right: 0;
+    top: -2em;
+    font-size: 0.5em;
 }
 .entry-footer {
     text-align: left;
@@ -322,4 +316,24 @@ body#post p > img {
     margin: 0;
     padding: 0;
     max-width: auto;
+}
+
+@media screen and (max-width: 480px) {
+    header nav div.logo > a {
+        letter-spacing: 1px;
+    }
+    header nav div.logo div.logo-switches {
+        top: 12px;
+        right: 2px;
+    }
+    header nav div.logo p.tagline {
+        line-height: 1.5em;
+    }
+    header .post-meta {
+        position: relative;
+        right: auto;
+        left: auto;
+        top: auto;
+        font-size: 0.5em;
+    }
 }
