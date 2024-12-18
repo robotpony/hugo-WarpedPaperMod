@@ -1,4 +1,11 @@
-header.header {
+footer.footer .kudos {
+    color: #333;
+}
+.dark footer.footer .kudos {
+    color: #ddd;
+}
+
+header.header.header {
     position: relative;
     max-width: calc(var(--main-width) + var(--gap) * 2);
     margin: auto;
@@ -22,6 +29,7 @@ header nav div.logo div.logo-switches {
     right: 10px;
     top: 20px;
 }
+
 header nav div.logo p.tagline {
     display: block;
     font-size: 0.6em !important;
@@ -30,9 +38,31 @@ header nav div.logo p.tagline {
     margin-block-end: 0;
     line-height: 0.75em;
     text-align: center;
-    font-size: 0.5em !important;
+    font-size: 0.55em !important;
+}
+header nav div.logo p.tagline a {
+    display: inline;
+    font-weight: normal;
+    font-size: 1em;
+    background-color: #ddd;
+}
+.dark header nav div.logo p.tagline a {
+    background-color: #555;
+}
+@media screen and (max-width: 480px) {
+    header nav div.logo > a {
+        letter-spacing: 1px;
+    }
+    header nav div.logo div.logo-switches {
+        top: 12px;
+        right: 2px;
+    }
+    header nav div.logo p.tagline {
+        line-height: 1.5em;
+    }
 }
 
+header nav div.logo p.tagline a,
 header nav div.logo p.tagline,
 footer.footer span,
 .post-meta,
@@ -67,13 +97,13 @@ ul.post-tags li a {
 }
 .post-entry .entry-content p {
     font-size: 1.15em;
+    opacity: 0.9 !important;
+    color: --content;
 }
-.first-entry .entry-content {
-    height: 13em;
-    -webkit-line-clamp: 55;
-}
-.first-entry .entry-content p {
-    height: auto;
+
+body.list main.main .entry-content {
+    height: 10em;
+    -webkit-line-clamp: 5;
 }
 .post-content blockquote p,
 .post-entry blockquote p {
@@ -91,6 +121,7 @@ main.main > article h5 {
     margin-bottom: 0.3em;
     margin-top: 2.2em;
     opacity: 0.9 !important;
+    letter-spacing: -1px;
 }
 body.list main.main > article h1,
 body.list main.main > article h2 {
