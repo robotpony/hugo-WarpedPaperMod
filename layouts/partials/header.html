@@ -118,7 +118,7 @@
                 </ul>
                 {{- end }}
             </div>
-            <p class="tagline">{{ site.Params.description }}</p>
+            <p class="tagline">{{ site.Params.description | markdownify }}</p>
         </div>
         {{- $currentPage := . }}
         <ul id="menu">
