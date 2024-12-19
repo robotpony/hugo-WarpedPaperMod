@@ -58,7 +58,7 @@ header nav div.logo p.tagline a {
 header nav div.logo p.tagline a:active,
 header nav div.logo p.tagline a:focus,
 header nav div.logo p.tagline a:hover {
-    background-color: #ddd;
+    background-color: #bbb;
     border-bottom: 1px solid #666;
     -webkit-transition: all 0.2s ease-out;
     -moz-transition: all 0.2s ease-out;
@@ -68,6 +68,7 @@ header nav div.logo p.tagline a:hover {
     border-bottom-style: solid;
     text-decoration: none !important;
     box-shadow: none !important;
+    border-radius: 3px;
 }
 .dark header nav div.logo p.tagline a:active,
 .dark header nav div.logo p.tagline a:focus,
@@ -107,11 +108,12 @@ header .post-meta {
 .first-entry .entry-content p,
 .post-entry .entry-content p {
     font-family: "Lora", serif;
-    font-weight: 300;
+    color: #111;
     font-style: normal;
-    font-size: 1em;
-    line-height: 1.7em;
-    opacity: 0.9 !important;
+    font-size: 0.98em;
+    font-size-adjust: 0.5;
+    line-height: 1.5em;
+    opacity: 0.75;
 }
 .post-entry .entry-content p {
     font-size: 1.15em;
@@ -136,8 +138,8 @@ main.main > article h5 {
     font-family: "Montserrat", sans-serif;
     font-weight: 600;
     display: block;
-    margin-bottom: 0.3em;
-    margin-top: 2.2em;
+    margin-bottom: 0.5em;
+    margin-top: 1.5em;
     opacity: 0.9 !important;
     letter-spacing: -1px;
 }
@@ -148,7 +150,7 @@ body.list main.main > article h2 {
 main.main > article > header.post-header h1 {
     font-size: 1.3em;
     font-weight: 600;
-    margin-bottom: 0em;
+    margin-bottom: -0.2em;
     opacity: 0.95 !important;
 }
 body.list main.main > article {
