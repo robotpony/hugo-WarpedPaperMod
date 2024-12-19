@@ -32,35 +32,59 @@ header nav div.logo div.logo-switches {
 
 header nav div.logo p.tagline {
     display: block;
-    font-size: 0.6em !important;
+    position: relative;
+    top: -5fr;
+    font-family: "Alumni Sans Pinstripe", serif;
+    text-transform: uppercase !important;
+    text-align: center;
+    letter-spacing: 2px;
+    font-size: 0.85em;
+    line-height: 0.85em;
+    color: var(--primary);
     width: 100%;
     margin-block-start: 0;
     margin-block-end: 0;
-    line-height: 0.75em;
-    text-align: center;
-    font-size: 0.55em !important;
 }
 header nav div.logo p.tagline a {
-    display: inline;
-    font-weight: normal;
+    display: inline-block;
+    padding: 0.15em 0.25em;
+    background-color: #f7f7f7;
     font-size: 1em;
-    background-color: #ddd;
+    border-bottom: 1px solid rgba(0, 0, 0, 0);
 }
 .dark header nav div.logo p.tagline a {
-    background-color: #555;
+    background-color: #333;
+}
+header nav div.logo p.tagline a:active,
+header nav div.logo p.tagline a:focus,
+header nav div.logo p.tagline a:hover {
+    background-color: #ddd;
+    border-bottom: 1px solid #666;
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    -o-transition: all 0.2s ease-out;
+
+    transition: all 200ms ease-in-out;
+    border-bottom-style: solid;
+    text-decoration: none !important;
+    box-shadow: none !important;
+}
+.dark header nav div.logo p.tagline a:active,
+.dark header nav div.logo p.tagline a:focus,
+.dark header nav div.logo p.tagline a:hover {
+    background-color: #444;
 }
 
 header nav div.logo p.tagline a,
 header nav div.logo p.tagline,
 footer.footer span,
 .post-meta,
-.entry-footer,
-ul.post-tags li a {
-    font-family: Monaco, Menlo, "Lucida Console", monospace;
+.entry-footer {
+    font-family: "Alumni Sans Pinstripe", serif;
+    font-weight: 500;
     text-transform: uppercase !important;
     text-align: center;
-    letter-spacing: 1px;
-    opacity: 0.75 !important;
+    letter-spacing: 2px;
 }
 article.post-single header {
     position: relative;
@@ -69,7 +93,7 @@ header .post-meta {
     position: absolute;
     right: 0;
     top: -2em;
-    font-size: 0.5em;
+    font-size: 0.75em;
 }
 .entry-footer {
     text-align: left;
@@ -134,7 +158,7 @@ body.list main.main > article footer {
     position: absolute;
     bottom: 0.5em;
     right: 1em;
-    font-size: 0.5em;
+    font-size: 0.75em;
 }
 main.main > article h1 {
     font-size: 1.2em;
@@ -163,6 +187,26 @@ article ul.post-tags li:before {
 }
 ul.post-tags li a {
     font-size: 0.7em;
+}
+.pagination a {
+    font-family: "Alumni Sans Pinstripe", serif;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.9;
+    font-size: 0.9em;
+}
+.pagination a:hover {
+    opacity: 1;
+    border-bottom: 1px solid #666;
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    -o-transition: all 0.2s ease-out;
+
+    transition: all 200ms ease-in-out;
+    border-bottom-style: solid;
+    text-decoration: none !important;
+    box-shadow: none !important;
 }
 
 /* Hide nav on main page only */
@@ -255,17 +299,18 @@ body#post p > img {
 .top.warped-bar,
 .bottom.warped-bar {
     width: 100%;
-    height: 15px;
     background-color: #689fd6;
     z-index: 999;
 }
 .top.warped-bar {
     position: fixed;
+    height: 15px;
     left: 0;
     top: 0;
 }
 .bottom.warped-bar {
     position: fixed;
+    height: 5px;
     left: 0;
     bottom: 0;
 }
@@ -275,7 +320,7 @@ body#post p > img {
     float: left;
 }
 .warped-bar.bottom .flourish hr {
-    height: 15px;
+    height: 5px;
 }
 .flourish hr:nth-child(1) {
     background-color: #68d6a1;
@@ -335,5 +380,8 @@ body#post p > img {
         left: auto;
         top: auto;
         font-size: 0.5em;
+    }
+    header nav div.logo p.tagline {
+        font-size: 0.75em;
     }
 }
