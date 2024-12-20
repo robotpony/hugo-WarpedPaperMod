@@ -91,10 +91,10 @@ article.post-single header {
     position: relative;
 }
 header .post-meta {
-    position: absolute;
-    right: 0;
-    top: -2em;
-    font-size: 0.75em;
+    margin-top: 0.25em;
+    font-size: 0.7em;
+    color: #000;
+    opacity: 1;
 }
 .entry-footer {
     text-align: left;
@@ -112,7 +112,10 @@ header .post-meta {
     font-size: 0.98em;
     font-size-adjust: 0.5;
     line-height: 1.5em;
-    opacity: 0.75;
+    font-weight: 100;
+    opacity: 0.8;
+    font-smooth: always;
+    -webkit-font-smoothing: antialiased;
 }
 .post-entry .entry-content p {
     font-size: 1.15em;
@@ -124,9 +127,13 @@ body.list main.main .entry-content {
     height: 10em;
     -webkit-line-clamp: 5;
 }
+.post-content blockquote {
+    border-left-color: #555;
+}
 .post-content blockquote p,
 .post-entry blockquote p {
     font-style: italic;
+    opacity: 0.65;
 }
 
 main.main > article h1,
