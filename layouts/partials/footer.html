@@ -10,7 +10,7 @@
     {{- end }}
 
     {{- with site.Params.footer.text }}
-        {{ . | markdownify }}
+        <span>{{ . | markdownify }}</span>
         {{- print " · "}}
     {{- end }}
 
