@@ -129,6 +129,9 @@ body.list main.main .entry-content {
     -webkit-line-clamp: 3;
     overflow: hidden;
 }
+.post-entry .entry-content p strong {
+    font-weight: 700;
+}
 .post-content blockquote {
     border-left-color: #555;
 }
