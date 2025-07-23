@@ -111,7 +111,7 @@ header .post-meta {
 .post-entry .entry-content p {
     font-family: "Lora", serif;
     font-style: normal;
-    font-size: 0.98em;
+    font-size: 0.9em;
     font-size-adjust: 0.5;
     line-height: 1.5em;
     font-weight: 100;
@@ -129,8 +129,8 @@ body.list main.main .entry-content {
     -webkit-line-clamp: 3;
     overflow: hidden;
 }
-.post-entry .entry-content p strong {
-    font-weight: 700;
+.post-content strong {
+    font-weight: 700 !important;
 }
 .post-content blockquote {
     border-left-color: #555;
