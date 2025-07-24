@@ -1,0 +1,38 @@
+{{- /* Security Headers and Meta Tags */ -}}
+
+{{- /* Content Security Policy */ -}}
+{{- $csp := "default-src 'self'; " -}}
+{{- $csp = printf "%sstyle-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " $csp -}}
+{{- $csp = printf "%sscript-src 'self' 'unsafe-inline' https://www.googletagmanager.com; " $csp -}}
+{{- $csp = printf "%sfont-src 'self' https://fonts.gstatic.com; " $csp -}}
+{{- $csp = printf "%simg-src 'self' data: https:; " $csp -}}
+{{- if hugo.IsServer -}}
+{{- $csp = printf "%sconnect-src 'self' ws://localhost:*; " $csp -}}
+{{- else -}}
+{{- $csp = printf "%sconnect-src 'self' https://analytics.google.com; " $csp -}}
+{{- end -}}
+{{- $csp = printf "%sobject-src 'none'; " $csp -}}
+{{- $csp = printf "%sbase-uri 'self'; " $csp -}}
+{{- $csp = printf "%sform-action 'self'; " $csp -}}
+{{- /* frame-ancestors directive removed - only valid in HTTP headers, not meta tags */ -}}
+{{- if not hugo.IsServer -}}
+{{- $csp = printf "%supgrade-insecure-requests;" $csp -}}
+{{- end -}}
+
+{{- if and (not site.Params.security.disableCSP) (not hugo.IsServer) -}}
+<meta http-equiv="Content-Security-Policy" content="{{ $csp }}">
+{{- end -}}
+
+{{- /* Additional Security Headers via Meta Tags */ -}}
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+{{- /* X-Frame-Options removed - only valid in HTTP headers, not meta tags */ -}}
+<meta http-equiv="X-XSS-Protection" content="1; mode=block">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+
+{{- /* HSTS for production */ -}}
+{{- if and (not hugo.IsServer) (not site.Params.security.disableHSTS) -}}
+<meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload">
+{{- end -}}
+
+{{- /* Permissions Policy */ -}}
+<meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), payment=(), usb=()">
