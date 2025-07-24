@@ -1,4 +1,4 @@
-{{- $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}
+{{- $pages := where (where site.RegularPages "Type" "in" site.Params.mainSections) "Draft" "!=" true }}
 {{- if and (gt (len $pages) 1) (in $pages . ) }}
 <nav class="paginav">
   {{- with $pages.Next . }}

@@ -29,6 +29,47 @@
     }
 }
 
+/* tablet portrait */
+@media screen and (min-width: 769px) and (max-width: 900px) {
+    :root {
+        --gap: 18px;
+        --main-width: 720px;
+    }
+
+    .post-entry {
+        padding: 20px;
+    }
+
+    .first-entry {
+        min-height: 320px;
+    }
+
+    .header nav {
+        display: flex;
+    }
+}
+
+/* tablet landscape */
+@media screen and (min-width: 901px) and (max-width: 1024px) {
+    :root {
+        --gap: 20px;
+        --main-width: 800px;
+    }
+
+    .post-entry {
+        padding: 24px;
+    }
+
+    .first-entry {
+        min-height: 360px;
+    }
+
+    .post-content h1,
+    .post-content h2 {
+        margin: 36px 0 24px;
+    }
+}
+
 /* footer */
 @media screen and (max-width: 900px) {
     .list .top-link {

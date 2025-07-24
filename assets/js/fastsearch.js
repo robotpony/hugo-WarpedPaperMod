@@ -48,7 +48,7 @@ window.onload = function () {
             }
         }
     };
-    xhr.open('GET', "../index.json");
+    xhr.open('GET', "{{ .Site.BaseURL }}index.json");
     xhr.send();
 }
 

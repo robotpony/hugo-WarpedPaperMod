@@ -1,6 +1,10 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+{{- /* Security Headers */ -}}
+{{- partial "security.html" . -}}
+
 {{- if hugo.IsProduction | or (eq site.Params.env "production") | and (ne .Params.robotsNoIndex true) }}
 <meta name="robots" content="index, follow">
 {{- else }}
@@ -76,7 +80,7 @@
 
 {{- /* Search */ -}}
 {{- if (eq .Layout `search`) -}}
-<link crossorigin="anonymous" rel="preload" as="fetch" href="../index.json">
+<link crossorigin="anonymous" rel="preload" as="fetch" href="{{ .Site.BaseURL }}index.json">
 {{- $fastsearch := resources.Get "js/fastsearch.js" | js.Build (dict "params" (dict "fuseOpts" site.Params.fuseOpts)) | resources.Minify }}
 {{- $fusejs := resources.Get "js/fuse.basic.min.js" }}
 {{- $license_js := resources.Get "js/license.js" }}
@@ -90,14 +94,13 @@
 {{- end -}}
 
 {{- /* warped resources */ -}}
-{{- with resources.Get site.Params.warpedScript -}}
-<script defer crossorigin="anonymous" src="{{ .RelPermalink }}"></script>
-
-
+{{- $warpedJS := resources.Get "js/warped.js" -}}
+{{- if $warpedJS -}}
+<script defer crossorigin="anonymous" src="{{ $warpedJS.RelPermalink }}"></script>
 {{- end -}}
-{{- with resources.Get site.Params.warpedStyle -}}
-<link crossorigin="anonymous" href="{{ .RelPermalink }}" rel="preload stylesheet" as="style">
-
+{{- $warpedCSS := resources.Get "css/warped.css" -}}
+{{- if $warpedCSS -}}
+<link crossorigin="anonymous" href="{{ $warpedCSS.RelPermalink }}" rel="preload stylesheet" as="style">
 {{- end -}}
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -112,6 +115,13 @@
 <link rel="mask-icon" href="{{ site.Params.assets.safari_pinned_tab | default "safari-pinned-tab.svg" | absURL }}">
 <meta name="theme-color" content="{{ site.Params.assets.theme_color | default "#2e2e33" }}">
 <meta name="msapplication-TileColor" content="{{ site.Params.assets.msapplication_TileColor | default "#2e2e33" }}">
+
+{{- /* PWA Manifest */ -}}
+<link rel="manifest" href="{{ "manifest.json" | absURL }}">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="{{ site.Title }}">
 
 {{- /* RSS */}}
 {{ range .AlternativeOutputFormats -}}

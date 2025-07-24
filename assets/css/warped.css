@@ -122,7 +122,7 @@ header .post-meta {
 .post-entry .entry-content p {
     font-size: 1.15em;
     opacity: 0.9 !important;
-    color: --content;
+    color: var(--content);
 }
 
 body.list main.main .entry-content {
