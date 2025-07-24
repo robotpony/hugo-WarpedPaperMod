@@ -1,0 +1,50 @@
+{
+  "name": "WarpedVisions.org",
+  "short_name": "WarpedVisions",
+  "description": "Essays, HOWTOs, and technical articles with high readability focus",
+  "start_url": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "theme_color": "#1e1e2e",
+  "background_color": "#1e1e2e",
+  "orientation": "portrait-primary",
+  "categories": ["education", "productivity", "reference"],
+  "lang": "en",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon-32x32.png", 
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon-16x16.png",
+      "sizes": "16x16", 
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Latest Articles",
+      "short_name": "Latest",
+      "description": "View the most recent articles",
+      "url": "/",
+      "icons": [{"src": "/favicon-32x32.png", "sizes": "32x32"}]
+    },
+    {
+      "name": "Search",
+      "short_name": "Search", 
+      "description": "Search articles and content",
+      "url": "/search/",
+      "icons": [{"src": "/favicon-32x32.png", "sizes": "32x32"}]
+    }
+  ]
+}
