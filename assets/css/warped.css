@@ -102,6 +102,16 @@ header .post-meta {
     text-align: left;
 }
 
+.post-content sup { vertical-align:top; line-height:100%; }
+.post-content sup > a {
+    box-shadow: none;
+    font-size: .7em;
+    font-weight: bold;    
+}
+div.footnotes {
+    margin-top: 3em;
+}
+
 .post-content dl,
 .post-content ol,
 .post-content p,
@@ -301,6 +311,7 @@ article ul > li:before {
 
 body#post p {
 }
+.post-content p > img,
 body#post p > img {
     display: block;
     width: auto;
