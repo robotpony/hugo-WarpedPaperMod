@@ -110,7 +110,10 @@ header .post-meta {
     margin: 0 .5em .5em;
     padding: 0 .25em .25em;
 }
-.post-content sup { vertical-align:top; line-height:100%; }
+.post-content sup { 
+    vertical-align:top; padding-left: .15em; 
+    line-height:100%; 
+}
 .post-content sup > a {
     box-shadow: none;
     font-size: .7em;
