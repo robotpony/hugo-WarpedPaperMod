@@ -128,6 +128,7 @@ div.footnotes {
 .post-content p,
 .post-content figure,
 .post-content ul,
+.post-content td,
 .first-entry .entry-content p,
 .post-entry .entry-content p {
     font-family: "Lora", serif;
@@ -161,6 +162,28 @@ body.list main.main .entry-content {
     font-style: italic;
     opacity: 0.65;
 }
+.post-content td, 
+.post-content tr {
+    text-align: left;
+    vertical-align: top;
+    font-size: .9em;
+}
+.post-content table {
+    width: 100%;
+}
+.post-content table tr {
+
+}
+.post-content table thead tr th {
+        font-family: "Montserrat", sans-serif;
+        font-weight: 600;
+        font-size: .8em;
+}
+.post-content div.goat svg {
+    /*font-size: .3em !important;*/
+    font-family: monospace;
+}
+
 main.main > header h1,
 main.main > article h1,
 main.main > article h2,
@@ -216,20 +239,27 @@ main.main > article h5 {
 }
 ul.post-tags ul li {
     list-style-type: none;
+    line-height: 1em;
+
 }
 article ul.post-tags li:before {
     content: "" !important;
 }
 ul.post-tags li a {
-    font-size: 0.7em;
+    font-size: 0.6em;
+    font-family: monospace;
+    text-transform: uppercase;
+}
+ul.post-tags li a:before {
+    content: "#";
 }
 .pagination a {
-    font-family: "Alumni Sans Pinstripe", serif;
+    font-family: monospace;
     font-weight: 800;
     letter-spacing: 3px;
     text-transform: uppercase;
-    opacity: 0.9;
-    font-size: 0.9em;
+    opacity: 0.7;
+    font-size: 0.5em;
 }
 .pagination a:hover {
     opacity: 1;
