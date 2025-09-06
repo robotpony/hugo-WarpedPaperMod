@@ -98,6 +98,11 @@ header .post-meta {
     color: #000;
     opacity: 1;
 }
+header .post-meta > span {
+    display: block; 
+    text-align: center;
+    width: 100%;
+}
 .entry-footer {
     text-align: left;
 }
@@ -121,6 +126,47 @@ header .post-meta {
 }
 div.footnotes {
     margin-top: 3em;
+}
+
+.post-content .grouped {
+    margin: 0; padding: 0; width: 100%;
+    margin-bottom: 1em;
+    
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+.post-content .grouped:after {
+    clear: both;
+    content: "";
+    display: table;
+}
+.post-content .callout.right {
+    width: 50%;
+    float: right;
+    padding-left: .5em;
+
+}
+.post-content .callout.left {
+    width: 50%;
+    padding-right: .5em;
+    float: left;
+}
+.post-content .grouped .callout h2,
+.post-content .grouped .callout h3,
+.post-content .grouped .callout p {
+    font-family: "Montserrat", sans-serif;
+    font-size: .8em;
+    font-weight: 400;
+}
+.post-content .grouped .callout p strong {
+    font-weight: 700 !important;
+}
+.post-content .grouped .callout h2,
+.post-content .grouped .callout h3,
+.post-content .grouped .callout h4,
+.post-content .grouped .callout h5 {
+    font-style: italic;
+    font-weight: 700;
 }
 
 .post-content dl,
@@ -162,6 +208,7 @@ body.list main.main .entry-content {
     font-style: italic;
     opacity: 0.65;
 }
+
 .post-content td, 
 .post-content tr {
     text-align: left;
@@ -171,13 +218,10 @@ body.list main.main .entry-content {
 .post-content table {
     width: 100%;
 }
-.post-content table tr {
-
-}
 .post-content table thead tr th {
-        font-family: "Montserrat", sans-serif;
-        font-weight: 600;
-        font-size: .8em;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    font-size: .8em;
 }
 .post-content div.goat svg {
     /*font-size: .3em !important;*/
@@ -207,6 +251,7 @@ main.main > article > header.post-header h1 {
     font-size: 1.3em;
     font-weight: 600;
     margin-bottom: -0.2em;
+    text-align: center;
     opacity: 0.95 !important;
 }
 body.list main.main > article {
