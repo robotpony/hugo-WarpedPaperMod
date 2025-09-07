@@ -5,6 +5,7 @@ footer.footer .kudos {
     color: #ddd;
 }
 
+
 header.header.header {
     position: relative;
     max-width: calc(var(--main-width) + var(--gap) * 2);
@@ -24,6 +25,19 @@ header nav div.logo > a {
     font-size: 1.75em;
     line-height: 1.5em;
 }
+span.entry-hint {
+    position: absolute;
+    height: 24px;
+    left: -128px;
+    opacity: .5;
+}
+span.entry-hint svg {
+    position: relative;
+    top: 4px;
+    width: 32x;
+    height: 32px;
+}
+
 header nav div.logo div.logo-switches {
     position: absolute;
     right: 10px;
