@@ -4,7 +4,9 @@ footer.footer .kudos {
 .dark footer.footer .kudos {
     color: #ddd;
 }
-
+main article.draft {
+    display: none;
+}
 
 header.header.header {
     position: relative;
