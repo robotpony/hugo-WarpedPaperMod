@@ -243,6 +243,11 @@ body.list main.main .entry-content {
     /*font-size: .3em !important;*/
     font-family: monospace;
 }
+/* Special empty-paragraph hack for a simple mono-diagram */
+/* p:not(:empty):has(code) {
+    font-size: 1.25em;
+    text-align: center;
+} */
 
 main.main > header h1,
 main.main > article h1,
