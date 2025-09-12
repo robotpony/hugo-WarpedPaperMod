@@ -182,7 +182,10 @@ div.footnotes {
 .post-content .grouped .callout h4,
 .post-content .grouped .callout h5 {
     font-style: italic;
-    font-weight: 700;
+    font-weight: 200;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: .35em;
 }
 
 .post-content dl,
