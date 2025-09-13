@@ -94,13 +94,21 @@
 {{- end -}}
 
 {{- /* warped resources */ -}}
+{{- if .Site.Params.warpedScript -}}
+<script defer crossorigin="anonymous" src="{{ .Site.Params.warpedScript }}"></script>
+{{- else -}}
 {{- $warpedJS := resources.Get "js/warped.js" -}}
 {{- if $warpedJS -}}
 <script defer crossorigin="anonymous" src="{{ $warpedJS.RelPermalink }}"></script>
 {{- end -}}
+{{- end -}}
+{{- if .Site.Params.warpedStyle -}}
+<link crossorigin="anonymous" href="{{ .Site.Params.warpedStyle }}" rel="preload stylesheet" as="style">
+{{- else -}}
 {{- $warpedCSS := resources.Get "css/warped.css" -}}
 {{- if $warpedCSS -}}
 <link crossorigin="anonymous" href="{{ $warpedCSS.RelPermalink }}" rel="preload stylesheet" as="style">
+{{- end -}}
 {{- end -}}
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
