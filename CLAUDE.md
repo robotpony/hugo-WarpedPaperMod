@@ -57,8 +57,6 @@ Hugo's built-in asset processing handles:
 
 ## Key Files for Modifications
 
-- `/assets/css/warped.css` - Theme-specific styling and branding
-- `/assets/js/warped.js` - Custom interactive features  
 - `/layouts/partials/head.html` - HTML head modifications
 - `/layouts/partials/header.html` - Site header template
 - `/layouts/partials/footer.html` - Site footer template
