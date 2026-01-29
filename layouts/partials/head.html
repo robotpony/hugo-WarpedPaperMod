@@ -1,6 +1,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="fediverse:creator" content="@robotpony@mas.to">
 
 {{- /* Security Headers */ -}}
 {{ partial "security.html" }}
@@ -10,6 +11,9 @@
 {{- else }}
 <meta name="robots" content="noindex, nofollow">
 {{- end }}
+
+<a rel="me" style="display:none" href="https://mas.to/@robotpony">Mastodon</a>
+
 
 {{- /* Title */}}
 <title>{{ if .IsHome }}{{ else }}{{ if .Title }}{{ .Title }} | {{ end }}{{ end }}{{ site.Title }}</title>
