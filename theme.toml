@@ -5,7 +5,7 @@ name = "WarpedPaperMod"
 license = "MIT"
 licenselink = "https://github.com/robotpony/hugo-WarpedPaperMod/blob/master/LICENSE"
 description = "A fast, clean, responsive Hugo theme for WarpedVisions.org"
-homepage = "https://robotpony.github.io/hugo-WarpedPaperMod/"
+homepage = "https://github.com/robotpony/hugo-WarpedPaperMod"
 tags = [
     "responsive",
     "simple",
@@ -29,7 +29,6 @@ features = [
     "archive",
     "share-icons",
     "cover",
-    "multilingual",
     "social-icons",
     "minified-assets",
     "theme-toggle",
@@ -37,15 +36,15 @@ features = [
     "scroll-to-top",
     "search",
 ]
-min_version = "0.125.7"
+min_version = "0.158.0"
 
 [author]
 name = "Bruce Alderson"
 homepage = "https://github.com/robotpony/"
 
-# If porting an existing theme
+# Forked from PaperMod (itself derived from Paper by nanxiaobei)
 [original]
-name = "Paper"
-author = "nanxiaobei"
-homepage = "https://github.com/nanxiaobei"
-repo = "https://github.com/nanxiaobei/hugo-paper/"
+name = "PaperMod"
+author = "adityatelange"
+homepage = "https://github.com/adityatelange"
+repo = "https://github.com/adityatelange/hugo-PaperMod/"

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is **WarpedPaperMod**, a Hugo theme based on PaperMod, specifically customized for WarpedVisions.org. It's a fast, clean, responsive theme optimized for essays, HOWTOs, and technical articles with high readability as a primary goal.
+This is **WarpedPaperMod**, a Hugo theme forked from PaperMod, specifically customized for WarpedVisions.org. It's a fast, clean, responsive theme optimized for essays, HOWTOs, and technical articles with high readability as a primary goal.
 
 ## Development Commands
 
@@ -20,26 +20,24 @@ Since this is a Hugo theme, development happens within a Hugo site that uses thi
 - **`/assets/css/`** - Modular CSS architecture:
   - `core/` - Base styles (theme-vars.css contains design system)
   - `common/` - Page-specific styles 
-  - `warped.css` - Custom theme branding and features
 - **`/assets/js/`** - JavaScript functionality:
-  - `warped.js` - Custom theme features (rainbow links, brand bars)
   - `fastsearch.js` - Search implementation using Fuse.js
 - **`/layouts/`** - Hugo templates:
   - `_default/` - Core page templates
   - `partials/` - Reusable template components
   - `shortcodes/` - Custom content blocks
-- **`/i18n/`** - 40+ language translations
+- **`/i18n/`** - English strings only (`en.yaml`)
+- Branding JS/CSS (rainbow links, brand bars) is not in the theme: it loads from the URLs in the site's `warpedScript`/`warpedStyle` params (`cdn.warpedvisions.org`)
 
 ### Key Features
 - Custom "Warped" branding with colorful top/bottom bars
 - Rainbow-colored article links with hover effects
 - Built-in search functionality
 - Responsive design with mobile-first approach
-- Comprehensive internationalization support
 - Light/dark theme toggle using CSS custom properties
 
 ### Design System
-Theme variables are defined in `/assets/css/core/theme-vars.css` with light/dark mode support. Custom branding colors and typography are in `/assets/css/warped.css`.
+Theme variables are defined in `/assets/css/core/theme-vars.css` with light/dark mode support. Custom branding colors and typography live in the CDN-hosted `warped.css`.
 
 ## Asset Pipeline
 
@@ -51,8 +49,8 @@ Hugo's built-in asset processing handles:
 
 ## Requirements
 
-- **Hugo version**: 0.125.7 minimum (specified in theme.toml:40)
-- **Go module**: References PaperMod structure
+- **Hugo version**: 0.158.0 minimum (theme.toml `min_version`, enforced in `baseof.html`)
+- **Go module**: `github.com/robotpony/hugo-WarpedPaperMod`
 - **No Node.js dependencies** - pure Hugo implementation
 
 ## Key Files for Modifications
