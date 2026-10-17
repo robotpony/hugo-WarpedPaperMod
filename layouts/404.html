@@ -1,3 +1,43 @@
 {{- define "main" }}
-<div class="not-found">404</div>
+{{- /*
+  A small text adventure set in a maker's shop. The "looking for" line is
+  filled in client-side from the request path, since Hugo builds this page
+  once and can't know which URL 404'd.
+*/}}
+<section class="error-404">
+    <div class="error-404-head">
+        <span class="error-404-num">404</span>
+        <h1>You appear to be lost.</h1>
+    </div>
+
+    <div class="terminal-card">
+        <p class="term-room">The Workshop</p>
+        <p>You are standing in a cluttered workshop. A desk lamp is clamped to the bench at a hopeful angle, and lino shavings cover everything.</p>
+        <p>You see:</p>
+        <ul class="term-list">
+            <li>a half-carved lino block, the knife still in it</li>
+            <li>a soldering iron, warm but unplugged</li>
+            <li>a stack of drafts marked &ldquo;almost done&rdquo;</li>
+            <li>a Raspberry Pi living in a cookie tin</li>
+        </ul>
+        <p>You are looking for: <span id="term-path">something that isn&rsquo;t on this bench</span></p>
+        <p class="term-prompt">&gt; search bench</p>
+        <p>Nothing matches. Something hums behind the pegboard.<span class="term-cursor" aria-hidden="true">_</span></p>
+        <p class="term-prompt">&gt; what now?</p>
+        <nav class="term-actions" aria-label="What to do next">
+            <a class="term-link" href="{{ site.Home.RelPermalink }}">go home</a>
+            <a class="term-link" href="{{ "blog/" | relURL }}">read the blog</a>
+        </nav>
+    </div>
+</section>
+
+<script>
+    (function () {
+        var el = document.getElementById('term-path');
+        var path = window.location.pathname;
+        if (el && path && path !== '/' && path !== '/404.html') {
+            el.textContent = path;
+        }
+    })();
+</script>
 {{- end }}{{/* end main */ -}}

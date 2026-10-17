@@ -1,11 +1,170 @@
-.not-found {
-    position: absolute;
-    left: 0;
-    right: 0;
+/* 404: a text adventure in the workshop. Theme vars flip for dark mode;
+   the --warped-* accents come from warped.css, with fallbacks. */
+.error-404 {
+    margin: 0 auto;
+    padding: 24px 0 40px;
+}
+
+.error-404-head {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     justify-content: center;
-    height: 80%;
-    font-size: 160px;
+    flex-wrap: wrap;
+    gap: 0 12px;
+    margin-bottom: 28px;
+    font-family: "Montserrat", sans-serif;
+    font-size: clamp(1.8rem, 5vw, 2.6rem);
+    line-height: 1.15;
+    text-align: center;
+}
+
+.error-404-num {
+    font-weight: 800;
+    color: var(--warped-red, #d68168);
+}
+
+.error-404-head h1 {
+    margin: 0;
+    font-size: inherit;
     font-weight: 700;
+    text-wrap: balance;
+}
+
+.terminal-card {
+    padding: 26px 24px 24px;
+    font-family: "Lora", serif;
+    font-size: 0.9em;
+    line-height: 1.5em;
+    color: var(--content);
+    background:
+        linear-gradient(90deg,
+            var(--warped-green, #68d6a1) 0 25%,
+            var(--warped-yellow, #d6cb68) 25% 50%,
+            var(--warped-orange, #d6a668) 50% 75%,
+            var(--warped-red, #d68168) 75%) top / 100% 4px no-repeat,
+        repeating-linear-gradient(to bottom,
+            color-mix(in srgb, var(--primary) 6%, transparent) 0 1px,
+            transparent 1px 3px),
+        var(--entry);
+    border: 1px solid var(--tertiary);
+    border-top: 0;
+    border-radius: 0 0 var(--radius) var(--radius);
+}
+
+.terminal-card p {
+    margin: 0 0 14px;
+}
+
+.term-room {
+    font-family: "Alumni Sans Pinstripe", serif;
+    font-weight: 500;
+    font-size: 1.5em;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--primary);
+}
+
+.terminal-card #term-path {
+    font-weight: 600;
+    color: var(--primary);
+    border-bottom: 2px solid var(--warped-blue, #689fd6);
+    word-break: break-all;
+}
+
+.term-prompt {
+    color: var(--secondary);
+}
+
+.term-list {
+    list-style: none;
+    margin: -8px 0 14px;
+    padding: 0;
+}
+
+.term-list li {
+    margin: 0 0 4px;
+    padding-left: 1.2em;
+    text-indent: -1.2em;
+}
+
+.term-list li::before {
+    content: "- ";
+    color: var(--warped-green, #68d6a1);
+    font-weight: 700;
+}
+
+.term-cursor {
+    display: inline-block;
+    margin-left: 2px;
+    font-weight: 700;
+    color: var(--warped-orange, #d6a668);
+    animation: term-blink 1.1s steps(1) infinite;
+}
+
+@keyframes term-blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+.term-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.term-actions .term-link {
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.85em;
+    line-height: 1.2;
+    color: var(--primary);
+    text-decoration: none;
+    background: var(--theme);
+    border: 1px solid var(--tertiary);
+    border-radius: var(--radius);
+    padding: 7px 14px;
+    transition: border-color 0.2s ease-out;
+}
+
+.term-actions .term-link:hover {
+    border-color: var(--warped-blue, #689fd6);
+}
+
+/* The room prints line by line, as if typed out as you read */
+.terminal-card > * {
+    opacity: 0;
+    animation: term-line-in 0.4s ease-out forwards;
+}
+
+.terminal-card > *:nth-child(1) { animation-delay: 0.05s; }
+.terminal-card > *:nth-child(2) { animation-delay: 0.2s; }
+.terminal-card > *:nth-child(3) { animation-delay: 0.38s; }
+.terminal-card > *:nth-child(4) { animation-delay: 0.54s; }
+.terminal-card > *:nth-child(5) { animation-delay: 0.74s; }
+.terminal-card > *:nth-child(6) { animation-delay: 0.9s; }
+.terminal-card > *:nth-child(7) { animation-delay: 1.04s; }
+.terminal-card > *:nth-child(8) { animation-delay: 1.2s; }
+.terminal-card > *:nth-child(9) { animation-delay: 1.34s; }
+
+@keyframes term-line-in {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .terminal-card > * {
+        opacity: 1;
+        animation: none;
+    }
+
+    .term-cursor {
+        animation: none;
+    }
 }

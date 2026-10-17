@@ -8,7 +8,7 @@
     font-size: 40px;
 }
 
-/* Outlined box under the brand stripe; text matches body size (0.9em Lora, 1.5em) */
+/* Matches the home page intro text, closed by the same rule as its <hr> */
 .post-description {
     margin-top: 32px;
     margin-bottom: 30px;
