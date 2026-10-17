@@ -11,13 +11,17 @@
     font-size: 40px;
 }
 
-/* Optional title icon (front matter `icon`/`iconFor`, see partials/title_icon.html) */
-.page-icon {
+/* Optional title icon (front matter `icon`/`iconFor`, see partials/title_icon.html),
+   and `img.sc-mark` for the same tile in body text. Sized like a tab favicon:
+   a little taller than the text, centred on the middle of the capitals. */
+.page-icon,
+img.sc-mark {
     display: inline-block;
-    width: 1em;
-    height: 1em;
-    margin: 0 0.2em 0 0;
-    vertical-align: -0.15em;
+    width: 1.3em;
+    height: 1.3em;
+    margin: 0 0.25em 0 0;
+    vertical-align: -0.3em;
+    vertical-align: calc(0.5cap - 0.65em);
 }
 
 /* Feed link pegged to the right margin, clear of the centred title */
