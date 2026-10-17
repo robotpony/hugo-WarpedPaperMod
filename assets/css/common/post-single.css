@@ -10,8 +10,8 @@
 
 /* Outlined box under the brand stripe; text matches body size (0.9em Lora, 1.5em) */
 .post-description {
-    margin-top: 12px;
-    margin-bottom: 8px;
+    margin-top: 32px;
+    margin-bottom: 36px;
     padding: 18px 18px 14px;
     font-family: "Lora", serif;
     font-size: 0.9em;
