@@ -11,6 +11,15 @@
     font-size: 40px;
 }
 
+/* Optional section icon (front matter `icon`, a bundle resource) before the title */
+.page-header h1 .page-icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    margin: 0 0.2em 0 0;
+    vertical-align: -0.15em;
+}
+
 /* Feed link pegged to the right margin, clear of the centred title */
 .page-header h1 .rss-link {
     position: absolute;

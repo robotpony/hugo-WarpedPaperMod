@@ -8,6 +8,9 @@
 <header class="page-header">
   {{- partial "breadcrumbs.html" . }}
   <h1>
+    {{- with .Params.icon }}{{ with $.Resources.Get . }}
+    <img class="page-icon" src="{{ .RelPermalink }}" alt="" width="40" height="40">
+    {{- end }}{{ end }}
     {{ .Title }}
     {{- if and (or (eq .Kind `term`) (eq .Kind `section`)) (.Param "ShowRssButtonInSectionTermList") }}
     {{- with .OutputFormats.Get "rss" }}
