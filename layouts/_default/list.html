@@ -8,10 +8,7 @@
 <header class="page-header">
   {{- partial "breadcrumbs.html" . }}
   <h1>
-    {{- with .Params.icon }}{{ with $.Resources.Get . }}
-    <img class="page-icon" src="{{ .RelPermalink }}" alt="" width="40" height="40">
-    {{- end }}{{ end }}
-    {{ .Title }}
+    {{ partial "title_icon.html" . }}
     {{- if and (or (eq .Kind `term`) (eq .Kind `section`)) (.Param "ShowRssButtonInSectionTermList") }}
     {{- with .OutputFormats.Get "rss" }}
     <a class="rss-link" href="{{ .RelPermalink }}" title="RSS feed" aria-label="RSS feed">
@@ -73,7 +70,7 @@
   {{- partial "cover.html" (dict "cxt" . "IsSingle" false "isHidden" $isHidden) }}
   <header class="entry-header">
     <h2 class="entry-hint-parent">
-      {{- .Title }}
+      {{- partial "title_icon.html" . }}
       {{- if .Draft }}
       <span class="entry-hint" title="Draft">
         <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" fill="currentColor">

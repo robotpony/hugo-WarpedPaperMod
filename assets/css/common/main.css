@@ -11,8 +11,8 @@
     font-size: 40px;
 }
 
-/* Optional section icon (front matter `icon`, a bundle resource) before the title */
-.page-header h1 .page-icon {
+/* Optional title icon (front matter `icon`/`iconFor`, see partials/title_icon.html) */
+.page-icon {
     display: inline-block;
     width: 1em;
     height: 1em;
