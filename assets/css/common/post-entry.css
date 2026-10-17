@@ -33,6 +33,11 @@
     -webkit-line-clamp: unset;
 }
 
+/* warped.css hides drafts in lists; drafts only render in preview, where they should show */
+main article.post-entry.draft {
+    display: block;
+}
+
 .post-entry {
     position: relative;
     margin-bottom: var(--gap);
