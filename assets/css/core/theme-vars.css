@@ -6,6 +6,8 @@
     --header-height: 60px;
     --footer-height: 60px;
     --radius: 8px;
+    /* buttons, chips, and tags: softer than square, smaller than cards */
+    --radius-sm: 6px;
     --theme: rgb(255, 255, 255);
     --entry: rgb(255, 255, 255);
     --primary: rgb(20, 20, 20);

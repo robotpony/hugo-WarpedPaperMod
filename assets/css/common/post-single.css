@@ -342,7 +342,7 @@
     display: block;
     padding: 5px 9px;
     border: 1px solid var(--tertiary);
-    border-radius: 3px;
+    border-radius: var(--radius-sm);
     background: none;
     font-family: "Montserrat", sans-serif;
     font-size: 12px;

@@ -122,7 +122,7 @@
     text-decoration: none;
     background: var(--theme);
     border: 1px solid var(--tertiary);
-    border-radius: var(--radius);
+    border-radius: var(--radius-sm);
     padding: 7px 14px;
     transition: border-color 0.2s ease-out;
 }

@@ -38,7 +38,7 @@
     gap: 6px;
     padding: 3px 8px;
     border: 1px solid var(--tertiary);
-    border-radius: 3px;
+    border-radius: var(--radius-sm);
     font-family: "Montserrat", sans-serif;
     font-size: 12px;
     font-weight: 500;
