@@ -94,6 +94,7 @@
   <a class="entry-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}"></a>
 </article>
 {{- end }}
+{{- partial "projects_sidebar.html" . }}
 
 {{- if gt $paginator.TotalPages 1 }}
 <footer class="page-footer">
@@ -131,7 +132,6 @@
   </nav>
 </footer>
 {{- end }}
-{{- partial "projects_sidebar.html" . }}
 
 {{- end }}{{/* end profileMode */}}
 

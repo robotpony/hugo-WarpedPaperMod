@@ -2,7 +2,7 @@
   {name, url, icon, blurb}) as a sidebar. Shown on list pages by default and on
   any page with `showProjects: true`; `showProjects: false` hides it. Nothing
   renders without the data. Placed below the content at every width: after a
-  list's pagination, or after a single page's article. */ -}}
+  list's posts (before its pagination), or after a single page's article. */ -}}
 {{- $show := ne .Kind "page" }}
 {{- if isset .Params "showprojects" }}{{ $show = .Params.showProjects }}{{ end }}
 {{- with site.Data.projects }}

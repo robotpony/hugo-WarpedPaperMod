@@ -25,7 +25,7 @@ Since this is a Hugo theme, development happens within a Hugo site that uses thi
 - **`/layouts/`** - Hugo templates:
   - `_default/` - Core page templates
   - `partials/` - Reusable template components
-    - `projects_sidebar.html` - "Things I've made" from the site's `data/projects.yaml` (heading, items of name/url/icon/blurb); on list pages by default, on others only with `showProjects: true` (`false` hides it). Placed below the content at every width (after a list's pagination, after a single page's article); `common/projects.css` drops the blurbs on phones
+    - `projects_sidebar.html` - "Things I've made" from the site's `data/projects.yaml` (heading, items of name/url/icon/blurb); on list pages by default, on others only with `showProjects: true` (`false` hides it). Placed below the content at every width (after a list's posts, before its pagination; after a single page's article); `common/projects.css` drops the blurbs on phones
   - `shortcodes/` - Custom content blocks
     - `carousel` - a swipeable strip of screenshots written as Markdown images inside `{{< carousel >}}`; a caption's bold lead (`"**Label.** Caption"`) labels its pill, with dots when no slide has one. CSS in `common/carousel.css`; `js/carousel.js` loads only where `.HasShortcode "carousel"` (head.html). Without JS it's a scroll-snap strip with every caption showing
 - **`/i18n/`** - English strings only (`en.yaml`)
