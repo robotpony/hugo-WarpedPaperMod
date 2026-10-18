@@ -76,14 +76,14 @@
 /* Scorekeep's icon is a full-bleed square: round it like the others' tiles */
 .projects-name img {
     flex: none;
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     margin: 0;
     border-radius: 22%;
 }
 
 .projects-blurb {
-    margin: 2px 0 0 28px;
+    margin: 2px 0 0 32px;
     font-size: 12px;
     line-height: 1.4;
     color: var(--secondary);

@@ -16,7 +16,7 @@
     {{- range $item := .items }}
     <li>
       <a class="projects-name" href="{{ .url | relURL }}">
-        {{- with .icon }}<img src="{{ partial "templates/_funcs/versioned-url.html" . }}" alt="" width="20" height="20" loading="lazy"
+        {{- with .icon }}<img src="{{ partial "templates/_funcs/versioned-url.html" . }}" alt="" width="24" height="24" loading="lazy"
         {{- with $item.icon_dark }} style="{{ printf "--icon-dark: url(%s)" (partial "templates/_funcs/versioned-url.html" .) | safeCSS }}"{{ end }}>{{ end -}}
         {{ .name }}</a>
       {{- with .blurb }}
