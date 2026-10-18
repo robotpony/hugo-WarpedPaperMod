@@ -11,8 +11,9 @@
 }
 
 .projects-heading {
-    margin: 0 0 12px;
+    margin: 0 0 10px;
     font-size: 12px;
+    line-height: 1.2;
     font-weight: 600;
     color: var(--secondary);
 }
@@ -31,7 +32,7 @@
 }
 
 .projects-name {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 8px;
     font-size: 14px;
@@ -54,9 +55,9 @@
 }
 
 .projects-blurb {
-    margin: 4px 0 0 28px;
+    margin: 2px 0 0 28px;
     font-size: 12px;
-    line-height: 1.45;
+    line-height: 1.4;
     color: var(--secondary);
 }
 
@@ -77,25 +78,35 @@
 @media screen and (min-width: 1120px) {
     .projects-sidebar {
         position: absolute;
-        top: calc(var(--gap) + 24px); /* the page/post header's top margin */
+        /* level with the title text: the header's 24px top margin, the h1's
+           1.5em (35px) and its half-leading */
+        top: calc(var(--gap) + 39px);
         bottom: var(--gap);
         left: 100%;
         width: 200px;
+        z-index: 1;
         margin: 0;
         padding: 0;
         border: 0;
     }
 
+    /* The background covers anything wider than the column, like a full-bleed rule */
     .projects-inner {
         position: sticky;
         top: var(--gap);
+        background: var(--theme);
+    }
+
+    .list .projects-inner {
+        background: var(--home-bg);
     }
 
     .projects-list {
         display: block;
     }
 
+    /* Name and blurb read as one; items sit clearly apart */
     .projects-list li + li {
-        margin-top: 14px;
+        margin-top: 18px;
     }
 }
