@@ -11,33 +11,7 @@
     font-size: 40px;
 }
 
-/* App-name kicker above a title (front matter `icon` + `iconFor`, see
-   partials/title_kicker.html): the name as written, in the heading font */
-.title-kicker {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-    font-family: Montserrat, sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 1.2;
-    color: var(--primary);
-}
-
-/* Centred over the centred page and post titles; left over cards */
-.post-header .title-kicker,
-.page-header .title-kicker {
-    justify-content: center;
-}
-
-.title-kicker .page-icon {
-    width: 20px;
-    height: 20px;
-    margin: 0 7px 0 0;
-    vertical-align: baseline;
-}
-
-/* Optional inline title icon (front matter `icon`, see partials/title_icon.html),
+/* Optional title icon (front matter `icon`/`iconFor`, see partials/title_icon.html),
    and `img.sc-mark` for the same tile in body text. Sized like a tab favicon:
    a little taller than the text, centred on the middle of the capitals. */
 .page-icon,

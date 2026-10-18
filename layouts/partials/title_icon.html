@@ -1,13 +1,22 @@
 {{- /* Page title with an optional inline icon. Front matter `icon` is a bundle
-  resource name or a site URL ("/images/x.svg"); `iconFor` names the app, and
-  a page with both gets a kicker above the title instead (title_kicker.html),
-  unless the title is that name. There, or with no `iconFor`, the icon goes
-  before the title. Wrapped in a span so flex title rows keep the icon beside
-  its text. */ -}}
+  resource name or a site URL ("/images/x.svg"); `iconFor` places it before the
+  first occurrence of that phrase, otherwise it goes before the whole title.
+  Wrapped in a span so flex title rows keep the icon beside its text. */ -}}
 {{- $title := .Title | htmlEscape }}
-{{- $icon := partial "page_icon.html" . }}
-{{- if and $icon.src (not $icon.kicker) }}
-{{- $img := printf `<img class="page-icon" src="%s" alt="" width="40" height="40">` ($icon.src | htmlEscape) }}
-{{- $title = print `<span class="title-text">` $img $title `</span>` }}
+{{- $src := "" }}
+{{- with .Params.icon }}
+{{- if or (hasPrefix . "/") (strings.Contains . "://") }}{{ $src = relURL . }}
+{{- else }}{{ with $.Resources.Get . }}{{ $src = .RelPermalink }}{{ end }}
+{{- end }}
+{{- end }}
+{{- if $src }}
+{{- $img := printf `<img class="page-icon" src="%s" alt="" width="40" height="40">` ($src | htmlEscape) }}
+{{- $phrase := .Params.iconFor | default "" | htmlEscape }}
+{{- if and $phrase (strings.Contains $title $phrase) }}
+{{- $title = replace $title $phrase (print $img $phrase) 1 }}
+{{- else }}
+{{- $title = print $img $title }}
+{{- end }}
+{{- $title = print `<span class="title-text">` $title `</span>` }}
 {{- end }}
 {{- $title | safeHTML -}}

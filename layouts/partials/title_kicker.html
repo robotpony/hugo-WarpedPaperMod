@@ -1,7 +1,0 @@
-{{- /* App-name kicker above a title: the `icon` tile and the `iconFor` name,
-  as written. Skipped when the title is the name itself (a series page), which
-  keeps the inline icon instead (title_icon.html). */ -}}
-{{- $icon := partial "page_icon.html" . }}
-{{- if $icon.kicker }}
-<div class="title-kicker"><img class="page-icon" src="{{ $icon.src }}" alt="" width="20" height="20">{{ .Params.iconFor }}</div>
-{{- end }}

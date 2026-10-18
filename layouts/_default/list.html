@@ -7,7 +7,6 @@
 {{- if .Title }}
 <header class="page-header">
   {{- partial "breadcrumbs.html" . }}
-  {{- partial "title_kicker.html" . }}
   <h1>
     {{ partial "title_icon.html" . }}
     {{- if and (or (eq .Kind `term`) (eq .Kind `section`)) (.Param "ShowRssButtonInSectionTermList") }}
@@ -70,7 +69,6 @@
   {{- $isHidden := (.Param "cover.hiddenInList") | default (.Param "cover.hidden") | default false }}
   {{- partial "cover.html" (dict "cxt" . "IsSingle" false "isHidden" $isHidden) }}
   <header class="entry-header">
-    {{- partial "title_kicker.html" . }}
     <h2 class="entry-hint-parent">
       {{- partial "title_icon.html" . }}
       {{- if .Draft }}
