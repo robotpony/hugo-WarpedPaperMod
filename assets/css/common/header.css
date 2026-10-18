@@ -91,3 +91,45 @@ body:not(.dark) #sun {
 .logo-switches {
     flex-wrap: inherit;
 }
+
+/* Tagline links as chips tinted in the rainbow's order, skipping its faint
+   yellow. warped.css (CDN, loaded after this) styles them grey: :not(#_) adds
+   an id's weight so these win over its light, dark, and hover rules */
+header nav div.logo p.tagline:not(#_) a {
+    --chip: #d68168;
+    --chip-base: white;
+    padding: 2px 8px;
+    border: 0;
+    border-radius: 3px;
+    background-color: color-mix(in srgb, var(--chip) 22%, var(--chip-base));
+    color: var(--primary);
+    transition: background-color .2s ease-in-out;
+}
+
+header nav div.logo p.tagline:not(#_) a:nth-of-type(2) {
+    --chip: #d6a668;
+}
+
+header nav div.logo p.tagline:not(#_) a:nth-of-type(3) {
+    --chip: #68d6a1;
+}
+
+header nav div.logo p.tagline:not(#_) a:nth-of-type(4) {
+    --chip: #689fd6;
+}
+
+header nav div.logo p.tagline:not(#_) a:hover,
+header nav div.logo p.tagline:not(#_) a:focus-visible {
+    background-color: color-mix(in srgb, var(--chip) 40%, var(--chip-base));
+}
+
+/* Dark: the same tints mixed into the page, a little stronger to show */
+.dark header nav div.logo p.tagline:not(#_) a {
+    --chip-base: var(--theme);
+    background-color: color-mix(in srgb, var(--chip) 30%, var(--chip-base));
+}
+
+.dark header nav div.logo p.tagline:not(#_) a:hover,
+.dark header nav div.logo p.tagline:not(#_) a:focus-visible {
+    background-color: color-mix(in srgb, var(--chip) 48%, var(--chip-base));
+}
