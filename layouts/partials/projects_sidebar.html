@@ -1,5 +1,6 @@
 {{- /* "Things I've made": site data (data/projects.yaml: heading, items of
-  {name, url, icon, blurb}) as a sidebar. Shown on list pages by default and on
+  {name, url, icon, icon_dark, blurb}) as a sidebar; icon_dark swaps in with
+  the dark theme (main.css). Shown on list pages by default and on
   any page with `showProjects: true`; `showProjects: false` hides it. Nothing
   renders without the data. Placed below the content at every width: after a
   list's posts (before its pagination), or after a single page's article. */ -}}
@@ -12,10 +13,11 @@
   <h2 class="projects-heading">{{ . }}</h2>
   {{- end }}
   <ul class="projects-list">
-    {{- range .items }}
+    {{- range $item := .items }}
     <li>
       <a class="projects-name" href="{{ .url | relURL }}">
-        {{- with .icon }}<img src="{{ . | relURL }}" alt="" width="20" height="20" loading="lazy">{{ end -}}
+        {{- with .icon }}<img src="{{ . | relURL }}" alt="" width="20" height="20" loading="lazy"
+        {{- with $item.icon_dark }} style="{{ printf "--icon-dark: url(%s)" (. | relURL) | safeCSS }}"{{ end }}>{{ end -}}
         {{ .name }}</a>
       {{- with .blurb }}
       <p class="projects-blurb">{{ . }}</p>

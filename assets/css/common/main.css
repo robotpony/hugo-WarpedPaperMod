@@ -170,3 +170,9 @@ div.highlight:hover .copy-code,
 pre:hover .copy-code {
     display: block;
 }
+
+/* An img with an inline --icon-dark: url(...) shows that image instead in the
+   dark theme, which is a body class, so an SVG can't follow it itself */
+.dark img[style*="--icon-dark"] {
+    content: var(--icon-dark);
+}
