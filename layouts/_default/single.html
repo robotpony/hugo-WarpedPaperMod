@@ -37,11 +37,26 @@
 
   <footer class="post-footer">
     {{- $tags := .Language.Params.Taxonomies.tag | default "tags" }}
-    <ul class="post-tags">
-      {{- range ($.GetTerms $tags) }}
-      <li><a href="{{ .Permalink }}">{{ .LinkTitle }}</a></li>
-      {{- end }}
-    </ul>
+    {{- $terms := $.GetTerms $tags }}
+    {{- /* seriesTag (cascaded from a series' _index.md) leads, tinted, linking to the series */}}
+    {{- $series := .Params.seriesTag }}
+    {{- if or $terms $series }}
+    <div class="post-filed">
+      <div class="post-filed-label">{{ i18n "filed_under" }}</div>
+      <ul class="post-tags">
+        {{- with $series }}
+        {{- with $.CurrentSection }}
+        <li class="lead"><a href="{{ .Permalink }}">{{ .Title }}</a></li>
+        {{- end }}
+        {{- end }}
+        {{- range $terms }}
+        {{- if ne .Data.Term $series }}
+        <li><a href="{{ .Permalink }}">{{ .Data.Term }}</a></li>
+        {{- end }}
+        {{- end }}
+      </ul>
+    </div>
+    {{- end }}
     {{- if (.Param "ShowPostNavLinks") }}
     {{- partial "post_nav_links.html" . }}
     {{- end }}

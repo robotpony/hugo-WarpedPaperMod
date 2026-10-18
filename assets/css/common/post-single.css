@@ -310,17 +310,78 @@
     margin-bottom: 10px;
 }
 
-.post-tags {
+/* Tag chips: outlined, with the series tag tinted first. The .post-footer
+   prefix outranks warped.css's monospace "#TAG" rules, which load later. */
+.post-filed {
+    border-top: 1px solid var(--border);
+    padding-top: 18px;
+}
+
+.post-filed-label {
+    margin-bottom: 10px;
+    font-family: "Alumni Sans Pinstripe", serif;
+    font-size: 16px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--secondary);
+}
+
+.post-footer .post-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px;
 }
 
-.post-tags li {
+.post-footer .post-tags li {
     display: inline-block;
+    text-indent: 0;
+    line-height: 1;
 }
 
-.post-tags a,
+.post-footer .post-tags a {
+    display: block;
+    padding: 5px 9px;
+    border: 1px solid var(--tertiary);
+    border-radius: 3px;
+    background: none;
+    font-family: "Montserrat", sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: none;
+    color: var(--secondary);
+    transition: border-color 0.15s, color 0.15s;
+}
+
+.post-footer .post-tags a::before {
+    content: none;
+}
+
+.post-footer .post-tags a:hover {
+    border-color: var(--chip-hover, var(--secondary));
+    color: var(--primary);
+}
+
+.post-footer .post-tags li:nth-child(5n+1) { --chip-hover: #d68168; }
+.post-footer .post-tags li:nth-child(5n+2) { --chip-hover: #d6a668; }
+.post-footer .post-tags li:nth-child(5n+3) { --chip-hover: #d6cb68; }
+.post-footer .post-tags li:nth-child(5n+4) { --chip-hover: #68d6a1; }
+.post-footer .post-tags li:nth-child(5n+5) { --chip-hover: #689fd6; }
+
+.post-footer .post-tags .lead a {
+    border-color: transparent;
+    background: var(--series-tint);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--series-ink);
+}
+
+.post-footer .post-tags .lead a:hover {
+    border-color: var(--series-ink);
+    color: var(--series-ink);
+}
+
 .share-buttons,
 .paginav {
     border-radius: var(--radius);
@@ -328,16 +389,6 @@
     border: 1px solid var(--border);
 }
 
-.post-tags a {
-    display: block;
-    padding: 0 14px;
-    color: var(--secondary);
-    font-size: 14px;
-    line-height: 34px;
-    background: var(--code-bg);
-}
-
-.post-tags a:hover,
 .paginav a:hover {
     background: var(--border);
 }
