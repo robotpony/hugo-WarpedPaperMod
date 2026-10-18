@@ -9,6 +9,12 @@
     color: var(--secondary);
 }
 
+/* Above the pager, its rule closes the block: one rule, spaced like the top */
+.projects-sidebar:has(+ .page-footer) {
+    margin-bottom: 0;
+    border-bottom: 0;
+}
+
 .projects-heading {
     margin: 0 0 10px;
     font-size: 12px;
