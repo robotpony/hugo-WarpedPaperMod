@@ -26,6 +26,7 @@ Since this is a Hugo theme, development happens within a Hugo site that uses thi
   - `_default/` - Core page templates
   - `partials/` - Reusable template components
   - `shortcodes/` - Custom content blocks
+    - `carousel` - a swipeable strip of screenshots written as Markdown images inside `{{< carousel >}}`; a caption's bold lead (`"**Label.** Caption"`) labels its pill, with dots when no slide has one. CSS in `common/carousel.css`; `js/carousel.js` loads only where `.HasShortcode "carousel"` (head.html). Without JS it's a scroll-snap strip with every caption showing
 - **`/i18n/`** - English strings only (`en.yaml`)
 - Branding JS/CSS (rainbow links, brand bars) is not in the theme: it loads from the URLs in the site's `warpedScript`/`warpedStyle` params (`cdn.warpedvisions.org`)
 

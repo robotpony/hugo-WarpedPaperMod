@@ -1,0 +1,31 @@
+{{- /*
+  A swipeable strip of screenshots, written as plain Markdown images:
+
+    {{< carousel >}}
+    ![Alt text](shot.png "**Label.** Caption, with Markdown.")
+    {{< /carousel >}}
+
+  The images still read as a list of images in any Markdown editor. The bold
+  lead of each caption names its chip; with no bold leads at all, the nav
+  shows dots. With no JS it's a scroll-snap strip with every caption showing;
+  js/carousel.js (loaded by head.html via .HasShortcode) adds the nav and keys.
+*/ -}}
+{{- $id := printf "carousel-%d" .Ordinal -}}
+{{- $shots := findRESubmatch `!\[([^\]]*)\]\(\s*(\S+?)(?:\s+"((?:[^"\\]|\\.)*)")?\s*\)` .Inner -}}
+{{- $labelled := false -}}
+{{- range $shots }}{{ if findRE `^\*\*.+?\*\*` (index . 3) 1 }}{{ $labelled = true }}{{ end }}{{ end -}}
+<figure class="carousel" id="{{ $id }}"{{ if not $labelled }} data-nav="dots"{{ end }} aria-roledescription="carousel">
+  <div class="carousel-track" tabindex="0" aria-label="Screenshots, scroll sideways">
+    {{- range $i, $m := $shots }}
+    {{- $alt := index $m 1 }}{{ $src := index $m 2 }}{{ $cap := index $m 3 }}
+    {{- $label := "" }}
+    {{- with findRESubmatch `^\*\*(.+?)\.?\*\*` $cap 1 }}{{ $label = index (index . 0) 1 }}{{ end }}
+    {{- $img := $.Page.Resources.Get $src }}
+    <figure class="carousel-slide" data-label="{{ $label | default (add $i 1) }}" aria-label="{{ add $i 1 }} of {{ len $shots }}">
+      <img src="{{ with $img }}{{ .RelPermalink }}{{ else }}{{ $src }}{{ end }}" alt="{{ $alt }}"
+        {{- with $img }} width="{{ .Width }}" height="{{ .Height }}"{{ end }} loading="lazy" draggable="false">
+      {{- with $cap }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+    </figure>
+    {{- end }}
+  </div>
+</figure>
