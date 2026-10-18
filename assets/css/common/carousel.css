@@ -1,5 +1,5 @@
 /* carousel shortcode: layouts/shortcodes/carousel.html, js/carousel.js */
-.post-content .carousel { margin: 2rem 0 var(--content-gap); }
+.post-content .carousel { margin: 2rem 0 var(--content-gap); container-type: inline-size; }
 .carousel-track {
   --slide: min(300px, 70vw);
   display: flex; gap: 20px; overflow-x: auto; overscroll-behavior-x: contain;
@@ -11,7 +11,7 @@
 .carousel-track::-webkit-scrollbar { display: none; }
 .carousel-track:focus-visible { box-shadow: 0 0 0 2px var(--tertiary); }
 .post-content .carousel-slide {
-  flex: 0 0 var(--slide); margin: 0; scroll-snap-align: center;
+  flex: 0 0 var(--slide); min-width: 0; margin: 0; scroll-snap-align: center;
   transition: opacity .35s, transform .35s;
 }
 .post-content .carousel-slide img {
@@ -25,7 +25,12 @@
 }
 .post-content .carousel-slide > figcaption strong { color: var(--primary); }
 .carousel.is-live .carousel-slide:not(.is-active) { opacity: .4; transform: scale(.93); cursor: pointer; }
-.carousel.is-live .carousel-slide:not(.is-active) > figcaption { opacity: 0; }
+.carousel.is-live .carousel-slide:not(.is-active) > figcaption { opacity: 0; pointer-events: none; }
+/* live captions run wider than their slide, centred on it; no wider than the carousel (its container), so the last one stays inside its padding */
+.carousel.is-live .carousel-slide > figcaption {
+  position: relative; left: 50%; transform: translateX(-50%);
+  width: min(560px, 100cqi - 32px); margin-inline: 0; text-align: center;
+}
 .carousel-nav {
   display: flex; align-items: center; justify-content: center; gap: 6px;
   margin-top: 14px; flex-wrap: wrap;
