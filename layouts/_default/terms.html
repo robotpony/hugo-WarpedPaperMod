@@ -11,17 +11,30 @@
 </header>
 {{- end }}
 
-<ul class="terms-tags">
-    {{- $type := .Type }}
-    {{- range $key, $value := .Data.Terms.Alphabetical }}
-    {{- $name := .Name }}
-    {{- $count := .Count }}
-    {{- with site.GetPage (printf "/%s/%s" $type $name) }}
-    <li>
-        <a href="{{ .Permalink }}">{{ .Name }} <sup><strong><sup>{{ $count }}</sup></strong></sup> </a>
-    </li>
-    {{- end }}
-    {{- end }}
-</ul>
+{{- $type := .Type }}
+<div class="terms-panel">
+    <section class="terms-group">
+        <h2 class="terms-label">{{ i18n "most_used_tags" }}</h2>
+        <ul class="terms-tags terms-top">
+            {{- range first 8 .Data.Terms.ByCount }}
+            {{- $count := .Count }}
+            {{- with site.GetPage (printf "/%s/%s" $type .Name) }}
+            <li><a href="{{ .Permalink }}"><span class="terms-dot" aria-hidden="true"></span>{{ .Data.Term }}<span class="terms-count">{{ $count }}</span></a></li>
+            {{- end }}
+            {{- end }}
+        </ul>
+    </section>
+    <section class="terms-group">
+        <h2 class="terms-label">{{ i18n "all_tags" }}</h2>
+        <ul class="terms-tags">
+            {{- range .Data.Terms.Alphabetical }}
+            {{- $count := .Count }}
+            {{- with site.GetPage (printf "/%s/%s" $type .Name) }}
+            <li><a href="{{ .Permalink }}">{{ .Data.Term }}<span class="terms-count">{{ $count }}</span></a></li>
+            {{- end }}
+            {{- end }}
+        </ul>
+    </section>
+</div>
 
 {{- end }}{{/* end main */ -}}

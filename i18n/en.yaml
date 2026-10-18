@@ -34,6 +34,7 @@
 
 - id: filed_under
   translation: "Filed under"
+
 - id: newer_page
   translation: "Newer"
 
@@ -48,3 +49,9 @@
 
 - id: page_fold
   translation: "{{ .Page }} of {{ .Total }}"
+
+- id: most_used_tags
+  translation: "Written about most"
+
+- id: all_tags
+  translation: "Everything, A to Z"

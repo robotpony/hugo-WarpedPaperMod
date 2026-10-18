@@ -1,18 +1,94 @@
+.terms-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 24px 28px;
+    background: var(--entry);
+    border-radius: var(--radius);
+}
+
+.terms-group + .terms-group {
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+}
+
+.terms-label {
+    margin-bottom: 10px;
+    font-family: "Alumni Sans Pinstripe", serif;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--secondary);
+}
+
+.terms-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
 .terms-tags li {
     display: inline-block;
-    margin: 10px;
-    font-weight: 500;
 }
 
 .terms-tags a {
-    display: block;
-    padding: 3px 10px;
-    background: var(--tertiary);
-    border-radius: 6px;
-    transition: transform 0.1s;
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 3px 8px;
+    border: 1px solid var(--tertiary);
+    border-radius: 3px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--secondary);
+    transition: transform 0.1s, border-color 0.15s, color 0.15s;
+}
+
+.terms-tags a:hover {
+    border-color: var(--secondary);
+    color: var(--primary);
 }
 
 .terms-tags a:active {
-    background: var(--tertiary);
     transform: scale(0.96);
 }
+
+.terms-count {
+    font-family: ui-monospace, Menlo, monospace;
+    font-size: 10px;
+    color: var(--secondary);
+    opacity: 0.8;
+}
+
+.terms-top {
+    gap: 8px;
+}
+
+.terms-top a {
+    align-items: center;
+    gap: 8px;
+    padding: 6px 11px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.terms-top .terms-count {
+    font-size: 11px;
+}
+
+.terms-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--dot);
+}
+
+.terms-top li:nth-child(5n+1) { --dot: #d68168; }
+.terms-top li:nth-child(5n+2) { --dot: #d6a668; }
+.terms-top li:nth-child(5n+3) { --dot: #d6cb68; }
+.terms-top li:nth-child(5n+4) { --dot: #68d6a1; }
+.terms-top li:nth-child(5n+5) { --dot: #689fd6; }
+.terms-top li:hover a { border-color: var(--dot); }
