@@ -1,0 +1,11 @@
+{{- /* Resolves front matter `icon` (a bundle resource name or a site URL like
+  "/images/x.svg") to a URL, or "" when there's none. Returns the URL and
+  whether the page gets a kicker (see title_kicker.html). */ -}}
+{{- $src := "" }}
+{{- with .Params.icon }}
+{{- if or (hasPrefix . "/") (strings.Contains . "://") }}{{ $src = relURL . }}
+{{- else }}{{ with $.Resources.Get . }}{{ $src = .RelPermalink }}{{ end }}
+{{- end }}
+{{- end }}
+{{- $kicker := and $src .Params.iconFor (ne .Title .Params.iconFor) }}
+{{- return (dict "src" $src "kicker" (not (not $kicker))) }}
