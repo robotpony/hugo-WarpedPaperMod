@@ -1,0 +1,9 @@
+{{- /* A local static file's URL with ?v= and a hash of its contents, so a
+  changed file under the same name skips browser caches. Remote URLs, and
+  files not in the site's static/, come back unchanged. */ -}}
+{{- $url := . | relURL }}
+{{- $file := path.Join "static" . }}
+{{- if and (not (strings.Contains . "://")) (fileExists $file) }}
+{{- $url = printf "%s?v=%s" $url (substr (os.ReadFile $file | md5) 0 8) }}
+{{- end }}
+{{- return $url }}
