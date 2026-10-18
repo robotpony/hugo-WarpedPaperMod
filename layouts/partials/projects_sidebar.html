@@ -5,7 +5,7 @@
   list's posts (before its pagination), or after a single page's article. */ -}}
 {{- $show := ne .Kind "page" }}
 {{- if isset .Params "showprojects" }}{{ $show = .Params.showProjects }}{{ end }}
-{{- with site.Data.projects }}
+{{- with hugo.Data.projects }}
 {{- if and $show .items }}
 <aside class="projects-sidebar" aria-label="{{ .heading | default "Projects" }}">
   {{- with .heading }}
