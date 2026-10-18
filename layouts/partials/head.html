@@ -6,6 +6,11 @@
 {{- /* Security Headers */ -}}
 {{ partial "security.html" }}
 
+{{- /* The projects sidebar's minimized state, before first paint (partials/projects_sidebar.html) */ -}}
+{{- if site.Data.projects }}
+<script>try{if(localStorage.getItem('projects-collapsed')==='1')document.documentElement.classList.add('projects-collapsed')}catch(e){}</script>
+{{- end }}
+
 {{- if hugo.IsProduction | or (eq site.Params.env "production") | and (ne .Params.robotsNoIndex true) }}
 <meta name="robots" content="index, follow">
 {{- else }}

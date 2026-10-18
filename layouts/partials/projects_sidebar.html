@@ -2,17 +2,27 @@
   {name, url, icon, blurb}) as a sidebar. Shown on list pages by default and on
   any page with `showProjects: true`; `showProjects: false` hides it. Nothing
   renders without the data. Wide screens pull it into the right margin
-  (common/projects.css); narrower ones show it inline where it's placed. */ -}}
+  (common/projects.css), where it can be minimized to a bar pinned to the
+  window's bottom; head.html applies the saved state before first paint.
+  Narrower screens show it inline where it's placed. */ -}}
 {{- $show := ne .Kind "page" }}
 {{- if isset .Params "showprojects" }}{{ $show = .Params.showProjects }}{{ end }}
 {{- with site.Data.projects }}
 {{- if and $show .items }}
 <aside class="projects-sidebar" aria-label="{{ .heading | default "Projects" }}">
   <div class="projects-inner">
-    {{- with .heading }}
-    <h2 class="projects-heading">{{ . }}</h2>
-    {{- end }}
-    <ul class="projects-list">
+    {{- $heading := .heading | default "Projects" }}
+    <div class="projects-head">
+      {{- with .heading }}
+      <h2 class="projects-heading">{{ . }}</h2>
+      {{- end }}
+      <button type="button" class="projects-toggle" aria-expanded="true" aria-controls="projects-list"
+        aria-label="Hide {{ $heading }}" data-heading="{{ $heading }}">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+      </button>
+    </div>
+    <ul class="projects-list" id="projects-list">
       {{- range .items }}
       <li>
         <a class="projects-name" href="{{ .url | relURL }}">
@@ -26,5 +36,32 @@
     </ul>
   </div>
 </aside>
+<script>
+(() => {
+  const root = document.documentElement;
+  const aside = document.currentScript.previousElementSibling;
+  const btn = aside.querySelector('.projects-toggle');
+  const name = btn.dataset.heading;
+  const sync = () => {
+    const collapsed = root.classList.contains('projects-collapsed');
+    btn.setAttribute('aria-expanded', String(!collapsed));
+    btn.setAttribute('aria-label', (collapsed ? 'Show ' : 'Hide ') + name);
+  };
+  const toggle = () => {
+    const collapsed = root.classList.toggle('projects-collapsed');
+    aside.classList.add('is-moving');
+    try { localStorage.setItem('projects-collapsed', collapsed ? '1' : '0'); } catch (e) {}
+    sync();
+  };
+  btn.addEventListener('click', toggle);
+  // The pinned bar's heading restores it too
+  aside.querySelector('.projects-head').addEventListener('click', e => {
+    if (!btn.contains(e.target) && root.classList.contains('projects-collapsed')) toggle();
+  });
+  aside.addEventListener('animationend', () => aside.classList.remove('is-moving'));
+  aside.classList.add('can-minimize');
+  sync();
+})();
+</script>
 {{- end }}
 {{- end }}

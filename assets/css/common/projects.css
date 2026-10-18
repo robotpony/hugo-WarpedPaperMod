@@ -10,8 +10,21 @@
     color: var(--secondary);
 }
 
-.projects-heading {
+.projects-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
     margin: 0 0 10px;
+}
+
+/* Minimizing is for the margin layout only, once the script is in (below) */
+.projects-toggle {
+    display: none;
+}
+
+.projects-heading {
+    margin: 0;
     font-size: 12px;
     line-height: 1.2;
     font-weight: 600;
@@ -108,5 +121,80 @@
     /* Name and blurb read as one; items sit clearly apart */
     .projects-list li + li {
         margin-top: 18px;
+    }
+
+    .can-minimize .projects-toggle {
+        display: inline-flex;
+    }
+
+    .projects-toggle {
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        padding: 0;
+        border: 0;
+        border-radius: 4px;
+        background: none;
+        color: var(--secondary);
+        cursor: pointer;
+    }
+
+    .projects-toggle:hover {
+        color: var(--primary);
+    }
+
+    .projects-toggle:focus-visible {
+        outline: 2px solid var(--secondary);
+        outline-offset: 1px;
+    }
+
+    .projects-toggle svg {
+        transition: transform .2s;
+    }
+
+    /* Minimized: the heading and an up chevron, pinned to the window's bottom
+       in the same column (.main is centred, so its right edge is 50% + half) */
+    .projects-collapsed .projects-inner {
+        position: fixed;
+        top: auto;
+        bottom: 0;
+        left: calc(50% + var(--main-width) / 2 + var(--gap));
+        width: 200px;
+        padding: 12px 0 16px;
+    }
+
+    .projects-collapsed .projects-head {
+        margin: 0;
+        cursor: pointer;
+    }
+
+    .projects-collapsed .projects-list {
+        display: none;
+    }
+
+    .projects-collapsed .projects-toggle svg {
+        transform: rotate(180deg);
+    }
+
+    .projects-sidebar.is-moving .projects-inner {
+        animation: projects-in .2s ease-out;
+    }
+}
+
+@keyframes projects-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .projects-sidebar.is-moving .projects-inner {
+        animation: none;
+    }
+
+    .projects-toggle svg {
+        transition: none;
     }
 }
