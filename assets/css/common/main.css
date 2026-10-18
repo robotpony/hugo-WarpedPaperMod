@@ -44,21 +44,93 @@ img.sc-mark {
     color: var(--primary);
 }
 
-.pagination {
+/* Newer/older with page numbers; numbers fold into "3 of 7" at phone width */
+.pager {
     display: flex;
+    align-items: center;
+    gap: 12px;
+    border-top: 1px solid var(--tertiary);
+    padding-top: 16px;
+    font-family: "Montserrat", sans-serif;
 }
 
-.pagination a {
-    color: var(--theme);
-    font-size: 13px;
-    line-height: 36px;
+.pager-btn {
+    padding: 7px 12px;
+    border: 1px solid var(--tertiary);
+    border-radius: 3px;
+    background: var(--entry);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--primary);
+    white-space: nowrap;
+}
+
+.pager-btn:hover {
+    border-color: var(--secondary);
+}
+
+.pager-nums {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+}
+
+.pager-num,
+.pager-gap {
+    min-width: 30px;
+    padding: 7px 0;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--secondary);
+}
+
+.pager-num:hover {
+    border-color: var(--tertiary);
+    color: var(--primary);
+}
+
+.pager-num.current {
     background: var(--primary);
-    border-radius: calc(36px / 2);
-    padding: 0 16px;
+    border-color: var(--primary);
+    color: var(--theme);
 }
 
-.pagination .next {
-    margin-inline-start: auto;
+.pager-count {
+    font-family: "Alumni Sans Pinstripe", serif;
+    font-size: 16px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--secondary);
+    white-space: nowrap;
+}
+
+.pager-space {
+    flex-grow: 1;
+}
+
+.pager-fold {
+    display: none;
+    flex-grow: 1;
+    text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+    .pager-nums {
+        display: none;
+    }
+
+    .pager-fold {
+        display: block;
+    }
+
+    .pager-btn {
+        padding: 11px 12px;
+    }
 }
 
 
