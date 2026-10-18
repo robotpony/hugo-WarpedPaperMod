@@ -2,25 +2,37 @@
    the content at every width, icons and names only on phones */
 .projects-sidebar {
     margin: var(--gap) 0;
-    padding: 16px 0;
-    border-top: 1px solid var(--tertiary);
+    padding: 4px 0 24px;
     border-bottom: 1px solid var(--tertiary);
     font-family: "Montserrat", sans-serif;
     color: var(--secondary);
 }
 
-/* Above the pager, its rule closes the block: one rule, spaced like the top */
+/* Above the pager, its rule closes the block */
 .projects-sidebar:has(+ .page-footer) {
     margin-bottom: 0;
     border-bottom: 0;
 }
 
+/* The heading carries the block's top line: a bar in the rainbow, blended */
 .projects-heading {
-    margin: 0 0 10px;
-    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 0 0 16px;
+    font-size: 13px;
     line-height: 1.2;
-    font-weight: 600;
-    color: var(--secondary);
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--primary);
+}
+
+.projects-heading::after {
+    content: "";
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, #d68168, #d6a668, #68d6a1, #689fd6);
 }
 
 .projects-list {
