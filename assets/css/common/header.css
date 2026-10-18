@@ -95,12 +95,22 @@ body:not(.dark) #sun {
 /* Tagline links as chips tinted in the rainbow's order, skipping its faint
    yellow. warped.css (CDN, loaded after this) styles them grey: :not(#_) adds
    an id's weight so these win over its light, dark, and hover rules */
+/* warped.css nudges the tagline up 5px, which tucks the chips under the
+   title's descenders */
+header nav div.logo p.tagline:not(#_) {
+    top: 0;
+}
+
 header nav div.logo p.tagline:not(#_) a {
     --chip: #d68168;
     --chip-base: white;
     padding: 2px 8px;
     border: 0;
     border-radius: 3px;
+    /* rows of chips sit apart when the tagline wraps on narrow screens */
+    margin-block: 3px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
     background-color: color-mix(in srgb, var(--chip) 22%, var(--chip-base));
     color: var(--primary);
     transition: background-color .2s ease-in-out;
