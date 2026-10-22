@@ -1,0 +1,36 @@
+{{- /*
+  The same thing shown two (or more) ways, one tab each:
+
+    {{< tabs >}}
+    {{< tab "Text" >}}
+    ```markdown
+    - [ ] A task
+    ```
+    {{< /tab >}}
+    {{< tab "In the app" >}}
+    ![A screenshot](shot.png)
+    {{< /tab >}}
+    {{< /tabs >}}
+
+  Each tab (tab.html) renders its body as Markdown and hands it here through
+  the Store. No JS: a radio per tab, the first checked, and common/tabs.css
+  shows the panel matching the checked one (up to six tabs). Arrow keys move
+  between the tabs, as in any radio group.
+*/ -}}
+{{- $_ := .Inner -}}
+{{- $id := printf "tabs-%d" .Ordinal -}}
+{{- with .Store.Get "tabs" -}}
+<div class="tabs" id="{{ $id }}">
+  {{- range $i, $t := . }}
+  <input type="radio" class="tabs-input" name="{{ $id }}" id="{{ $id }}-{{ $i }}"{{ if eq $i 0 }} checked{{ end }}>
+  <label class="tabs-label" for="{{ $id }}-{{ $i }}">{{ $t.label }}</label>
+  {{- end }}
+  {{- range . }}
+  <div class="tabs-panel">
+    {{ .body }}
+  </div>
+  {{- end }}
+</div>
+{{- else -}}
+{{- warnf "tabs: no tab shortcodes inside %s" .Position -}}
+{{- end -}}

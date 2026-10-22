@@ -1,0 +1,12 @@
+{{- /*
+  One tab of a tabs shortcode (tabs.html): {{< tab "Label" >}} Markdown {{< /tab >}}.
+  Renders nothing itself; its parent draws the tabs.
+*/ -}}
+{{- with .Parent -}}
+  {{- .Store.Add "tabs" (slice (dict
+    "label" ($.Get 0 | default "Tab")
+    "body" ($.InnerDeindent | $.Page.RenderString (dict "display" "block"))
+  )) -}}
+{{- else -}}
+  {{- warnf "tab: outside a tabs shortcode at %s" .Position -}}
+{{- end -}}
