@@ -1,7 +1,12 @@
 {{- $u := urls.Parse .Destination -}}
 {{- $src := $u.String -}}
+{{- $style := "" -}}
 {{- if not $u.IsAbs -}}
   {{- $path := strings.TrimPrefix "./" $u.Path }}
+  {{- $dark := replaceRE `(\.[^./]+)$` "-dark$1" $path -}}
+  {{- with or (.PageInner.Resources.Get $dark) (resources.Get $dark) -}}
+    {{- $style = printf "--icon-dark: url(%s)" .RelPermalink -}}
+  {{- end -}}
   {{- with or (.PageInner.Resources.Get $path) (resources.Get $path) -}}
     {{- $src = .RelPermalink -}}
     {{- with $u.RawQuery -}}
@@ -12,7 +17,7 @@
     {{- end -}}
   {{- end -}}
 {{- end -}}
-{{- $attributes := merge .Attributes (dict "alt" .Text "src" $src "title" (.Title | transform.HTMLEscape) "loading" "lazy") -}}
+{{- $attributes := merge .Attributes (dict "alt" .Text "src" $src "title" (.Title | transform.HTMLEscape) "loading" "lazy" "style" $style) -}}
 <img
   {{- range $k, $v := $attributes -}}
     {{- if $v -}}
