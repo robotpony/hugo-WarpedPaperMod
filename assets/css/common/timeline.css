@@ -1,0 +1,61 @@
+/* ```timeline blocks: layouts/_default/_markup/render-codeblock-timeline.html.
+   Dots on a track of decades, labels above in up to three rows (raised ones
+   get a leader to their dot), faint entries hollow. Under 640px it turns
+   into a vertical list with each year inline. Ported from the cookbook's
+   lineage timeline. */
+.post-content .timeline { position: relative; margin: 2rem 0 var(--content-gap); padding: 36px 0 0; }
+.post-content .timeline.rows-2 { padding-top: 60px; }
+.post-content .timeline.rows-3 { padding-top: 84px; }
+.tl-track { position: relative; height: 2px; margin: 0 6px; background: var(--tertiary); }
+.post-content .tl-list { list-style: none; margin: 0; padding: 0; }
+.post-content .tl-mark {
+  position: absolute; bottom: -5px; width: 12px; height: 12px; margin: 0 0 0 -6px; padding: 0;
+  font-family: "Lora", serif; font-size: 14px; line-height: 1.3;
+}
+.tl-dot {
+  display: block; width: 12px; height: 12px; border-radius: 50%; box-sizing: border-box;
+  background: var(--series-ink); border: 2px solid var(--theme); box-shadow: 0 0 0 1px var(--series-ink);
+}
+.tl-name {
+  position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%);
+  white-space: nowrap; color: var(--primary);
+}
+.tl-mark.start .tl-name { left: 0; transform: none; }
+.tl-mark.end .tl-name { left: auto; right: 0; transform: none; }
+.tl-mark.row-1 .tl-name { bottom: calc(100% + 30px); }
+.tl-mark.row-2 .tl-name { bottom: calc(100% + 54px); }
+.tl-mark.row-1::before,
+.tl-mark.row-2::before {
+  content: ""; position: absolute; left: 50%; bottom: calc(100% + 2px); width: 1px; height: 26px;
+  background: var(--tertiary);
+}
+.tl-mark.row-2::before { height: 50px; }
+.post-content .tl-name code { margin: 0; padding: 1px 4px; font-size: 0.85em; }
+.tl-year { display: none; font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: var(--secondary); }
+.tl-mark.faint .tl-dot { background: var(--theme); box-shadow: 0 0 0 1px var(--secondary); }
+.tl-mark.faint .tl-name { color: var(--secondary); }
+.tl-ticks { position: relative; height: 28px; margin: 0 6px; }
+.tl-tick { position: absolute; top: 4px; width: 1px; height: 6px; margin-left: -0.5px; background: var(--secondary); }
+.tl-decade {
+  position: absolute; top: 6px; transform: translateX(-50%);
+  font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: var(--secondary);
+}
+@media (max-width: 640px) {
+  .post-content .timeline,
+  .post-content .timeline.rows-2,
+  .post-content .timeline.rows-3 { padding: 0; }
+  .tl-ticks { display: none; }
+  .tl-track { height: auto; margin: 0; background: none; }
+  .post-content .tl-list { display: flex; flex-direction: column; margin-left: 6px; border-left: 2px solid var(--tertiary); }
+  .post-content .tl-mark {
+    position: static; display: flex; align-items: baseline; gap: 10px; width: auto; height: auto;
+    margin: 0 0 0 -7px; padding: 6px 0;
+  }
+  .tl-mark.row-1::before,
+  .tl-mark.row-2::before { display: none; }
+  .tl-dot { flex: none; align-self: center; }
+  .tl-name,
+  .tl-mark.start .tl-name,
+  .tl-mark.end .tl-name { position: static; transform: none; white-space: normal; }
+  .tl-year { display: inline; }
+}

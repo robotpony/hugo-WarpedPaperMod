@@ -31,6 +31,7 @@ Since this is a Hugo theme, development happens within a Hugo site that uses thi
   - `reading/list.html` - the site's `/reading/` section: every finished book grouped by year, 24 to a page, with "Reading now" leading page 1 and a Goodreads link on every page. The books are unrendered pages (`build: {render: never, list: local}`) from the site's content adapter, `content/reading/_content.gotmpl`, with params author, rating, book_url, and cover, so they never reach site-wide lists, feeds, or the sitemap
   - `shortcodes/` - Custom content blocks
     - `carousel` - a swipeable strip of screenshots written as Markdown images inside `{{< carousel >}}`; a caption's bold lead (`"**Label.** Caption"`) labels its pill, with dots when no slide has one. CSS in `common/carousel.css`; `js/carousel.js` loads only where `.HasShortcode "carousel"` (head.html). Without JS it's a scroll-snap strip with every caption showing
+  - `_default/_markup/render-codeblock-timeline.html` - a ```` ```timeline ```` block, one `YEAR Label` per line (inline Markdown label; `~YEAR` draws faint), as dots on a track of decades from the first year's decade to the last year's, rounded up. Labels stack in up to three rows by estimated width, with leaders to raised ones. CSS in `common/timeline.css`, which turns it into a vertical list under 640px
 - **`/i18n/`** - English strings only (`en.yaml`)
 - Branding JS/CSS (rainbow links, brand bars) is not in the theme: it loads from the URLs in the site's `warpedScript`/`warpedStyle` params (`cdn.warpedvisions.org`)
 

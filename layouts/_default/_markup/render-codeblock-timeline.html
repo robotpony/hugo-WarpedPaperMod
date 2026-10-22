@@ -1,0 +1,90 @@
+{{/*
+  A ```timeline block: dots on a track of decades, one per line, written
+  as "YEAR Label" (the label is inline Markdown). A year with a leading ~
+  ("~2015 Hugo, first look") draws faint, for detours and tentative starts.
+  Ported from the cookbook's lineage timeline (not-a-chef, Fugu's
+  blueprint/lineage.html).
+
+  The track runs from the first year's decade to the last year rounded up
+  to a decade. Each label sits above its dot, on the lowest of three rows
+  where its estimated width (about 7.5px a character on a 628px track)
+  clears the label before it; a raised label gets a leader to its dot.
+  Labels near the ends align to their dot's side so they stay on the
+  track. Under 640px common/timeline.css turns it into a vertical list
+  with each year inline.
+*/}}
+{{- $entries := slice -}}
+{{- range $i, $line := split (strings.TrimSpace .Inner) "\n" -}}
+  {{- $line = strings.TrimSpace $line -}}
+  {{- if not $line }}{{ continue }}{{ end -}}
+  {{- $m := findRESubmatch `^(~?)(\d{4})\s+(.+)$` $line 1 -}}
+  {{- if not $m -}}
+    {{- warnf "timeline: skipped %q (want \"YEAR Label\") in %s" $line $.Position -}}
+    {{- continue -}}
+  {{- end -}}
+  {{- $m = index $m 0 -}}
+  {{- $label := $.Page.RenderString (index $m 3) -}}
+  {{- $entries = $entries | append (dict
+    "year" (int (index $m 2))
+    "faint" (eq (index $m 1) "~")
+    "label" $label
+    "chars" (countrunes (plainify $label))
+    "key" (add (mul (int (index $m 2)) 1000) $i)
+  ) -}}
+{{- end -}}
+{{- with sort $entries "key" -}}
+  {{- $first := (index . 0).year -}}
+  {{- $last := (index . (sub (len .) 1)).year -}}
+  {{- $start := mul (math.Floor (div (float $first) 10)) 10 | int -}}
+  {{- $end := mul (math.Ceil (div (float $last) 10)) 10 | int -}}
+  {{- if le $end $start }}{{ $end = add $start 10 }}{{ end -}}
+  {{- $span := float (sub $end $start) -}}
+  {{- $r0 := -100.0 }}{{ $r1 := -100.0 }}{{ $r2 := -100.0 -}}
+  {{- $rows := 1 -}}
+  {{- $marks := slice -}}
+  {{- range . -}}
+    {{- $pos := div (mul (float (sub .year $start)) 100) $span -}}
+    {{- $w := div (mul (float .chars) 7.5) 6.28 -}}
+    {{- $left := sub $pos (div $w 2) -}}
+    {{- $edge := "" -}}
+    {{- if lt $left 0.0 -}}
+      {{- $edge = "start" }}{{ $left = sub $pos 1 -}}
+    {{- else if gt (add $pos (div $w 2)) 100.0 -}}
+      {{- $edge = "end" }}{{ $left = sub (add $pos 1) $w -}}
+    {{- end -}}
+    {{- $right := add $left $w -}}
+    {{- $row := 0 -}}
+    {{- if gt $left (add $r0 2) -}}
+      {{- $r0 = $right -}}
+    {{- else if gt $left (add $r1 2) -}}
+      {{- $row = 1 }}{{ $r1 = $right -}}
+    {{- else if gt $left (add $r2 2) -}}
+      {{- $row = 2 }}{{ $r2 = $right -}}
+    {{- else -}}
+      {{- $row = 2 }}{{ $r2 = $right -}}
+    {{- end -}}
+    {{- $rows = math.Max $rows (add $row 1) | int -}}
+    {{- $marks = $marks | append (merge . (dict "pos" $pos "row" $row "edge" $edge)) -}}
+  {{- end -}}
+  <figure class="timeline rows-{{ $rows }}">
+    <div class="tl-track">
+      <ol class="tl-list">
+        {{- range $marks }}
+        <li class="tl-mark row-{{ .row }}{{ with .edge }} {{ . }}{{ end }}{{ if .faint }} faint{{ end }}" style="left:{{ printf "%.1f" .pos }}%">
+          <span class="tl-dot" aria-hidden="true"></span>
+          <span class="tl-name">{{ .label }}</span>
+          <span class="tl-year">{{ .year }}</span>
+        </li>
+        {{- end }}
+      </ol>
+    </div>
+    <div class="tl-ticks" aria-hidden="true">
+      {{- range seq $start 10 $end }}
+      <span class="tl-tick" style="left:{{ printf "%.1f" (div (mul (float (sub . $start)) 100) $span) }}%"></span>
+      {{- end -}}
+      {{- range seq $start 10 (sub $end 10) }}
+      <span class="tl-decade" style="left:{{ printf "%.1f" (div (mul (add (float (sub . $start)) 5) 100) $span) }}%">{{ . }}s</span>
+      {{- end }}
+    </div>
+  </figure>
+{{- end -}}
