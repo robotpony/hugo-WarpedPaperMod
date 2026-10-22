@@ -1,7 +1,8 @@
 {{- /* "Recently read": site data (data/reading.json: profile, and books of
   {id, title, author, rating, date, shelf, url, cover}, newest first) as a
   shelf under "Things I've made". Every book being read, then the six newest
-  finished, with covers (assets/<cover>) cropped to 2:3. Shown on the home page
+  finished, with covers (assets/<cover>) cropped to 2:3, and a link to the
+  site's /reading/ section (reading/list.html) when it has one. Shown on the home page
   by default and on any page with `showReading: true`; `showReading: false`
   hides it. Nothing renders without the data. */ -}}
 {{- $show := .IsHome }}
@@ -15,7 +16,7 @@
   <p class="reading-label">Reading now</p>
   <ul class="reading-now">
     {{- range . }}
-    <li><a href="{{ .url }}">{{ partial "reading_cover.html" . }}<span><span class="reading-title">{{ .title }}</span><span class="reading-by">{{ .author }}</span></span></a></li>
+    {{ partial "reading_book.html" . }}
     {{- end }}
   </ul>
   {{- end }}
@@ -24,14 +25,12 @@
   <ul class="reading-shelf">
     {{- range . }}
     <li><a href="{{ .url }}" title="{{ .title }} · {{ .author }}">{{ partial "reading_cover.html" . }}<span class="reading-title">{{ .title }}</span>
-      {{- with int .rating }}
-      <span class="reading-stars" role="img" aria-label="{{ . }} of 5 stars">{{ strings.Repeat . "★" }}<span class="off">{{ strings.Repeat (sub 5 .) "★" }}</span></span>
-      {{- end }}</a></li>
+      {{- partial "reading_stars.html" .rating }}</a></li>
     {{- end }}
   </ul>
   {{- end }}
-  {{- with .profile }}
-  <a class="reading-more" href="{{ . }}">More on Goodreads →</a>
+  {{- with site.GetPage "/reading" }}
+  <a class="reading-more" href="{{ .RelPermalink }}">Everything I've read →</a>
   {{- end }}
 </aside>
 {{- end }}

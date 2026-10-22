@@ -1,0 +1,5 @@
+{{- /* A book's rating as five stars, filled to the rating; nothing when it's
+  unrated (0) */ -}}
+{{- with int . }}
+<span class="reading-stars" role="img" aria-label="{{ . }} of 5 stars">{{ strings.Repeat . "★" }}<span class="off">{{ strings.Repeat (sub 5 .) "★" }}</span></span>
+{{- end -}}

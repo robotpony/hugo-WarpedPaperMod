@@ -44,6 +44,9 @@
 - id: older_posts
   translation: "Older posts"
 
+- id: older_books
+  translation: "Older books"
+
 - id: page_of
   translation: "Page {{ .Page }} of {{ .Total }}"
 

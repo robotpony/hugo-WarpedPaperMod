@@ -1,0 +1,5 @@
+{{- /* One book as a row: a small cover beside its title and author, with its
+  stars when `stars` is set. Takes a book from data/reading.json, or a dict
+  with the same keys (title, author, url, cover, rating). */ -}}
+<li><a href="{{ .url }}">{{ partial "reading_cover.html" . }}<span><span class="reading-title">{{ .title }}</span><span class="reading-by">{{ .author }}</span>
+  {{- if .stars }}{{ partial "reading_stars.html" .rating }}{{ end }}</span></a></li>

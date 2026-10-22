@@ -1,0 +1,41 @@
+{{- /* The site's /reading/ section: every finished book, newest first and
+  grouped by year, 24 to a page. The books are unrendered pages a content
+  adapter makes from data/reading.json (content/reading/_content.gotmpl, with
+  params author, rating, book_url, cover); the first page leads with the
+  books being read, and every page links to Goodreads. */ -}}
+{{- define "main" }}
+<header class="page-header">
+  {{- partial "breadcrumbs.html" . }}
+  <h1>{{ .Title }}</h1>
+  {{- with .Description }}
+  <div class="post-description">{{ . | markdownify }}</div>
+  {{- end }}
+</header>
+
+{{- $paginator := .Paginate (.RegularPages.GroupByDate "2006") 24 }}
+<div class="reading reading-page">
+  {{- if eq $paginator.PageNumber 1 }}
+  {{- with where hugo.Data.reading.books "shelf" "currently-reading" }}
+  <h2 class="reading-label">Reading now</h2>
+  <ul class="reading-now">
+    {{- range . }}
+    {{ partial "reading_book.html" . }}
+    {{- end }}
+  </ul>
+  {{- end }}
+  {{- end }}
+  {{- range $paginator.PageGroups }}
+  <h2 class="reading-label">{{ .Key }}</h2>
+  <ul class="reading-now">
+    {{- range .Pages }}
+    {{ partial "reading_book.html" (dict "title" .Title "author" .Params.author "url" .Params.book_url "cover" .Params.cover "rating" .Params.rating "stars" true) }}
+    {{- end }}
+  </ul>
+  {{- end }}
+  {{- with hugo.Data.reading.profile }}
+  <a class="reading-more" href="{{ . }}">More on Goodreads →</a>
+  {{- end }}
+</div>
+{{- partial "projects_sidebar.html" . }}
+{{- partial "pager.html" (dict "Paginator" $paginator "Older" (i18n "older_books")) }}
+{{- end }}
