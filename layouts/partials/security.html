@@ -2,9 +2,9 @@
 
 {{- /* Content Security Policy */ -}}
 {{- $csp := "default-src 'self'; " -}}
-{{- $csp = printf "%sstyle-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.warpedvisions.org; " $csp -}}
+{{- $csp = printf "%sstyle-src 'self' 'unsafe-inline' https://cdn.warpedvisions.org; " $csp -}}
 {{- $csp = printf "%sscript-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://cdn.warpedvisions.org; " $csp -}}
-{{- $csp = printf "%sfont-src 'self' https://fonts.gstatic.com; " $csp -}}
+{{- $csp = printf "%sfont-src 'self' https://cdn.warpedvisions.org; " $csp -}}
 {{- $csp = printf "%simg-src 'self' data: https:; " $csp -}}
 {{- if hugo.IsServer -}}
 {{- $csp = printf "%sconnect-src 'self' ws://localhost:*; " $csp -}}

@@ -111,13 +111,13 @@
 {{- with site.Params.warpedScript }}
 <script defer crossorigin="anonymous" src="{{ . }}"></script>
 {{- end }}
+{{- /* warped.css also carries the fonts' @font-face rules, with the fonts in
+  fonts/ beside it. Montserrat (latin) is preloaded, since the browser would
+  otherwise find it only once warped.css arrives. */ -}}
 {{- with site.Params.warpedStyle }}
 <link crossorigin="anonymous" href="{{ . }}" rel="preload stylesheet" as="style">
+<link rel="preload" href="{{ replaceRE `[^/]*$` "fonts/montserrat-latin.woff2" . }}" as="font" type="font/woff2" crossorigin="anonymous">
 {{- end }}
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Alumni+Sans+Pinstripe:ital@0;1&family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
 {{- /* Favicons */}}
 <link rel="icon" href="{{ site.Params.assets.favicon | default "favicon.ico" | absURL }}">

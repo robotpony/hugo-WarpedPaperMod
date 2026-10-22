@@ -49,7 +49,7 @@ Theme variables are defined in `/assets/css/core/theme-vars.css` with light/dark
 Hugo's built-in asset processing handles:
 - CSS concatenation, minification, and fingerprinting
 - JavaScript bundling
-- Google Fonts integration with preload optimization
+- Fonts (Montserrat, Lora, Alumni Sans Pinstripe) are self-hosted with warped.css: its @font-face rules load fonts/*.woff2 beside it, and head.html preloads Montserrat from there
 - No external build tools (webpack, npm) required
 
 ## Requirements
