@@ -2,15 +2,16 @@
    (syntax in docs/timeline.md). Dots on a track of decades, labels above
    and below in rows (--row, counted out from the track), each with a leader
    to its dot; the figure's --up and --down are the row counts on each side.
-   Decade ticks cross the track, their years just under it, below-track
-   labels past them. Faint entries are hollow. Under 640px it's a vertical
+   Decade ticks cross the track, their years centred just under them,
+   below-track labels past them. Faint entries are hollow. Under 640px it's a vertical
    list with each year inline. Every selector starts with .tline, so it
    outranks post-single's and warped.css's list and code rules. */
 .tline {
   position: relative; margin: 2rem 0 var(--content-gap);
   padding: calc(var(--up, 1) * 22px + 18px) 0 calc(var(--down, 0) * 22px + 26px);
 }
-.tline .tline-track { position: relative; height: 2px; margin: 0 6px; background: var(--tertiary); }
+/* The side margins leave room for the end years, centred on their ticks. */
+.tline .tline-track { position: relative; height: 2px; margin: 0 16px; background: var(--tertiary); }
 .tline .tline-list { list-style: none; margin: 0; padding: 0; }
 .tline .tline-mark {
   position: absolute; top: -5px; width: 12px; height: 12px; margin: 0 0 0 -6px; padding: 0;
@@ -39,15 +40,13 @@
 .tline .faint .tline-name { color: var(--secondary); }
 .tline .tline-ticks { position: absolute; inset: 0; }
 .tline .tline-tick {
-  position: absolute; top: 7px; padding-left: 3px; white-space: nowrap;
+  position: absolute; top: 7px; transform: translateX(-50%); white-space: nowrap;
   font-family: ui-monospace, Menlo, monospace; font-size: 11px; line-height: 1; color: var(--secondary);
 }
-.tline .tline-tick.last { padding: 0 3px 0 0; transform: translateX(-100%); }
 .tline .tline-tick::before {
-  content: ""; position: absolute; left: 0; top: -10px; width: 1px; height: 9px; margin-left: -0.5px;
+  content: ""; position: absolute; left: 50%; top: -10px; width: 1px; height: 9px; margin-left: -0.5px;
   background: var(--secondary);
 }
-.tline .tline-tick.last::before { left: auto; right: 0; margin: 0 -0.5px 0 0; }
 @media (max-width: 640px) {
   .tline { padding: 0; }
   .tline .tline-ticks,

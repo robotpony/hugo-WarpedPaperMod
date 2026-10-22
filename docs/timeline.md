@@ -72,7 +72,7 @@ Decade entries (`1950s Label`) and ranges (`1955-1960 Label`, `~1955-1960 Label`
 Not part of the spec; for reference when porting.
 
 - Classes all start with `tline` (`.tline`, `.tline-track`, `.tline-list`, `.tline-mark`, `.tline-dot`, `.tline-name`, `.tline-year`, `.tline-ticks`, `.tline-tick`), so they don't collide with the cookbook's lineage (`.timeline`, `.tl-*`). The hook writes classes and inline position variables only (`left`, `--row`, `--up`, `--down`); colours come from each theme's CSS.
-- A tick crosses the track at each decade, with its year just under the track. Tracks over 80 years name every other decade. The last decade's year is right-aligned to its tick.
+- A tick crosses the track at each decade, with its year centred just under it. Tracks over 80 years name every other decade. The track is inset 16px at each side so the end years fit inside the column.
 - Labels alternate above and below the track by entry order. A label that would go below, but whose leader would cross a decade's year, goes above instead, and the next one goes below. On each side, a label takes the nearest row its estimated width clears. Every label has a leader to its dot.
 - Labels near either end align to their dot's side so they stay on the track.
 - Faint entries have a hollow dot and a muted label.

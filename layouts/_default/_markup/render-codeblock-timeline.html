@@ -6,8 +6,8 @@
   never collide.
 
   The track runs from the first year's decade to the last year rounded up
-  to a decade, with a tick at each decade and a small year just under the
-  track (every other decade on tracks over 80 years). Labels alternate
+  to a decade, with a tick at each decade and its year centred just under
+  it (every other decade on tracks over 80 years). Labels alternate
   above and below the track by entry order. A label below that would cross
   a decade's year goes above instead, and the next one goes below. On each
   side a label takes the nearest row that its estimated width clears (Lora
@@ -49,15 +49,16 @@
   {{- $end := mul (math.Ceil (div (float $last) 10)) 10 | int -}}
   {{- if le $end $start }}{{ $end = add $start 10 }}{{ end -}}
   {{- $span := float (sub $end $start) -}}
-  {{- /* Decade years: each starts at its tick, the last ends at it. A
-         dot whose leader would cross one keeps its label above. */ -}}
-  {{- $decW := 5.4 -}}
+  {{- /* Decade years, centred on their ticks: a dot whose leader would
+         cross one keeps its label above. $decHalf is half a year's width
+         (11px mono against 600px), plus a little. */ -}}
+  {{- $decHalf := 3.0 -}}
   {{- $decades := slice -}}
   {{- $every := cond (gt $span 80.0) 20 10 -}}
   {{- range seq $start 10 $end -}}
     {{- $p := div (mul (float (sub . $start)) 100) $span -}}
     {{- $named := eq (mod (sub . $start) $every) 0 -}}
-    {{- $decades = $decades | append (dict "year" . "pos" $p "last" (eq . $end) "named" $named) -}}
+    {{- $decades = $decades | append (dict "year" . "pos" $p "named" $named) -}}
   {{- end -}}
   {{- $up := slice }}{{ $down := slice -}}
   {{- $side := "up" -}}
@@ -66,9 +67,7 @@
     {{- $pos := div (mul (float (sub .year $start)) 100) $span -}}
     {{- if eq $side "down" -}}
       {{- range where $decades "named" true -}}
-        {{- $lo := cond .last (sub .pos $decW) (sub .pos 0.8) -}}
-        {{- $hi := cond .last (add .pos 0.8) (add .pos $decW) -}}
-        {{- if and (ge $pos $lo) (le $pos $hi) }}{{ $side = "up" }}{{ end -}}
+        {{- if and (ge $pos (sub .pos $decHalf)) (le $pos (add .pos $decHalf)) }}{{ $side = "up" }}{{ end -}}
       {{- end -}}
     {{- end -}}
     {{- $left := sub $pos (div .w 2) -}}
@@ -106,7 +105,7 @@
       </ol>
       <div class="tline-ticks" aria-hidden="true">
         {{- range $decades }}
-        <span class="tline-tick{{ if .last }} last{{ end }}" style="left:{{ printf "%.1f" .pos }}%">{{ if .named }}{{ .year }}{{ end }}</span>
+        <span class="tline-tick" style="left:{{ printf "%.1f" .pos }}%">{{ if .named }}{{ .year }}{{ end }}</span>
         {{- end }}
       </div>
     </div>
