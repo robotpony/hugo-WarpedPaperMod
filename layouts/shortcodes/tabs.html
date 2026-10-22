@@ -16,11 +16,17 @@
   the Store. No JS: a radio per tab, the first checked, and common/tabs.css
   shows the panel matching the checked one (up to six tabs). Arrow keys move
   between the tabs, as in any radio group.
+
+  {{< tabs layout="side" >}} shows every panel at once on wide screens, as
+  equal columns under their labels, and falls back to tabs where the
+  columns would be too narrow (common/tabs.css).
 */ -}}
 {{- $_ := .Inner -}}
 {{- $id := printf "tabs-%d" .Ordinal -}}
+{{- $layout := .Get "layout" -}}
+{{- if and $layout (ne $layout "side") }}{{ warnf "tabs: unknown layout %q at %s" $layout .Position }}{{ end -}}
 {{- with .Store.Get "tabs" -}}
-<div class="tabs" id="{{ $id }}">
+<div class="tabs{{ if eq $layout "side" }} side{{ end }}" id="{{ $id }}" style="--tabs:{{ len . }}">
   {{- range $i, $t := . }}
   <input type="radio" class="tabs-input" name="{{ $id }}" id="{{ $id }}-{{ $i }}"{{ if eq $i 0 }} checked{{ end }}>
   <label class="tabs-label" for="{{ $id }}-{{ $i }}">{{ $t.label }}</label>

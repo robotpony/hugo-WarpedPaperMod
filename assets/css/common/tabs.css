@@ -20,3 +20,20 @@
 .tabs-input:nth-of-type(4):checked ~ .tabs-panel:nth-of-type(4),
 .tabs-input:nth-of-type(5):checked ~ .tabs-panel:nth-of-type(5),
 .tabs-input:nth-of-type(6):checked ~ .tabs-panel:nth-of-type(6) { display: block; }
+/* layout="side": every panel at once, as equal columns under their labels,
+   from 840px, where two columns (388px each) fit a 47-character line of
+   12.5px code with room to spare. Narrower, it's tabs again. The radios
+   leave the tab order, since there's nothing to switch. */
+@media (min-width: 840px) {
+  .post-content .tabs.side {
+    display: grid; grid-template-columns: repeat(var(--tabs), minmax(0, 1fr));
+    column-gap: 24px; align-items: start;
+  }
+  .tabs.side .tabs-input { display: none; }
+  .tabs.side .tabs-label {
+    margin: 0 0 8px; padding: 0; border: 0; color: var(--secondary); cursor: default; pointer-events: none;
+  }
+  .post-content .tabs.side .tabs-panel { display: block; padding: 0; border: 0; }
+  .post-content .tabs.side .tabs-panel pre code { font-size: 12.5px; }
+  .post-content .tabs.side .tabs-panel img { display: block; width: 100%; height: auto; margin: 0; }
+}
