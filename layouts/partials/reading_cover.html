@@ -1,0 +1,6 @@
+{{- /* A book's cover from the site's assets, cropped to 2:3 at 2x the shelf's
+  size; a blank tile when the cover is missing */ -}}
+{{- with and .cover (resources.Get .cover) }}
+{{- with .Fill "200x300 Center q80" }}<img src="{{ .RelPermalink }}" alt="" width="{{ .Width }}" height="{{ .Height }}" loading="lazy">{{ end }}
+{{- else }}<span class="reading-blank"></span>
+{{- end -}}

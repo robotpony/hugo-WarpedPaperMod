@@ -1,0 +1,39 @@
+{{- /* "Recently read": site data (data/reading.json: profile, and books of
+  {id, title, author, rating, date, shelf, url, cover}, newest first) as a
+  shelf under "Things I've made". Every book being read, then the six newest
+  finished, with covers (assets/<cover>) cropped to 2:3. Shown on the home page
+  by default and on any page with `showReading: true`; `showReading: false`
+  hides it. Nothing renders without the data. */ -}}
+{{- $show := .IsHome }}
+{{- if isset .Params "showreading" }}{{ $show = .Params.showReading }}{{ end }}
+{{- with hugo.Data.reading }}
+{{- $now := where .books "shelf" "currently-reading" }}
+{{- $done := first 6 (where .books "shelf" "read") }}
+{{- if and $show (or $now $done) }}
+<aside class="reading" aria-label="Recently read">
+  <h2 class="reading-heading">Recently read</h2>
+  {{- with $now }}
+  <p class="reading-label">Reading now</p>
+  <ul class="reading-now">
+    {{- range . }}
+    <li><a href="{{ .url }}">{{ partial "reading_cover.html" . }}<span><span class="reading-title">{{ .title }}</span><span class="reading-by">{{ .author }}</span></span></a></li>
+    {{- end }}
+  </ul>
+  {{- end }}
+  {{- with $done }}
+  <p class="reading-label">Finished</p>
+  <ul class="reading-shelf">
+    {{- range . }}
+    <li><a href="{{ .url }}" title="{{ .title }} · {{ .author }}">{{ partial "reading_cover.html" . }}<span class="reading-title">{{ .title }}</span>
+      {{- with int .rating }}
+      <span class="reading-stars" role="img" aria-label="{{ . }} of 5 stars">{{ strings.Repeat . "★" }}<span class="off">{{ strings.Repeat (sub 5 .) "★" }}</span></span>
+      {{- end }}</a></li>
+    {{- end }}
+  </ul>
+  {{- end }}
+  {{- with .profile }}
+  <a class="reading-more" href="{{ . }}">More on Goodreads →</a>
+  {{- end }}
+</aside>
+{{- end }}
+{{- end }}

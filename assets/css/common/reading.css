@@ -1,0 +1,184 @@
+/* "Recently read" (partials/reading.html): a shelf of covers under "Things
+   I've made", set apart by whitespace alone */
+.reading {
+    margin: var(--gap) 0;
+    padding: 0 0 8px;
+    font-family: "Montserrat", sans-serif;
+    color: var(--secondary);
+}
+
+/* The projects' content ends 24px above their closing line; the heading
+   starts as far below it */
+.projects-sidebar:has(+ .reading) {
+    margin-bottom: 0;
+}
+
+.projects-sidebar + .reading {
+    margin-top: 0;
+    padding-top: 24px;
+}
+
+.reading:has(+ .page-footer) {
+    margin-bottom: 0;
+}
+
+.reading-heading {
+    margin: 0 0 16px;
+    font-size: 13px;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--primary);
+}
+
+.reading-label {
+    margin: 0 0 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.reading ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.reading li {
+    margin: 0;
+    min-width: 0;
+}
+
+.reading a {
+    color: var(--secondary);
+}
+
+.reading img,
+.reading-blank {
+    display: block;
+    margin: 0;
+    object-fit: cover;
+    border-radius: 3px;
+    background: var(--border);
+}
+
+/* Reading now: small covers beside title and author */
+.reading-now {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 20px;
+}
+
+.reading .reading-now {
+    margin-bottom: 20px;
+}
+
+.reading-now a {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.reading-now img,
+.reading-now .reading-blank {
+    flex: none;
+    width: 56px;
+    height: 84px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
+}
+
+.reading-now .reading-title {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--primary);
+}
+
+.reading-by {
+    display: block;
+    margin-top: 2px;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+/* Finished: a shelf of covers, titles under them */
+.reading-shelf {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.reading-shelf img,
+.reading-shelf .reading-blank {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2 / 3;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .25);
+    transition: transform .15s;
+}
+
+.reading-shelf a:hover img {
+    transform: translateY(-3px);
+}
+
+.reading-shelf .reading-title {
+    display: -webkit-box;
+    margin-top: 6px;
+    font-size: 11px;
+    line-height: 1.35;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.reading a:hover .reading-title {
+    color: var(--primary);
+}
+
+.reading-stars {
+    display: block;
+    margin-top: 3px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: #d6a668;
+}
+
+.reading-stars .off {
+    color: var(--border);
+}
+
+.dark .reading-stars .off {
+    color: #444;
+}
+
+.reading-more {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.reading-more:hover {
+    color: var(--primary);
+}
+
+@media screen and (max-width: 600px) {
+    .reading-now {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+    }
+
+    .reading-shelf {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reading-shelf img {
+        transition: none;
+    }
+}
