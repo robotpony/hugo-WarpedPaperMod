@@ -1,0 +1,40 @@
+{{- /* The pager under a paginated list: first, last, and two pages either
+  side of the current one. Takes a dict of Paginator, and Older: the first
+  page's label for the next one ("Older posts"). */ -}}
+{{- $p := .Paginator }}
+{{- if gt $p.TotalPages 1 }}
+<footer class="page-footer">
+  {{- $cur := $p.PageNumber }}
+  {{- $total := $p.TotalPages }}
+  {{- $where := dict "Page" $cur "Total" $total }}
+  <nav class="pager" aria-label="Pages">
+    {{- if $p.HasPrev }}
+    <a class="pager-btn" href="{{ $p.Prev.URL | absURL }}" rel="prev">←&nbsp;{{ i18n "newer_page" }}</a>
+    {{- /* first, last, and two either side of the current page; gaps become an ellipsis */}}
+    <div class="pager-nums">
+      {{- $shown := 0 }}
+      {{- range $p.Pagers }}
+      {{- $n := .PageNumber }}
+      {{- if or (eq $n 1) (eq $n $total) (and (ge $n (sub $cur 2)) (le $n (add $cur 2))) }}
+      {{- if gt (sub $n $shown) 1 }}<span class="pager-gap">…</span>{{ end }}
+      {{- if eq $n $cur }}
+      <span class="pager-num current" aria-current="page">{{ $n }}</span>
+      {{- else }}
+      <a class="pager-num" href="{{ .URL | absURL }}">{{ $n }}</a>
+      {{- end }}
+      {{- $shown = $n }}
+      {{- end }}
+      {{- end }}
+    </div>
+    <span class="pager-count pager-fold">{{ i18n "page_fold" $where }}</span>
+    {{- else }}
+    <span class="pager-count">{{ i18n "page_of" $where }}</span>
+    <span class="pager-space"></span>
+    {{- end }}
+    {{- if $p.HasNext }}
+    <a class="pager-btn" href="{{ $p.Next.URL | absURL }}" rel="next">
+      {{- if $p.HasPrev }}{{ i18n "older_page" }}{{ else }}{{ $.Older }}{{ end }}&nbsp;→</a>
+    {{- end }}
+  </nav>
+</footer>
+{{- end }}
