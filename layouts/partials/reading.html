@@ -11,7 +11,6 @@
 {{- $done := first 6 (where .books "shelf" "read") }}
 {{- if and $show (or $now $done) }}
 <aside class="reading" aria-label="Recently read">
-  <h2 class="reading-heading">Recently read</h2>
   {{- with $now }}
   <p class="reading-label">Reading now</p>
   <ul class="reading-now">

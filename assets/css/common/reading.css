@@ -7,7 +7,7 @@
     color: var(--secondary);
 }
 
-/* The projects' content ends 24px above their closing line; the heading
+/* The projects' content ends 24px above their closing line; the first label
    starts as far below it */
 .projects-sidebar:has(+ .reading) {
     margin-bottom: 0;
@@ -20,16 +20,6 @@
 
 .reading:has(+ .page-footer) {
     margin-bottom: 0;
-}
-
-.reading-heading {
-    margin: 0 0 16px;
-    font-size: 13px;
-    line-height: 1.2;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--primary);
 }
 
 .reading-label {
