@@ -85,10 +85,13 @@
     -webkit-box-decoration-break: clone;
 }
 
-.post-content a code {
-    margin: auto 0;
-    border-radius: 0;
-    box-shadow: 0 -1px 0 var(--primary) inset;
+/* warped.css tints only links that are a p's or li's child; a link inside
+   em, strong or the like gets the same tinted underline (warped.js leaves it
+   the default blue), not the dark one above. */
+.post-content :is(p, li) a {
+    border-bottom: 4px solid rgba(104, 159, 214, 0.35);
+    text-decoration: none;
+    box-shadow: none;
 }
 
 .post-content del {
