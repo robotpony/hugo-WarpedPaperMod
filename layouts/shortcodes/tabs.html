@@ -20,12 +20,27 @@
   {{< tabs layout="side" >}} shows every panel at once on wide screens, as
   equal columns under their labels, and falls back to tabs where the
   columns would be too narrow (common/tabs.css).
+
+  {{< tabs layout="stack" >}} shows every panel at once at every width,
+  full width and one under another, each under its label, for content whose
+  lines are too long for columns. With nothing to switch it draws no radios:
+  each label is a plain caption over its panel.
 */ -}}
 {{- $_ := .Inner -}}
 {{- $id := printf "tabs-%d" .Ordinal -}}
 {{- $layout := .Get "layout" -}}
-{{- if and $layout (ne $layout "side") }}{{ warnf "tabs: unknown layout %q at %s" $layout .Position }}{{ end -}}
+{{- if and $layout (not (in (slice "side" "stack") $layout)) }}{{ warnf "tabs: unknown layout %q (want \"side\" or \"stack\") at %s" $layout .Position }}{{ end -}}
 {{- with .Store.Get "tabs" -}}
+{{- if eq $layout "stack" -}}
+<div class="tabs stack" id="{{ $id }}">
+  {{- range . }}
+  <div class="tabs-label">{{ .label }}</div>
+  <div class="tabs-panel">
+    {{ .body }}
+  </div>
+  {{- end }}
+</div>
+{{- else -}}
 <div class="tabs{{ if eq $layout "side" }} side{{ end }}" id="{{ $id }}" style="--tabs:{{ len . }}">
   {{- range $i, $t := . }}
   <input type="radio" class="tabs-input" name="{{ $id }}" id="{{ $id }}-{{ $i }}"{{ if eq $i 0 }} checked{{ end }}>
@@ -37,6 +52,7 @@
   </div>
   {{- end }}
 </div>
+{{- end -}}
 {{- else -}}
 {{- warnf "tabs: no tab shortcodes inside %s" .Position -}}
 {{- end -}}

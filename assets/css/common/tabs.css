@@ -37,3 +37,11 @@
   .post-content .tabs.side .tabs-panel pre code { font-size: 12.5px; }
   .post-content .tabs.side .tabs-panel img { display: block; width: 100%; height: auto; margin: 0; }
 }
+/* layout="stack": every panel at once at every width, full width, each
+   under its label (a plain caption; tabs.html draws no radios). */
+.post-content .tabs.stack { display: block; }
+.tabs.stack .tabs-label { display: block; margin: 0 0 8px; padding: 0; border: 0; cursor: default; }
+.tabs.stack .tabs-label:hover { color: var(--secondary); }
+.post-content .tabs.stack .tabs-panel { display: block; margin-bottom: 24px; padding: 0; border: 0; }
+.post-content .tabs.stack .tabs-panel:last-child { margin-bottom: 0; }
+.post-content .tabs.stack .tabs-panel img { display: block; width: 100%; height: auto; margin: 0; }
