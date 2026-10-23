@@ -2,13 +2,16 @@
    (syntax in docs/timeline.md). Dots on a track of decades, labels above
    and below in rows (--row, counted out from the track), each with a leader
    to its dot; the figure's --up and --down are the row counts on each side.
+   Labels sit on the page background above every leader, so a leader that
+   passes a nearer row's label breaks there instead of crossing its text.
    Decade ticks cross the track, their years centred just under them,
    below-track labels past them. Faint entries are hollow. Under 640px it's a vertical
    list with each year inline. Every selector starts with .tline, so it
    outranks post-single's and warped.css's list and code rules. */
 .tline {
+  --tline-row: 28px;
   position: relative; margin: 2rem 0 var(--content-gap);
-  padding: calc(var(--up, 1) * 22px + 18px) 0 calc(var(--down, 0) * 22px + 26px);
+  padding: calc(var(--up, 1) * var(--tline-row) + 22px) 0 calc(var(--down, 0) * var(--tline-row) + 30px);
 }
 /* The side margins leave room for the end years, centred on their ticks. */
 .tline .tline-track { position: relative; height: 2px; margin: 0 16px; background: var(--tertiary); }
@@ -22,9 +25,12 @@
   border-radius: 50%; background: var(--series-ink); border: 2px solid var(--theme);
   box-shadow: 0 0 0 1px var(--series-ink);
 }
-.tline .tline-name { position: absolute; left: 50%; transform: translateX(-50%); white-space: nowrap; color: var(--primary); }
-.tline .up .tline-name { bottom: calc(50% + 20px + var(--row, 0) * 22px); }
-.tline .down .tline-name { top: calc(50% + 30px + var(--row, 0) * 22px); }
+.tline .tline-name {
+  position: absolute; z-index: 3; left: 50%; transform: translateX(-50%); white-space: nowrap; color: var(--primary);
+  background: var(--theme); box-shadow: 0 0 0 3px var(--theme);
+}
+.tline .up .tline-name { bottom: calc(50% + 26px + var(--row, 0) * var(--tline-row)); }
+.tline .down .tline-name { top: calc(50% + 34px + var(--row, 0) * var(--tline-row)); }
 .tline .start .tline-name { left: 0; transform: none; }
 .tline .end .tline-name { left: auto; right: 0; transform: none; }
 /* The leader runs from the dot's centre, under the dot, to its label. */
@@ -32,8 +38,8 @@
   content: ""; position: absolute; z-index: 1; left: 50%; width: 1px; margin-left: -0.5px;
   background: var(--tertiary);
 }
-.tline .up::before { bottom: 50%; height: calc(20px + var(--row, 0) * 22px); }
-.tline .down::before { top: 50%; height: calc(30px + var(--row, 0) * 22px); }
+.tline .up::before { bottom: 50%; height: calc(26px + var(--row, 0) * var(--tline-row)); }
+.tline .down::before { top: 50%; height: calc(34px + var(--row, 0) * var(--tline-row)); }
 .tline .tline-name code { margin: 0; padding: 1px 4px; font-size: 0.85em; }
 .tline .tline-year { display: none; font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: var(--secondary); }
 .tline .faint .tline-dot { background: var(--theme); box-shadow: 0 0 0 1px var(--secondary); }
