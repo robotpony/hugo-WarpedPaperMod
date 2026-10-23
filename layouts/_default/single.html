@@ -14,7 +14,7 @@
       </span>
       {{- end }}
     </h1>
-    {{- if .Description }}
+    {{- if and .Description (.Param "showDescription") }}
     <div class="post-description">
       {{ .Description }}
     </div>
