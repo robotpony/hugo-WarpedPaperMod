@@ -2,7 +2,7 @@
 
 A fenced code block with the info string `timeline` draws dated entries as dots on a track of decades. This file is the shared spec for warpedvisions.org (the w42 theme) and bruce-loves-to-cook.ca (the Fugu theme). Each site keeps its own hook and CSS; the syntax below is what both accept.
 
-The reference hook is w42's `layouts/_default/_markup/render-codeblock-timeline.html`, with its CSS in `assets/css/common/timeline.css`.
+The reference hook is w42's `layouts/_default/_markup/render-codeblock-timeline.html`. It hands the block to `layouts/partials/diagrams/timeline.html`, which draws it (CSS in `assets/css/common/timeline.css`), by way of `layouts/partials/diagram.html`, which adds an (i) toggle to the fenced source. The toggle is w42's, not part of the spec.
 
 ## Syntax
 

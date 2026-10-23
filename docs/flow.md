@@ -2,7 +2,7 @@
 
 A fenced code block with the info string `flow` draws a short sequence of steps as one row, with arrows between them. This file is the shared spec for warpedvisions.org (the w42 theme) and bruce-loves-to-cook.ca (the Fugu theme). w42 owns it; each site keeps its own hook and CSS, and the syntax below is what both accept. It's modelled on the cookbook's `formula` diagrams in their `→` mode, without icons.
 
-The reference hook is w42's `layouts/_default/_markup/render-codeblock-flow.html`, with its CSS in `assets/css/common/flow.css`.
+The reference hook is w42's `layouts/_default/_markup/render-codeblock-flow.html`. It hands the block to `layouts/partials/diagrams/flow.html`, which draws it (CSS in `assets/css/common/flow.css`), by way of `layouts/partials/diagram.html`, which adds an (i) toggle to the fenced source. The toggle is w42's, not part of the spec.
 
 ## Syntax
 

@@ -92,6 +92,17 @@
 {{- end }}
 {{- end }}
 
+{{- /* Diagram source toggle: only on pages with a drawn code block (partials/diagram.html) */ -}}
+{{- if strings.Contains (string .Content) `class="diagram"` }}
+{{- $diagram := resources.Get "js/diagram.js" | resources.Minify }}
+{{- if not site.Params.assets.disableFingerprinting }}
+{{- $diagram = $diagram | fingerprint }}
+<script defer crossorigin="anonymous" src="{{ $diagram.RelPermalink }}" integrity="{{ $diagram.Data.Integrity }}"></script>
+{{- else }}
+<script defer crossorigin="anonymous" src="{{ $diagram.RelPermalink }}"></script>
+{{- end }}
+{{- end }}
+
 {{- /* Search */ -}}
 {{- if (eq .Layout `search`) -}}
 <link crossorigin="anonymous" rel="preload" as="fetch" href="{{ .Site.BaseURL }}index.json">

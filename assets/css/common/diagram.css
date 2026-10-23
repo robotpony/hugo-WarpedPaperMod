@@ -1,0 +1,16 @@
+/* The (i) toggle on drawn code blocks: partials/diagram.html, js/diagram.js.
+   The wrapper takes the diagram's outer margins, so the toggle sits just
+   under the drawing (or its source), at the right, quiet until hovered or
+   focused. */
+.post-content .diagram { margin: 2rem 0 var(--content-gap); }
+.post-content .diagram .diagram-view > :first-child { margin-top: 0; }
+.post-content .diagram .diagram-view > :last-child { margin-bottom: 0; }
+.post-content .diagram .diagram-source .highlight { margin: 0; }
+.diagram [hidden] { display: none !important; }
+.diagram .diagram-toggle {
+  display: flex; margin: 2px 0 0 auto; padding: 3px; border: 0; border-radius: 50%;
+  background: none; color: var(--tertiary); cursor: pointer;
+}
+.diagram .diagram-toggle:hover,
+.diagram .diagram-toggle[aria-pressed="true"] { color: var(--secondary); }
+.diagram .diagram-toggle:focus-visible { color: var(--secondary); outline: 2px solid var(--series-ink); outline-offset: 1px; }

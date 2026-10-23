@@ -1,0 +1,115 @@
+{{/*
+  Draws a ```timeline block, from render-codeblock-timeline.html by way of
+  partials/diagram.html, which adds the source toggle; it takes the
+  hook's context. Dots on a track of decades. The syntax (one "YEAR
+  Label" per line, ~YEAR faint) is shared with the cookbook; see
+  docs/timeline.md. Ported from the cookbook's lineage timeline (not-a-chef,
+  Fugu's blueprint/lineage.html), with its own .tline-* classes so the two
+  never collide.
+
+  The track runs from the first year's decade to the last year rounded up
+  to a decade, with a tick at each decade and its year centred just under
+  it (every other decade on tracks over 80 years). Labels alternate
+  above and below the track by entry order. A label below that would cross
+  a decade's year goes above instead, and the next one goes below. On each
+  side a label takes the nearest row that its estimated width clears (Lora
+  at 14px against a 600px track, the narrowest above 640px; inline code
+  counts wider), with a leader to its dot. Labels near the ends align to
+  their dot's side. Under 640px common/timeline.css turns it into a
+  vertical list with each year inline.
+*/}}
+{{- $entries := slice -}}
+{{- range $i, $line := split (strings.TrimSpace .Inner) "\n" -}}
+  {{- $line = strings.TrimSpace $line -}}
+  {{- if not $line }}{{ continue }}{{ end -}}
+  {{- $m := findRESubmatch `^(~?)(\d{4})\s+(.+)$` $line 1 -}}
+  {{- if not $m -}}
+    {{- warnf "timeline: skipped %q (want \"YEAR Label\") in %s" $line $.Position -}}
+    {{- continue -}}
+  {{- end -}}
+  {{- $m = index $m 0 -}}
+  {{- $label := $.Page.RenderString (dict "display" "inline") (index $m 3) -}}
+  {{- $code := findRE `<code>[^<]*</code>` $label -}}
+  {{- $codeChars := 0 -}}
+  {{- range $code }}{{ $codeChars = add $codeChars (countrunes (plainify .)) }}{{ end -}}
+  {{- $chars := countrunes (plainify $label) -}}
+  {{- $px := add (mul (float (sub $chars $codeChars)) 7.0) (mul (float $codeChars) 7.2) (mul (len $code) 10) -}}
+  {{- $entries = $entries | append (dict
+    "year" (int (index $m 2))
+    "faint" (eq (index $m 1) "~")
+    "label" $label
+    "w" (div $px 6.0)
+    "key" (add (mul (int (index $m 2)) 1000) $i)
+  ) -}}
+{{- end -}}
+{{- with sort $entries "key" -}}
+  {{- /* Entries go in year order whatever the line order; lines with the
+         same year keep theirs. */ -}}
+  {{- $first := (index . 0).year -}}
+  {{- $last := (index . (sub (len .) 1)).year -}}
+  {{- $start := mul (math.Floor (div (float $first) 10)) 10 | int -}}
+  {{- $end := mul (math.Ceil (div (float $last) 10)) 10 | int -}}
+  {{- if le $end $start }}{{ $end = add $start 10 }}{{ end -}}
+  {{- $span := float (sub $end $start) -}}
+  {{- /* Decade years, centred on their ticks: a dot whose leader would
+         cross one keeps its label above. $decHalf is half a year's width
+         (11px mono against 600px), plus a little. */ -}}
+  {{- $decHalf := 3.0 -}}
+  {{- $decades := slice -}}
+  {{- $every := cond (gt $span 80.0) 20 10 -}}
+  {{- range seq $start 10 $end -}}
+    {{- $p := div (mul (float (sub . $start)) 100) $span -}}
+    {{- $named := eq (mod (sub . $start) $every) 0 -}}
+    {{- $decades = $decades | append (dict "year" . "pos" $p "named" $named) -}}
+  {{- end -}}
+  {{- $up := slice }}{{ $down := slice -}}
+  {{- $side := "up" -}}
+  {{- $marks := slice -}}
+  {{- range . -}}
+    {{- $pos := div (mul (float (sub .year $start)) 100) $span -}}
+    {{- if eq $side "down" -}}
+      {{- range where $decades "named" true -}}
+        {{- if and (ge $pos (sub .pos $decHalf)) (le $pos (add .pos $decHalf)) }}{{ $side = "up" }}{{ end -}}
+      {{- end -}}
+    {{- end -}}
+    {{- $left := sub $pos (div .w 2) -}}
+    {{- $edge := "" -}}
+    {{- if lt $left 0.0 -}}
+      {{- $edge = "start" }}{{ $left = sub $pos 1 -}}
+    {{- else if gt (add $pos (div .w 2)) 100.0 -}}
+      {{- $edge = "end" }}{{ $left = sub (add $pos 1) .w -}}
+    {{- end -}}
+    {{- $right := add $left .w -}}
+    {{- /* The nearest row on this side whose last label ends before this
+           one starts, or a new row. */ -}}
+    {{- $rows := cond (eq $side "up") $up $down -}}
+    {{- $row := len $rows -}}
+    {{- range $r, $edgeAt := $rows -}}
+      {{- if and (eq $row (len $rows)) (gt $left (add $edgeAt 2)) }}{{ $row = $r }}{{ end -}}
+    {{- end -}}
+    {{- $next := slice -}}
+    {{- range $r, $edgeAt := $rows }}{{ $next = $next | append (cond (eq $r $row) $right $edgeAt) }}{{ end -}}
+    {{- if eq $row (len $rows) }}{{ $next = $next | append $right }}{{ end -}}
+    {{- if eq $side "up" }}{{ $up = $next }}{{ else }}{{ $down = $next }}{{ end -}}
+    {{- $marks = $marks | append (merge . (dict "pos" $pos "side" $side "row" $row "edge" $edge)) -}}
+    {{- $side = cond (eq $side "up") "down" "up" -}}
+  {{- end -}}
+  <figure class="tline" style="--up:{{ len $up }};--down:{{ len $down }}">
+    <div class="tline-track">
+      <ol class="tline-list">
+        {{- range $marks }}
+        <li class="tline-mark {{ .side }}{{ with .edge }} {{ . }}{{ end }}{{ if .faint }} faint{{ end }}" style="left:{{ printf "%.1f" .pos }}%;--row:{{ .row }}">
+          <span class="tline-dot" aria-hidden="true"></span>
+          <span class="tline-name">{{ .label }}</span>
+          <span class="tline-year">{{ .year }}</span>
+        </li>
+        {{- end }}
+      </ol>
+      <div class="tline-ticks" aria-hidden="true">
+        {{- range $decades }}
+        <span class="tline-tick" style="left:{{ printf "%.1f" .pos }}%">{{ if .named }}{{ .year }}{{ end }}</span>
+        {{- end }}
+      </div>
+    </div>
+  </figure>
+{{- end -}}

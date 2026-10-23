@@ -1,0 +1,26 @@
+{{- /*
+  A drawn code-block microformat (```timeline, ```flow) with an (i) toggle
+  between the drawing and the fenced source that drives it. Every
+  diagram hook calls this with its context and its drawing partial:
+
+    {{- partial "diagram.html" (dict "hook" . "draw" "diagrams/flow.html") -}}
+
+  The source is the block as written, fences included, highlighted like
+  any other code block, and starts hidden. js/diagram.js (loaded by
+  head.html when the page holds a .diagram) shows the button and swaps
+  the two; without JS the button stays hidden and only the drawing shows.
+  A draw partial that outputs nothing (no valid lines) leaves nothing.
+*/ -}}
+{{- $hook := .hook -}}
+{{- $html := partial .draw $hook -}}
+{{- if strings.TrimSpace $html -}}
+{{- $fence := strings.Repeat 3 "`" -}}
+{{- $src := printf "%s%s\n%s\n%s" $fence $hook.Type (strings.TrimRight "\n" $hook.Inner) $fence -}}
+<div class="diagram">
+  <div class="diagram-view">{{ $html }}</div>
+  <div class="diagram-source" hidden>{{ transform.Highlight $src "markdown" "" }}</div>
+  <button type="button" class="diagram-toggle" aria-pressed="false" aria-label="Show source" title="Show source" hidden>
+    <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="8.25" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="6.4" r="1.1" fill="currentColor"/><path d="M10 9v5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+</div>
+{{- end -}}
