@@ -64,6 +64,15 @@ Hugo's built-in asset processing handles:
 - **Go module**: `github.com/robotpony/hugo-WarpedPaperMod`
 - **No Node.js dependencies** - pure Hugo implementation
 
+## Versions and the changelog
+
+Modelled on Space Command's (`~/projects/utilities/warped-space-command/docs/changelog-style.md` has the full writing rules).
+
+- The version is `version` in `theme.toml`: `major.minor.patch`, pre-1.0. Minor for a capability added or removed (a shortcode, block, layout, front matter param); patch for fixes, visual tweaks, refactors, and docs. Borderline is patch; a fix bundled with a feature is minor. Major only when Bruce asks.
+- Every commit that changes the theme bumps the version, and `CHANGELOG.md` gets a `## <version> — <YYYY-MM-DD>` entry in the same commit, with `### Added`, `### Changed`, `### Fixed`, `### Removed` (only those used). A change nobody would notice (docs, refactors) still bumps but gets no entry, so the top entry can be older than the version.
+- Write for a post author or a reader: what changed on the page or in the front matter, shortcodes and blocks, by the names they use. Present tense, one or two sentences, about 40 words. Say what an author has to change. A fix names what went wrong, not its cause. How it's built and who asked go in the commit message.
+- No tags per version.
+
 ## Key Files for Modifications
 
 - `/layouts/partials/head.html` - HTML head modifications
