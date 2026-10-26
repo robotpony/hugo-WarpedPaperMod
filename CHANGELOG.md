@@ -2,6 +2,12 @@
 
 The w42 theme's changes, newest first. Versions are `major.minor.patch`, pre-1.0. Changes from before the fork's cleanup on 2026-10-15 are in the git history.
 
+## 0.7.3 — 2026-10-26
+
+### Fixed
+
+- A timeline, flow or tabs warning about one line gives that line's number, not the block's opening fence. Too many steps, rows or tabs warns at the first one past the limit.
+
 ## 0.7.2 — 2026-10-26
 
 ### Changed

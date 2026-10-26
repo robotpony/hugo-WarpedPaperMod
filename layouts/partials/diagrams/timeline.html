@@ -20,13 +20,13 @@
   vertical list with each year inline.
 */}}
 {{- $entries := slice -}}
-{{- range $i, $line := split (strings.TrimSpace .Inner) "\n" -}}
+{{- range $i, $line := split (strings.TrimRight "\n" .Inner) "\n" -}}
   {{- $line = partial "fences/line.html" $line -}}
   {{- if not $line }}{{ continue }}{{ end -}}
   {{- $m := findRESubmatch `^(~?)(\d{4})\s+(.+)$` $line 1 -}}
   {{- if not $m -}}
     {{- $code := cond (findRE `^~?\d{4}$` $line 1) "missing-label" "bad-year" -}}
-    {{- warnf "timeline [%s]: skipped %q (want \"YEAR Label\") in %s" $code $line $.Position -}}
+    {{- warnf "timeline [%s]: skipped %q (want \"YEAR Label\") in %s" $code $line (partial "fences/pos.html" (dict "hook" $ "line" $i)) -}}
     {{- continue -}}
   {{- end -}}
   {{- $m = index $m 0 -}}

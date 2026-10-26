@@ -33,11 +33,12 @@
 {{- end -}}
 {{- $panels := slice -}}
 {{- $label := "" -}}
+{{- $at := 0 -}}
 {{- $body := slice -}}
 {{- $open := false -}}
 {{- $fence := "" -}}
 {{- $openRE := print "^ {0,3}(" "`" "{3,}|~{3,})" -}}
-{{- range split (strings.TrimRight "\n" .Inner) "\n" -}}
+{{- range $i, $line := split (strings.TrimRight "\n" .Inner) "\n" -}}
   {{- if $fence -}}
     {{- with findRESubmatch (print $openRE `\s*$`) . 1 -}}
       {{- $run := index (index . 0) 1 -}}
@@ -45,7 +46,8 @@
     {{- end -}}
   {{- else -}}
     {{- with findRESubmatch `^tab:(?:\s+(.*))?$` (strings.TrimSpace .) 1 -}}
-      {{- if $open }}{{ $panels = $panels | append (dict "label" $label "body" $body) }}{{ end -}}
+      {{- if $open }}{{ $panels = $panels | append (dict "label" $label "body" $body "at" $at) }}{{ end -}}
+      {{- $at = $i -}}
       {{- $label = strings.TrimSpace (index (index . 0) 1) -}}
       {{- $body = slice -}}
       {{- $open = true -}}
@@ -56,25 +58,25 @@
   {{- if $open -}}
     {{- $body = $body | append . -}}
   {{- else if strings.TrimSpace . -}}
-    {{- warnf "tabs [out-of-order]: skipped %q (want \"tab: Label\" first) in %s" . $.Position -}}
+    {{- warnf "tabs [out-of-order]: skipped %q (want \"tab: Label\" first) in %s" . (partial "fences/pos.html" (dict "hook" $ "line" $i)) -}}
   {{- end -}}
 {{- end -}}
-{{- if $open }}{{ $panels = $panels | append (dict "label" $label "body" $body) }}{{ end -}}
+{{- if $open }}{{ $panels = $panels | append (dict "label" $label "body" $body "at" $at) }}{{ end -}}
 {{- $tabs := slice -}}
 {{- range $panels -}}
   {{- $label := .label -}}
   {{- if not $label -}}
-    {{- warnf "tabs [missing-label]: a tab: line has no label, so drawing \"Tab\", in %s" $.Position -}}
+    {{- warnf "tabs [missing-label]: a tab: line has no label, so drawing \"Tab\", in %s" (partial "fences/pos.html" (dict "hook" $ "line" .at)) -}}
     {{- $label = "Tab" -}}
   {{- end -}}
   {{- $md := strings.Trim (delimit .body "\n") "\n" -}}
-  {{- if not (strings.TrimSpace $md) }}{{ warnf "tabs [empty-group]: the %q panel is empty in %s" $label $.Position }}{{ end -}}
+  {{- if not (strings.TrimSpace $md) }}{{ warnf "tabs [empty-group]: the %q panel is empty in %s" $label (partial "fences/pos.html" (dict "hook" $ "line" .at)) }}{{ end -}}
   {{- $tabs = $tabs | append (dict
     "label" ($.Page.RenderString (dict "display" "inline") $label)
     "body" ($.Page.RenderString (dict "display" "block") $md)
   ) -}}
 {{- end -}}
-{{- if gt (len $tabs) 6 }}{{ warnf "tabs [over-limit]: %d panels in %s; more than six crowd the tabs" (len $tabs) .Position }}{{ end -}}
+{{- if gt (len $tabs) 6 }}{{ warnf "tabs [over-limit]: %d panels in %s; more than six crowd the tabs" (len $tabs) (partial "fences/pos.html" (dict "hook" . "line" (index $panels 6).at)) }}{{ end -}}
 {{- with $tabs -}}
 {{- if eq $layout "stack" -}}
 <div class="tabs stack" id="{{ $id }}">
