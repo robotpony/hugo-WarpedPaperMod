@@ -2,6 +2,12 @@
 
 The w42 theme's changes, newest first. Versions are `major.minor.patch`, pre-1.0. Changes from before the fork's cleanup on 2026-10-15 are in the git history.
 
+## 0.7.2 — 2026-10-26
+
+### Changed
+
+- Build warnings from timeline, flow and tabs blocks carry the shared spec's code after the type, as in `flow [too-many-cells]: skipped …`. A bare year in a timeline now warns as a missing label, not a bad year.
+
 ## 0.7.0 — 2026-10-26
 
 ### Removed

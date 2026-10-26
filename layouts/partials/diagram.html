@@ -26,6 +26,6 @@
   </button>
 </div>
 {{- else -}}
-{{- warnf "%s: no valid lines, so showing the source, in %s" $hook.Type $hook.Position -}}
+{{- warnf "%s [no-valid-lines]: no valid lines, so showing the source, in %s" $hook.Type $hook.Position -}}
 {{ transform.Highlight (strings.TrimRight "\n" $hook.Inner) "text" "" }}
 {{- end -}}

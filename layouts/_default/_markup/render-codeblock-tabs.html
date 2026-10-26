@@ -28,7 +28,7 @@
 {{- $id := printf "tabs-fence-%d" .Ordinal -}}
 {{- $layout := .Attributes.layout | default "" -}}
 {{- if and $layout (not (in (slice "side" "stack") $layout)) -}}
-  {{- warnf "tabs: unknown layout %q (want \"side\" or \"stack\"), so drawing tabs, in %s" $layout .Position -}}
+  {{- warnf "tabs [unknown-layout]: unknown layout %q (want \"side\" or \"stack\"), so drawing tabs, in %s" $layout .Position -}}
   {{- $layout = "" -}}
 {{- end -}}
 {{- $panels := slice -}}
@@ -56,7 +56,7 @@
   {{- if $open -}}
     {{- $body = $body | append . -}}
   {{- else if strings.TrimSpace . -}}
-    {{- warnf "tabs: skipped %q (want \"tab: Label\" first) in %s" . $.Position -}}
+    {{- warnf "tabs [out-of-order]: skipped %q (want \"tab: Label\" first) in %s" . $.Position -}}
   {{- end -}}
 {{- end -}}
 {{- if $open }}{{ $panels = $panels | append (dict "label" $label "body" $body) }}{{ end -}}
@@ -64,17 +64,17 @@
 {{- range $panels -}}
   {{- $label := .label -}}
   {{- if not $label -}}
-    {{- warnf "tabs: a tab: line has no label, so drawing \"Tab\", in %s" $.Position -}}
+    {{- warnf "tabs [missing-label]: a tab: line has no label, so drawing \"Tab\", in %s" $.Position -}}
     {{- $label = "Tab" -}}
   {{- end -}}
   {{- $md := strings.Trim (delimit .body "\n") "\n" -}}
-  {{- if not (strings.TrimSpace $md) }}{{ warnf "tabs: the %q panel is empty in %s" $label $.Position }}{{ end -}}
+  {{- if not (strings.TrimSpace $md) }}{{ warnf "tabs [empty-group]: the %q panel is empty in %s" $label $.Position }}{{ end -}}
   {{- $tabs = $tabs | append (dict
     "label" ($.Page.RenderString (dict "display" "inline") $label)
     "body" ($.Page.RenderString (dict "display" "block") $md)
   ) -}}
 {{- end -}}
-{{- if gt (len $tabs) 6 }}{{ warnf "tabs: %d panels in %s; more than six crowd the tabs" (len $tabs) .Position }}{{ end -}}
+{{- if gt (len $tabs) 6 }}{{ warnf "tabs [over-limit]: %d panels in %s; more than six crowd the tabs" (len $tabs) .Position }}{{ end -}}
 {{- with $tabs -}}
 {{- if eq $layout "stack" -}}
 <div class="tabs stack" id="{{ $id }}">
@@ -99,6 +99,6 @@
 </div>
 {{- end -}}
 {{- else -}}
-{{- warnf "tabs: no tab: lines, so showing the source, in %s" .Position -}}
+{{- warnf "tabs [no-valid-lines]: no tab: lines, so showing the source, in %s" .Position -}}
 {{ transform.Highlight (strings.TrimRight "\n" .Inner) "text" "" }}
 {{- end -}}

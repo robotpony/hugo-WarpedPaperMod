@@ -25,7 +25,8 @@
   {{- if not $line }}{{ continue }}{{ end -}}
   {{- $m := findRESubmatch `^(~?)(\d{4})\s+(.+)$` $line 1 -}}
   {{- if not $m -}}
-    {{- warnf "timeline: skipped %q (want \"YEAR Label\") in %s" $line $.Position -}}
+    {{- $code := cond (findRE `^~?\d{4}$` $line 1) "missing-label" "bad-year" -}}
+    {{- warnf "timeline [%s]: skipped %q (want \"YEAR Label\") in %s" $code $line $.Position -}}
     {{- continue -}}
   {{- end -}}
   {{- $m = index $m 0 -}}
