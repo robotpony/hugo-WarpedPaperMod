@@ -2,6 +2,17 @@
 
 The w42 theme's changes, newest first. Versions are `major.minor.patch`, pre-1.0. Changes from before the fork's cleanup on 2026-10-15 are in the git history.
 
+## 0.6.0 — 2026-10-26
+
+### Added
+
+- A ```` ```tabs ```` block does what the tabs shortcode does: `tab: <label>` lines start panels, and `{layout="side"}` or `{layout="stack"}` sets the layout. Give the outer fence more backticks than any fence inside it. The shortcode still works for now.
+- Timeline and flow lines can end in a note, `← text` or `<- text`, for whoever reads the source. It's never drawn; write `\←` for a literal arrow.
+
+### Changed
+
+- A timeline or flow block with no valid lines shows its source as plain preformatted text, with a build warning, instead of nothing.
+
 ## 0.5.1 — 2026-10-25
 
 ### Changed

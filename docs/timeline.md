@@ -22,9 +22,9 @@ One entry per line:
 1. **Year.** Four digits at the start of the line (`1983`).
 2. **Faint marker.** An optional `~` right before the year (`~2008`) marks the entry as faint: a detour, a tentative start, or a draft. It doesn't mean "circa".
 3. **Separator.** One or more spaces or tabs after the year.
-4. **Label.** The rest of the line, as written: brackets, pipes, backticks and all. Nothing in it is parsed by the hook.
+4. **Label.** The rest of the line, as written: brackets, pipes, backticks and all. Nothing in it is parsed by the hook, except a note at the end, which is dropped.
 
-Leading and trailing whitespace on a line is ignored, and blank lines are skipped. As a pattern: `^(~?)(\d{4})\s+(.+)$`.
+Leading and trailing whitespace on a line is ignored, and blank lines are skipped. As a pattern: `^(~?)(\d{4})\s+(.+)$`. A note (`← text` or `<- text` after whitespace, to the end of the line) is dropped before the line is read, and a note-only line is skipped like a blank one; `\←` and `\<-` are literal arrows. The shared spec (`~/writing/not-a-chef/docs/fences/README.md`, "Notes") has the details.
 
 ## Labels
 
@@ -56,6 +56,8 @@ These lines warn today:
 - A range: `1955-1960 Label`
 - A month or day: `1983-04 Label`
 - Anything before the year other than `~`: `- 1983 Atari BASIC`, `c. 1983 Atari BASIC`
+
+A block with no valid lines shows its source as preformatted text, with a warning.
 
 A warning means "not drawn yet", not "never valid".
 

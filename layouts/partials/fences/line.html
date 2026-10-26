@@ -1,0 +1,13 @@
+{{- /*
+  One line of a line-read fence (timeline, flow), with its note dropped:
+  a note starts at ← or <- with whitespace before it (or at the start of
+  the line) and runs to the end, and goes with the whitespace before it.
+  \← and \<- are literal arrows, without the backslash. Returns the line
+  trimmed, so a note-only line comes back empty and is skipped like a
+  blank one. Notes stay in the (i) source view. Spec: README.md "Notes"
+  in the shared fence spec.
+*/ -}}
+{{- $line := replace (replace . `\←` "\x00l") `\<-` "\x00a" -}}
+{{- $line = replaceRE `(?:^|\s+)(?:←|<-).*$` "" $line -}}
+{{- $line = replace (replace $line "\x00l" "←") "\x00a" "<-" -}}
+{{- return strings.TrimSpace $line -}}

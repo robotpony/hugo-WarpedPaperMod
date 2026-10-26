@@ -34,7 +34,7 @@ One step per line, in order:
 
 4. **Caption.** An optional `caption: <text>` line, last in the block, is drawn under the row (or under all the rows). It uses the same keyword as `formula`.
 
-Leading and trailing whitespace around a line, a label or a note is ignored, and blank lines are skipped. Labels, notes, row labels and the caption are inline Markdown, rendered with the page's own `RenderString` and `"display" "inline"`, so each site's render hooks apply.
+Leading and trailing whitespace around a line, a label or a note is ignored, and blank lines are skipped. Labels, notes, row labels and the caption are inline Markdown, rendered with the page's own `RenderString` and `"display" "inline"`, so each site's render hooks apply. A note (`← text` or `<- text` after whitespace, to the end of the line) is dropped before the line is read, and a note-only line is skipped like a blank one; `\←` and `\<-` are literal arrows. The shared spec (`~/writing/not-a-chef/docs/fences/README.md`, "Notes") has the details.
 
 Keep a block to about five steps. More still draw, with a warning, since they crowd the row.
 
@@ -91,7 +91,7 @@ These warn:
 - A step before the first `row:`, in a block that uses rows: not drawn
 - A `row:` with no steps: not drawn
 - More than three rows: drawn, with a warning
-- No steps at all: nothing is drawn
+- No steps at all: the source shows as preformatted text, with a warning
 
 A warning means "not drawn this way yet", not "never valid". Any extension (parallel rows were one; branches or step links would be others) must be agreed between both sites and written here first, and must keep every line that's valid today drawing the same way.
 

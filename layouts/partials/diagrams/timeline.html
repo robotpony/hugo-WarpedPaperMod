@@ -5,7 +5,8 @@
   Label" per line, ~YEAR faint) is shared with the cookbook; see
   docs/timeline.md. Ported from the cookbook's lineage timeline (not-a-chef,
   Fugu's blueprint/lineage.html), with its own .tline-* classes so the two
-  never collide.
+  never collide. A ← note at the end of a line is dropped first
+  (partials/fences/line.html).
 
   The track runs from the first year's decade to the last year rounded up
   to a decade, with a tick at each decade and its year centred just under
@@ -20,7 +21,7 @@
 */}}
 {{- $entries := slice -}}
 {{- range $i, $line := split (strings.TrimSpace .Inner) "\n" -}}
-  {{- $line = strings.TrimSpace $line -}}
+  {{- $line = partial "fences/line.html" $line -}}
   {{- if not $line }}{{ continue }}{{ end -}}
   {{- $m := findRESubmatch `^(~?)(\d{4})\s+(.+)$` $line 1 -}}
   {{- if not $m -}}

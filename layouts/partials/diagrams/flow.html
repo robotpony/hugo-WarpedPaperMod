@@ -15,7 +15,8 @@
   is dropped, since the hook draws the arrows (it warns on a row's first
   step). An optional `caption:` line, last, goes under the drawing. Labels,
   notes and row labels are inline Markdown. A line with more than one |, an
-  empty label, or a step after the caption warns and isn't drawn.
+  empty label, or a step after the caption warns and isn't drawn. A ← note
+  at the end of a line is dropped first (partials/fences/line.html).
 
   `row: <label>` lines (the label optional) split the steps into parallel
   rows, up to three, with step n of each row in the same column. A block
@@ -34,7 +35,7 @@
 {{- $inRow := false -}}
 {{- $caption := "" -}}
 {{- range $i, $line := split (strings.TrimSpace .Inner) "\n" -}}
-  {{- $line = strings.TrimSpace $line -}}
+  {{- $line = partial "fences/line.html" $line -}}
   {{- if not $line }}{{ continue }}{{ end -}}
   {{- if hasPrefix $line "caption:" -}}
     {{- $caption = strings.TrimSpace (strings.TrimPrefix "caption:" $line) -}}
@@ -93,7 +94,7 @@
   {{- delimit $aria ", then " -}}
 {{- end -}}
 {{- if not $rows -}}
-  {{- warnf "flow: no steps in %s" .Position -}}
+  {{- /* Nothing drawn: partials/diagram.html shows the source. */ -}}
 {{- else if not $rowMode -}}
   {{- $s0 := index $rows 0 -}}
   <figure class="flow">

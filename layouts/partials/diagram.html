@@ -9,7 +9,9 @@
   any other code block, and starts hidden. js/diagram.js (loaded by
   head.html when the page holds a .diagram) shows the button and swaps
   the two; without JS the button stays hidden and only the drawing shows.
-  A draw partial that outputs nothing (no valid lines) leaves nothing.
+  A draw partial that outputs nothing (no valid lines) leaves the block's
+  source as preformatted text, with a warning, so a reader still sees
+  what was written.
 */ -}}
 {{- $hook := .hook -}}
 {{- $html := partial .draw $hook -}}
@@ -23,4 +25,7 @@
     <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="8.25" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="6.4" r="1.1" fill="currentColor"/><path d="M10 9v5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
   </button>
 </div>
+{{- else -}}
+{{- warnf "%s: no valid lines, so showing the source, in %s" $hook.Type $hook.Position -}}
+{{ transform.Highlight (strings.TrimRight "\n" $hook.Inner) "text" "" }}
 {{- end -}}
