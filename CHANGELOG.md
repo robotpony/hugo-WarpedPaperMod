@@ -2,6 +2,12 @@
 
 The w42 theme's changes, newest first. Versions are `major.minor.patch`, pre-1.0. Changes from before the fork's cleanup on 2026-10-15 are in the git history.
 
+## 0.7.5 — 2026-10-26
+
+### Changed
+
+- A `← note` after a tabs block's `tab:` label is dropped, as in timeline and flow lines; a `tab:` line that's only a note draws "Tab" with a warning. A `←` in a panel's body is still ordinary text.
+
 ## 0.7.4 — 2026-10-26
 
 ### Changed

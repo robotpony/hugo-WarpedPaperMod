@@ -14,7 +14,8 @@
     ![A screenshot](shot.png)
     ````
 
-  A `tab: <label>` line starts a panel (the label is inline Markdown), and
+  A `tab: <label>` line starts a panel (the label is inline Markdown, and
+  a ← note after it is dropped; a ← in a body is ordinary text), and
   its body runs to the next one, rendered as block Markdown with blank
   lines kept. Inside a nested fence (the outer fence takes more backticks)
   `tab:` lines belong to that fence. `layout="side"` shows every panel at
@@ -45,7 +46,7 @@
       {{- if and (eq (substr $run 0 1) (substr $fence 0 1)) (ge (len $run) (len $fence)) }}{{ $fence = "" }}{{ end -}}
     {{- end -}}
   {{- else -}}
-    {{- with findRESubmatch `^tab:(?:\s+(.*))?$` (strings.TrimSpace .) 1 -}}
+    {{- with findRESubmatch `^tab:(?:\s+(.*))?$` (partial "fences/line.html" .) 1 -}}
       {{- if $open }}{{ $panels = $panels | append (dict "label" $label "body" $body "at" $at) }}{{ end -}}
       {{- $at = $i -}}
       {{- $label = strings.TrimSpace (index (index . 0) 1) -}}
