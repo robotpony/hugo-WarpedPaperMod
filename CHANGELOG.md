@@ -2,6 +2,12 @@
 
 The w42 theme's changes, newest first. Versions are `major.minor.patch`, pre-1.0. Changes from before the fork's cleanup on 2026-10-15 are in the git history.
 
+## 0.5.1 — 2026-10-25
+
+### Changed
+
+- A blog post shows its date under its title, in small caps ("25 OCT 2026"). Other pages, lists, and projects don't.
+
 ## 0.5.0 — 2026-10-23
 
 ### Added

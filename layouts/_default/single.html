@@ -14,6 +14,9 @@
       </span>
       {{- end }}
     </h1>
+    {{- if and (eq .Section "blog") (not .Date.IsZero) }}
+    <time class="post-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format "2 Jan 2006" }}</time>
+    {{- end }}
     {{- if and .Description (.Param "showDescription") }}
     <div class="post-description">
       {{ .Description }}

@@ -22,6 +22,19 @@
     border-bottom: 2px solid var(--tertiary);
 }
 
+/* A blog post's date, in small caps like the reading list's labels */
+.post-date {
+    display: block;
+    margin-top: 6px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--secondary);
+}
+
 .post-meta,
 .breadcrumbs {
     color: var(--secondary);
