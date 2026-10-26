@@ -1,5 +1,5 @@
 /* ```timeline blocks: layouts/_default/_markup/render-codeblock-timeline.html
-   (syntax in docs/timeline.md). Dots on a track of decades, labels above
+   (syntax in hugo-warped's fences/timeline.md). Dots on a track of decades, labels above
    and below in rows (--row, counted out from the track), each with a leader
    to its dot; the figure's --up and --down are the row counts on each side.
    Labels sit on the page background above every leader, so a leader that

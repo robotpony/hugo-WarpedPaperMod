@@ -5,7 +5,7 @@
   \← and \<- are literal arrows, without the backslash. Returns the line
   trimmed, so a note-only line comes back empty and is skipped like a
   blank one. Notes stay in the (i) source view. Spec: README.md "Notes"
-  in the shared fence spec.
+  in hugo-warped's fences/.
 */ -}}
 {{- $line := replace (replace . `\←` "\x00l") `\<-` "\x00a" -}}
 {{- $line = replaceRE `(?:^|\s+)(?:←|<-).*$` "" $line -}}

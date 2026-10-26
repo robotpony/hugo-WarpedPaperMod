@@ -1,5 +1,5 @@
 /* ```flow blocks: layouts/_default/_markup/render-codeblock-flow.html (syntax
-   in docs/flow.md). Boxed labels in a row joined by arrows, each note in
+   in hugo-warped's fences/flow.md). Boxed labels in a row joined by arrows, each note in
    italic under its label, the caption under the row. Under 640px it's a
    centred column with the arrows pointing down, and parallel rows wrap
    under their labels. Every selector starts with

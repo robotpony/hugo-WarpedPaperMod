@@ -17,13 +17,13 @@
   A `tab: <label>` line starts a panel (the label is inline Markdown), and
   its body runs to the next one, rendered as block Markdown with blank
   lines kept. Inside a nested fence (the outer fence takes more backticks)
-  `tab:` lines belong to that fence. `layout="side"` shows every panel at once
-  as columns on wide screens (tabs where they'd be too narrow);
+  `tab:` lines belong to that fence. `layout="side"` shows every panel at
+  once as columns on wide screens (tabs where they'd be too narrow);
   `layout="stack"` shows them full width, one under another, with no
-  radios; none is switchable tabs. Spec: tabs.md in the shared fence
-  spec. Text before the first tab, an empty label ("Tab"), an empty body,
-  an unknown layout and more than six panels warn; a block with no tab:
-  lines shows its source as preformatted text.
+  radios; none is switchable tabs. Spec: hugo-warped's fences/tabs.md.
+  Text before the first tab, an empty label ("Tab"), an empty body, an
+  unknown layout and more than six panels warn; a block with no tab: lines
+  shows its source as preformatted text.
 */ -}}
 {{- $id := printf "tabs-fence-%d" .Ordinal -}}
 {{- $layout := .Attributes.layout | default "" -}}
