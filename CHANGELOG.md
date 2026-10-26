@@ -2,6 +2,12 @@
 
 The w42 theme's changes, newest first. Versions are `major.minor.patch`, pre-1.0. Changes from before the fork's cleanup on 2026-10-15 are in the git history.
 
+## 0.7.0 — 2026-10-26
+
+### Removed
+
+- The `{{< tabs >}}` and `{{< tab >}}` shortcodes. Write a ```` ```tabs ```` block instead, with a `tab: <label>` line before each panel and `{layout="side"}` or `{layout="stack"}` for the layout.
+
 ## 0.6.0 — 2026-10-26
 
 ### Added

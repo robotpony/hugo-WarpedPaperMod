@@ -1,4 +1,4 @@
-/* tabs shortcode: layouts/shortcodes/tabs.html and tab.html. A radio per tab
+/* ```tabs block: layouts/_default/_markup/render-codeblock-tabs.html. A radio per tab
    (visually hidden, still focusable) with its label as the tab; the checked
    radio's panel shows. Panels match by position, up to six tabs. */
 .post-content .tabs { display: flex; flex-wrap: wrap; margin: 2rem 0 var(--content-gap); }
