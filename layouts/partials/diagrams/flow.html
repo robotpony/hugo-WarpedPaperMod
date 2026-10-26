@@ -15,7 +15,8 @@
   is dropped, since the hook draws the arrows (it warns on a row's first
   step). An optional `caption:` line, last, goes under the drawing. Labels,
   notes and row labels are inline Markdown. A line with more than one |, an
-  empty label, or a step after the caption warns and isn't drawn. A ← note
+  empty label, a step after the caption, a second caption, or a keyword
+  line flow doesn't take (`note: …`) warns and isn't drawn. A ← note
   at the end of a line is dropped first (partials/fences/line.html).
 
   `row: <label>` lines (the label optional) split the steps into parallel
@@ -35,14 +36,24 @@
 {{- $inRow := false -}}
 {{- $rowAt := 0 -}}
 {{- $caption := "" -}}
+{{- $captioned := false -}}
 {{- range $i, $line := split (strings.TrimRight "\n" .Inner) "\n" -}}
   {{- $line = partial "fences/line.html" $line -}}
   {{- if not $line }}{{ continue }}{{ end -}}
-  {{- if hasPrefix $line "caption:" -}}
-    {{- $caption = strings.TrimSpace (strings.TrimPrefix "caption:" $line) -}}
+  {{- if and (findRE `^[a-z][a-z-]*:(?:\s|$)` $line 1) (not (or (hasPrefix $line "caption:") (hasPrefix $line "row:"))) -}}
+    {{- warnf "flow [unknown-keyword]: skipped %q (flow takes caption: and row:) in %s" $line (partial "fences/pos.html" (dict "hook" $ "line" $i)) -}}
     {{- continue -}}
   {{- end -}}
-  {{- if $caption -}}
+  {{- if hasPrefix $line "caption:" -}}
+    {{- if $captioned -}}
+      {{- warnf "flow [duplicate-keyword]: skipped %q (a block takes one caption, and the first stands) in %s" $line (partial "fences/pos.html" (dict "hook" $ "line" $i)) -}}
+    {{- else -}}
+      {{- $caption = strings.TrimSpace (strings.TrimPrefix "caption:" $line) -}}
+      {{- $captioned = true -}}
+    {{- end -}}
+    {{- continue -}}
+  {{- end -}}
+  {{- if $captioned -}}
     {{- warnf "flow [out-of-order]: skipped %q after the caption (the caption goes last) in %s" $line (partial "fences/pos.html" (dict "hook" $ "line" $i)) -}}
     {{- continue -}}
   {{- end -}}

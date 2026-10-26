@@ -23,6 +23,10 @@
 {{- range $i, $line := split (strings.TrimRight "\n" .Inner) "\n" -}}
   {{- $line = partial "fences/line.html" $line -}}
   {{- if not $line }}{{ continue }}{{ end -}}
+  {{- if findRE `^[a-z][a-z-]*:(?:\s|$)` $line 1 -}}
+    {{- warnf "timeline [unknown-keyword]: skipped %q (timeline takes no keywords) in %s" $line (partial "fences/pos.html" (dict "hook" $ "line" $i)) -}}
+    {{- continue -}}
+  {{- end -}}
   {{- $m := findRESubmatch `^(~?)(\d{4})\s+(.+)$` $line 1 -}}
   {{- if not $m -}}
     {{- $code := cond (findRE `^~?\d{4}$` $line 1) "missing-label" "bad-year" -}}

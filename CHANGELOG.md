@@ -2,6 +2,13 @@
 
 The w42 theme's changes, newest first. Versions are `major.minor.patch`, pre-1.0. Changes from before the fork's cleanup on 2026-10-15 are in the git history.
 
+## 0.7.4 — 2026-10-26
+
+### Changed
+
+- In a flow block, a lowercase keyword line it doesn't take (`note: rest after`) is skipped with a warning instead of drawn as a step; `Note: rest` is still a step. A second `caption:` is skipped with a warning, and the first one stands.
+- A timeline's `caption:` line now warns as an unknown keyword rather than a bad year. It was already skipped.
+
 ## 0.7.3 — 2026-10-26
 
 ### Fixed
