@@ -21,63 +21,23 @@
   `tab:` lines belong to that fence. `layout="side"` shows every panel at
   once as columns on wide screens (tabs where they'd be too narrow);
   `layout="stack"` shows them full width, one under another, with no
-  radios; none is switchable tabs. Spec: hugo-warped's fences/tabs.md.
-  Text before the first tab, an empty label ("Tab"), an empty body, an
+  radios; none is switchable tabs. Spec: hugo-warped's fences/tabs.md,
+  whose parse.html reads the block and warns; this draws it. Text before the first tab, an empty label ("Tab"), an empty body, an
   unknown layout and more than six panels warn; a block with no tab: lines
   shows its source as preformatted text.
 */ -}}
+{{- $p := partial "hugo-warped/parse.html" . -}}
+{{- partial "hugo-warped/warn.html" (dict "hook" . "parse" $p) -}}
 {{- $id := printf "tabs-fence-%d" .Ordinal -}}
 {{- $layout := .Attributes.layout | default "" -}}
-{{- if and $layout (not (in (slice "side" "stack") $layout)) -}}
-  {{- warnf "tabs [unknown-layout]: unknown layout %q (want \"side\" or \"stack\"), so drawing tabs, in %s" $layout .Position -}}
-  {{- $layout = "" -}}
-{{- end -}}
-{{- $panels := slice -}}
-{{- $label := "" -}}
-{{- $at := 0 -}}
-{{- $body := slice -}}
-{{- $open := false -}}
-{{- $fence := "" -}}
-{{- $openRE := print "^ {0,3}(" "`" "{3,}|~{3,})" -}}
-{{- range $i, $line := split (strings.TrimRight "\n" .Inner) "\n" -}}
-  {{- if $fence -}}
-    {{- with findRESubmatch (print $openRE `\s*$`) . 1 -}}
-      {{- $run := index (index . 0) 1 -}}
-      {{- if and (eq (substr $run 0 1) (substr $fence 0 1)) (ge (len $run) (len $fence)) }}{{ $fence = "" }}{{ end -}}
-    {{- end -}}
-  {{- else -}}
-    {{- with findRESubmatch `^tab:(?:\s+(.*))?$` (partial "fences/line.html" .) 1 -}}
-      {{- if $open }}{{ $panels = $panels | append (dict "label" $label "body" $body "at" $at) }}{{ end -}}
-      {{- $at = $i -}}
-      {{- $label = strings.TrimSpace (index (index . 0) 1) -}}
-      {{- $body = slice -}}
-      {{- $open = true -}}
-      {{- continue -}}
-    {{- end -}}
-    {{- with findRESubmatch $openRE . 1 }}{{ $fence = index (index . 0) 1 }}{{ end -}}
-  {{- end -}}
-  {{- if $open -}}
-    {{- $body = $body | append . -}}
-  {{- else if strings.TrimSpace . -}}
-    {{- warnf "tabs [out-of-order]: skipped %q (want \"tab: Label\" first) in %s" . (partial "fences/pos.html" (dict "hook" $ "line" $i)) -}}
-  {{- end -}}
-{{- end -}}
-{{- if $open }}{{ $panels = $panels | append (dict "label" $label "body" $body "at" $at) }}{{ end -}}
+{{- if not (in (slice "side" "stack") $layout) }}{{ $layout = "" }}{{ end -}}
 {{- $tabs := slice -}}
-{{- range $panels -}}
-  {{- $label := .label -}}
-  {{- if not $label -}}
-    {{- warnf "tabs [missing-label]: a tab: line has no label, so drawing \"Tab\", in %s" (partial "fences/pos.html" (dict "hook" $ "line" .at)) -}}
-    {{- $label = "Tab" -}}
-  {{- end -}}
-  {{- $md := strings.Trim (delimit .body "\n") "\n" -}}
-  {{- if not (strings.TrimSpace $md) }}{{ warnf "tabs [empty-group]: the %q panel is empty in %s" $label (partial "fences/pos.html" (dict "hook" $ "line" .at)) }}{{ end -}}
+{{- range cond $p.fallback slice $p.lines -}}
   {{- $tabs = $tabs | append (dict
-    "label" ($.Page.RenderString (dict "display" "inline") $label)
-    "body" ($.Page.RenderString (dict "display" "block") $md)
+    "label" ($.Page.RenderString (dict "display" "inline") .value)
+    "body" ($.Page.RenderString (dict "display" "block") .body)
   ) -}}
 {{- end -}}
-{{- if gt (len $tabs) 6 }}{{ warnf "tabs [over-limit]: %d panels in %s; more than six crowd the tabs" (len $tabs) (partial "fences/pos.html" (dict "hook" . "line" (index $panels 6).at)) }}{{ end -}}
 {{- with $tabs -}}
 {{- if eq $layout "stack" -}}
 <div class="tabs stack" id="{{ $id }}">
@@ -102,6 +62,5 @@
 </div>
 {{- end -}}
 {{- else -}}
-{{- warnf "tabs [no-valid-lines]: no tab: lines, so showing the source, in %s" .Position -}}
 {{ transform.Highlight (strings.TrimRight "\n" .Inner) "text" "" }}
 {{- end -}}

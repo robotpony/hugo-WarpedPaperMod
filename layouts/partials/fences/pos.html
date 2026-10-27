@@ -1,9 +1,0 @@
-{{- /*
-  The position of one body line of a fenced block, for a warning:
-  (dict "hook" <code block context> "line" <0-based index into .Inner>).
-  Body line n sits n+1 lines below the opening fence. Formatted like
-  Hugo's own positions ("file:line:col"). Spec: README.md "Warning codes"
-  in hugo-warped's fences/: each warning goes on its own line.
-*/ -}}
-{{- $p := .hook.Position -}}
-{{- return printf "%q" (printf "%s:%d:%d" $p.Filename (add $p.LineNumber 1 .line) $p.ColumnNumber) -}}

@@ -1,0 +1,6 @@
+# Fences (timeline, flow, tabs) are read by hugo-warped's partials; this
+# theme only draws them. A site that takes the theme as a git submodule
+# adds hugo-warped beside it and maps the module path to that folder
+# (hugo-warped's README, "Adding it to a project").
+[[module.imports]]
+path = "github.com/robotpony/hugo-warped"

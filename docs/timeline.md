@@ -2,7 +2,7 @@
 
 A ```` ```timeline ```` block draws dated entries as dots on a track of decades. Its syntax lives in hugo-warped's fences/ ([on GitHub](https://github.com/robotpony/hugo-warped/tree/main/fences); locally `~/projects/sites/hugo-warped/fences/timeline.md`, with the shared grammar, notes and bad-line rules in `README.md` there), shared by w42, the cookbook and Scorekeep. Spec changes go to the hugo-warped agent, not here.
 
-w42's hook is `layouts/_default/_markup/render-codeblock-timeline.html`. It hands the block to `layouts/partials/diagrams/timeline.html`, which draws it (CSS in `assets/css/common/timeline.css`), by way of `layouts/partials/diagram.html`, which adds the (i) toggle to the fenced source, and shows the source instead when no line is valid. `partials/fences/line.html` drops each line's `←` note first. The toggle is w42's, not part of the spec.
+w42's hook is `layouts/_default/_markup/render-codeblock-timeline.html`. It hands the block to `layouts/partials/diagrams/timeline.html`, which draws it (CSS in `assets/css/common/timeline.css`), by way of `layouts/partials/diagram.html`, which adds the (i) toggle to the fenced source, and shows the source instead when no line is valid. hugo-warped's `partials/hugo-warped/parse.html` reads the block first (notes dropped, bad lines warned), so the theme only draws. The toggle is w42's, not part of the spec.
 
 ## Rendering in w42
 

@@ -2,6 +2,12 @@
 
 The w42 theme's changes, newest first. Versions are `major.minor.patch`, pre-1.0. Changes from before the fork's cleanup on 2026-10-15 are in the git history.
 
+## 0.8.0 — 2026-10-27
+
+### Changed
+
+- Timeline, flow and tabs blocks are read by hugo-warped, imported as a Hugo module, and draw and warn exactly as before. A site that takes the theme as a git submodule adds hugo-warped beside it and a `[module] replacements` line mapping `github.com/robotpony/hugo-warped` to that folder.
+
 ## 0.7.5 — 2026-10-26
 
 ### Changed

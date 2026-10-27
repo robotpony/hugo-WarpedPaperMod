@@ -3,8 +3,9 @@
   partials/diagram.html, which adds the source toggle; it takes the
   hook's context. Steps in a row joined by arrows, each label boxed with
   its note under it. The syntax is shared with the cookbook; see
-  hugo-warped's fences/flow.md. Modelled on the cookbook's formula diagrams (Fugu's
-  render-codeblock-formula.html, its → mode), without icons.
+  hugo-warped's fences/flow.md, whose parse.html reads the lines and
+  warns; this draws them. Modelled on the cookbook's formula diagrams
+  (Fugu's render-codeblock-formula.html, its → mode), without icons.
 
     Markdown | in git
     Hugo
@@ -17,7 +18,7 @@
   notes and row labels are inline Markdown. A line with more than one |, an
   empty label, a step after the caption, a second caption, or a keyword
   line flow doesn't take (`note: …`) warns and isn't drawn. A ← note
-  at the end of a line is dropped first (partials/fences/line.html).
+  at the end of a line is dropped.
 
   `row: <label>` lines (the label optional) split the steps into parallel
   rows, up to three, with step n of each row in the same column. A block
@@ -29,79 +30,30 @@
   then …". Under 640px common/flow.css stacks a single row as a column with
   arrows pointing down, and wraps each parallel row under its label.
 */}}
-{{- $rowMode := findRE `(?m)^[ \t]*row:` .Inner 1 -}}
-{{- $rows := slice -}}
-{{- $head := "" -}}
-{{- $steps := slice -}}
-{{- $inRow := false -}}
-{{- $rowAt := 0 -}}
-{{- $caption := "" -}}
-{{- $captioned := false -}}
-{{- range $i, $line := split (strings.TrimRight "\n" .Inner) "\n" -}}
-  {{- $line = partial "fences/line.html" $line -}}
-  {{- if not $line }}{{ continue }}{{ end -}}
-  {{- if and (findRE `^[a-z][a-z-]*:(?:\s|$)` $line 1) (not (or (hasPrefix $line "caption:") (hasPrefix $line "row:"))) -}}
-    {{- warnf "flow [unknown-keyword]: skipped %q (flow takes caption: and row:) in %s" $line (partial "fences/pos.html" (dict "hook" $ "line" $i)) -}}
-    {{- continue -}}
-  {{- end -}}
-  {{- if hasPrefix $line "caption:" -}}
-    {{- if $captioned -}}
-      {{- warnf "flow [duplicate-keyword]: skipped %q (a block takes one caption, and the first stands) in %s" $line (partial "fences/pos.html" (dict "hook" $ "line" $i)) -}}
+{{- /* hugo-warped reads the block and warns; its lines are flat (a row:
+       head, its steps, the next head, the caption last), so regroup them.
+       Rows with no steps are already dropped. */ -}}
+{{- $p := partial "hugo-warped/parse.html" . -}}
+{{- partial "hugo-warped/warn.html" (dict "hook" . "parse" $p) -}}
+{{- $rowMode := false -}}
+{{- $rows := slice }}{{ $head := "" }}{{ $steps := slice }}{{ $caption := "" -}}
+{{- if not $p.fallback -}}
+  {{- range $p.lines -}}
+    {{- if eq .keyword "row" -}}
+      {{- if $rowMode }}{{ $rows = $rows | append (dict "head" $head "steps" $steps) }}{{ end -}}
+      {{- $rowMode = true }}{{ $head = .value }}{{ $steps = slice -}}
+    {{- else if eq .keyword "caption" -}}
+      {{- $caption = .value -}}
     {{- else -}}
-      {{- $caption = strings.TrimSpace (strings.TrimPrefix "caption:" $line) -}}
-      {{- $captioned = true -}}
+      {{- $note := "" }}{{ if gt (len .row) 1 }}{{ $note = index .row 1 }}{{ end -}}
+      {{- $steps = $steps | append (dict "label" (index .row 0) "note" $note) -}}
     {{- end -}}
-    {{- continue -}}
   {{- end -}}
-  {{- if $captioned -}}
-    {{- warnf "flow [out-of-order]: skipped %q after the caption (the caption goes last) in %s" $line (partial "fences/pos.html" (dict "hook" $ "line" $i)) -}}
-    {{- continue -}}
-  {{- end -}}
-  {{- if and $rowMode (hasPrefix $line "row:") -}}
-    {{- if $inRow }}{{ $rows = $rows | append (dict "head" $head "steps" $steps "at" $rowAt) }}{{ end -}}
-    {{- $head = strings.TrimSpace (strings.TrimPrefix "row:" $line) -}}
-    {{- $rowAt = $i -}}
-    {{- $steps = slice -}}
-    {{- $inRow = true -}}
-    {{- continue -}}
-  {{- end -}}
-  {{- if and $rowMode (not $inRow) -}}
-    {{- warnf "flow [out-of-order]: skipped %q before the first row: (a block with rows starts with one) in %s" $line (partial "fences/pos.html" (dict "hook" $ "line" $i)) -}}
-    {{- continue -}}
-  {{- end -}}
-  {{- with findRESubmatch `^(?:→|->)\s+(.*)$` $line 1 -}}
-    {{- if not $steps }}{{ warnf "flow [stray-marker]: the first step has an arrow in %s" (partial "fences/pos.html" (dict "hook" $ "line" $i)) }}{{ end -}}
-    {{- $line = index (index . 0) 1 -}}
-  {{- end -}}
-  {{- $f := split $line "|" -}}
-  {{- $label := strings.TrimSpace (index $f 0) -}}
-  {{- if gt (len $f) 2 -}}
-    {{- warnf "flow [too-many-cells]: skipped %q (want \"Label | note\") in %s" $line (partial "fences/pos.html" (dict "hook" $ "line" $i)) -}}
-    {{- continue -}}
-  {{- end -}}
-  {{- if not $label -}}
-    {{- warnf "flow [missing-cell]: skipped %q (want \"Label | note\") in %s" $line (partial "fences/pos.html" (dict "hook" $ "line" $i)) -}}
-    {{- continue -}}
-  {{- end -}}
-  {{- $note := "" -}}
-  {{- if eq (len $f) 2 }}{{ $note = strings.TrimSpace (index $f 1) }}{{ end -}}
-  {{- $steps = $steps | append (dict "label" $label "note" $note "at" $i) -}}
-{{- end -}}
-{{- if $rowMode -}}
-  {{- if $inRow }}{{ $rows = $rows | append (dict "head" $head "steps" $steps "at" $rowAt) }}{{ end -}}
-  {{- $drawn := slice -}}
-  {{- range $rows -}}
-    {{- if .steps }}{{ $drawn = $drawn | append . }}{{ else }}{{ warnf "flow [empty-group]: row %q has no steps in %s" .head (partial "fences/pos.html" (dict "hook" $ "line" .at)) }}{{ end -}}
-  {{- end -}}
-  {{- $rows = $drawn -}}
-  {{- if gt (len $rows) 3 }}{{ warnf "flow [over-limit]: %d rows in %s; more than three crowd the block" (len $rows) (partial "fences/pos.html" (dict "hook" . "line" (index $rows 3).at)) }}{{ end -}}
-{{- else if $steps -}}
-  {{- $rows = slice (dict "head" "" "steps" $steps) -}}
+  {{- if $steps }}{{ $rows = $rows | append (dict "head" $head "steps" $steps) }}{{ end -}}
 {{- end -}}
 {{- $cols := 0 -}}
 {{- $headed := false -}}
 {{- range $rows -}}
-  {{- if gt (len .steps) 5 }}{{ warnf "flow [over-limit]: %d steps in %s; more than five crowd the row" (len .steps) (partial "fences/pos.html" (dict "hook" $ "line" (index .steps 5).at)) }}{{ end -}}
   {{- if gt (len .steps) $cols }}{{ $cols = len .steps }}{{ end -}}
   {{- if .head }}{{ $headed = true }}{{ end -}}
 {{- end -}}

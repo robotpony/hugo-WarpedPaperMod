@@ -10,8 +10,8 @@
   head.html when the page holds a .diagram) shows the button and swaps
   the two; without JS the button stays hidden and only the drawing shows.
   A draw partial that outputs nothing (no valid lines) leaves the block's
-  source as preformatted text, with a warning, so a reader still sees
-  what was written.
+  source as preformatted text, so a reader still sees what was written
+  (the draw partial's hugo-warped parse warns no-valid-lines).
 */ -}}
 {{- $hook := .hook -}}
 {{- $html := partial .draw $hook -}}
@@ -26,6 +26,5 @@
   </button>
 </div>
 {{- else -}}
-{{- warnf "%s [no-valid-lines]: no valid lines, so showing the source, in %s" $hook.Type $hook.Position -}}
 {{ transform.Highlight (strings.TrimRight "\n" $hook.Inner) "text" "" }}
 {{- end -}}
