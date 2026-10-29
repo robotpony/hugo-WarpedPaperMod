@@ -45,3 +45,13 @@
 .post-content .tabs.stack .tabs-panel { display: block; margin-bottom: 24px; padding: 0; border: 0; }
 .post-content .tabs.stack .tabs-panel:last-child { margin-bottom: 0; }
 .post-content .tabs.stack .tabs-panel img { display: block; width: 100%; height: auto; margin: 0; }
+/* layout="aside": stacked like stack, in a 260px column floated right with
+   a 24px gutter, from 700px, where the text beside it keeps about 330px.
+   The text after the block wraps beside it; the next heading clears it.
+   Code in it is 11px and scrolls; images fill its width. Narrower, it's
+   stack. */
+@media (min-width: 700px) {
+  .post-content .tabs.aside { float: right; width: 260px; margin: 0.25rem 0 var(--content-gap) 24px; }
+  .post-content .tabs.aside .tabs-panel pre code { font-size: 11px; }
+  .post-content .tabs.aside ~ :is(h2, h3, h4) { clear: right; }
+}

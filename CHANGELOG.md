@@ -2,6 +2,12 @@
 
 The w42 theme's changes, newest first. Versions are `major.minor.patch`, pre-1.0. Changes from before the fork's cleanup on 2026-10-15 are in the git history.
 
+## 0.11.0 — 2026-10-29
+
+### Added
+
+- A tabs block with `{layout="aside"}` shows its panels stacked in a narrow column on the right, with the paragraphs after it wrapping beside it; under 700px it's full width, like `stack`. Put the block before the paragraphs meant to wrap.
+
 ## 0.10.0 — 2026-10-29
 
 ### Added
