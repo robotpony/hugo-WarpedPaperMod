@@ -30,8 +30,9 @@
   {{- partial "toc.html" . }}
   {{- end }}
 
-  {{- if .Content }}
+  {{- if or .Content .Params.banner }}
   <div class="post-content">
+    {{- partial "banner.html" . }}
     {{- if not (.Param "disableAnchoredHeadings") }}
     {{- partial "anchored_headings.html" .Content -}}
     {{- else }}{{ .Content }}{{ end }}

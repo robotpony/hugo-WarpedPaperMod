@@ -2,6 +2,13 @@
 
 The w42 theme's changes, newest first. Versions are `major.minor.patch`, pre-1.0. Changes from before the fork's cleanup on 2026-10-15 are in the git history.
 
+## 0.9.0 — 2026-10-29
+
+### Added
+
+- A post's `banner:` front matter (`src` and `alt`, with optional `width` and `height`) draws its banner at the top of the post, from images.warpedvisions.org or, in the preview, the local images repo. A banner without alt text is left out with a warning. Posts without their own `images:` share the banner as their link preview image.
+- Markdown images on images.warpedvisions.org load from the local images repo in the preview too.
+
 ## 0.8.0 — 2026-10-27
 
 ### Changed

@@ -256,6 +256,10 @@
     margin: 1rem 0;
 }
 
+.post-content img.post-banner {
+    height: auto;
+}
+
 .post-content img[src*="#center"] {
     margin: 1rem auto;
 }

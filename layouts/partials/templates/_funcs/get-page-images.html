@@ -12,6 +12,17 @@
       "Permalink" .Permalink) }}
   {{- end }}
 {{- end }}
+{{/* Then the post's banner, if it has alt text. */}}
+{{- if and (not $imgParams) (not $imgs) }}
+  {{- with .Params.banner }}
+    {{- if and .src .alt }}
+      {{- $url := partial "images_url.html" .src }}
+      {{- $imgs = $imgs | append (dict
+        "RelPermalink" $url
+        "Permalink" (absURL $url)) }}
+    {{- end }}
+  {{- end }}
+{{- end }}
 {{/* Use the first one of site images as the fallback. */}}
 {{- if and (not $imgParams) (not $imgs) }}
   {{- with site.Params.images }}

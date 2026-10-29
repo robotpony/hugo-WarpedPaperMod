@@ -1,0 +1,13 @@
+{{- /* Resolves an image on the site's images host. A path (2026/10/x.jpg) or a
+     URL on the host (imagesHost, https://images.warpedvisions.org by default)
+     loads from imagesURL, which defaults to the host and which the preview
+     points at a local copy. Any other URL comes back unchanged. */ -}}
+{{- $host := strings.TrimSuffix "/" (site.Params.imagesHost | default "https://images.warpedvisions.org") -}}
+{{- $base := strings.TrimSuffix "/" (site.Params.imagesURL | default $host) -}}
+{{- $src := . -}}
+{{- if strings.HasPrefix $src (printf "%s/" $host) -}}
+  {{- $src = printf "%s/%s" $base (strings.TrimPrefix (printf "%s/" $host) $src) -}}
+{{- else if not (urls.Parse $src).IsAbs -}}
+  {{- $src = printf "%s/%s" $base (strings.TrimPrefix "/" $src) -}}
+{{- end -}}
+{{- return $src -}}

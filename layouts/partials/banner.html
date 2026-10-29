@@ -1,0 +1,13 @@
+{{- /* A post's banner from its `banner:` front matter (src, alt, and optional
+     width and height, 1536x559 by default: tools/banner.sh's crop). It leads
+     the post's content, loaded eagerly. A banner without alt text is left out,
+     with a warning. */ -}}
+{{- with .Params.banner -}}
+  {{- if not .src -}}
+    {{- warnf "%s: banner has no src; leaving it out" $.File.Path -}}
+  {{- else if not .alt -}}
+    {{- warnf "%s: banner %s has no alt text; leaving it out" $.File.Path .src -}}
+  {{- else -}}
+<img class="post-banner" src="{{ partial "images_url.html" .src }}" alt="{{ .alt }}" width="{{ .width | default 1536 }}" height="{{ .height | default 559 }}" fetchpriority="high">
+  {{- end -}}
+{{- end -}}

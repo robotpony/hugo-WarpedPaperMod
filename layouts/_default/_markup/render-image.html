@@ -1,7 +1,9 @@
 {{- $u := urls.Parse .Destination -}}
 {{- $src := $u.String -}}
 {{- $style := "" -}}
-{{- if not $u.IsAbs -}}
+{{- if $u.IsAbs -}}
+  {{- $src = partial "images_url.html" $src -}}
+{{- else -}}
   {{- $path := strings.TrimPrefix "./" $u.Path }}
   {{- $dark := replaceRE `(\.[^./]+)$` "-dark$1" $path -}}
   {{- with or (.PageInner.Resources.Get $dark) (resources.Get $dark) -}}
