@@ -10,5 +10,7 @@ w42's hook is `layouts/_default/_markup/render-codeblock-timeline.html`. It hand
 - A tick crosses the track at each decade, with its year centred just under it. Tracks over 80 years name every other decade. The track is inset 16px at each side so the end years fit inside the column.
 - Labels alternate above and below the track by entry order. A label that would go below, but whose leader would cross a decade's year, goes above instead, and the next one goes below. On each side, a label takes the nearest row its estimated width clears. Every label has a leader to its dot.
 - Labels near either end align to their dot's side so they stay on the track.
+- Clusters: the dot gap is 21px against a 600px track (3.5% of it): the 14px dots don't touch, and each year's short tick (`'95`, 11px mono) fits. Neighbouring years closer than that draw that far apart on a wider, paler band, each with a short tick; the rest of the track keeps one scale, shrunk to make room. A decade tick inside a zoomed span, or within the gap of a short tick, is dropped. The manifesto's 1995/1996 and 2024/2025 zoom.
+- Gaps: no breaks yet. The manifesto's longest empty stretch is about a decade; add the cut when a timeline needs one, and record the longest stretch drawn here.
 - Faint entries have a hollow dot and a muted label.
 - At 640px and below, the track becomes a vertical list with each year after its label.

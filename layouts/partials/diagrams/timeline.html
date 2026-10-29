@@ -17,7 +17,8 @@
   side a label takes the nearest row that its estimated width clears (Lora
   at 14px against a 600px track, the narrowest above 640px; inline code
   counts wider), with a leader to its dot. Labels near the ends align to
-  their dot's side. Under 640px common/timeline.css turns it into a
+  their dot's side. Years closer than $gap draw in a zoomed span, on a
+  wider band, with a short tick for each year. Under 640px common/timeline.css turns it into a
   vertical list with each year inline.
 */}}
 {{- $p := partial "hugo-warped/parse.html" . -}}
@@ -47,22 +48,86 @@
   {{- $end := mul (math.Ceil (div (float $last) 10)) 10 | int -}}
   {{- if le $end $start }}{{ $end = add $start 10 }}{{ end -}}
   {{- $span := float (sub $end $start) -}}
+  {{- /* Clusters (hugo-warped's fences/timeline.md): neighbouring years
+         closer than $gap (21px against 600px, enough for their short
+         ticks' years) are one cluster, drawn $gap apart. The rest of the
+         track keeps one scale, $k percent a year, shrunk to make room; a
+         shrink can bring more neighbours inside the gap, so it settles
+         over a few passes. */ -}}
+  {{- $gap := 3.5 -}}
+  {{- $ys := slice -}}
+  {{- range . }}{{ if not (in $ys .year) }}{{ $ys = $ys | append .year }}{{ end }}{{ end -}}
+  {{- $k := div 100.0 $span -}}
+  {{- $close := slice -}}
+  {{- range seq 4 -}}
+    {{- $close = slice -}}
+    {{- $zoomed := 0.0 }}{{ $zoomedYears := 0.0 -}}
+    {{- range $i, $y := first (sub (len $ys) 1) $ys -}}
+      {{- $dy := float (sub (index $ys (add $i 1)) $y) -}}
+      {{- $c := lt (mul $dy $k) $gap -}}
+      {{- $close = $close | append $c -}}
+      {{- if $c }}{{ $zoomed = add $zoomed $gap }}{{ $zoomedYears = add $zoomedYears $dy }}{{ end -}}
+    {{- end -}}
+    {{- $k = div (sub 100.0 $zoomed) (sub $span $zoomedYears) -}}
+  {{- end -}}
+  {{- /* Each distinct year's position, and the zoomed spans (first and
+         last year of each run of close neighbours). */ -}}
+  {{- $at := dict -}}
+  {{- $pos := mul (float (sub (index $ys 0) $start)) $k -}}
+  {{- $zooms := slice }}{{ $from := -1 -}}
+  {{- range $i, $y := $ys -}}
+    {{- if gt $i 0 -}}
+      {{- $dy := float (sub $y (index $ys (sub $i 1))) -}}
+      {{- $pos = add $pos (cond (index $close (sub $i 1)) $gap (mul $dy $k)) -}}
+    {{- end -}}
+    {{- $at = merge $at (dict (string $y) $pos) -}}
+    {{- $in := and (lt $i (len $close)) (index $close $i) -}}
+    {{- if and $in (lt $from 0) }}{{ $from = $y }}{{ end -}}
+    {{- if and (not $in) (ge $from 0) -}}
+      {{- $zooms = $zooms | append (dict "from" $from "to" $y) }}{{ $from = -1 -}}
+    {{- end -}}
+  {{- end -}}
+  {{- /* Inside a zoomed span each year gets a short tick ('95) in place of
+         the decade ticks it covers; a decade tick within $gap of one is
+         dropped too. */ -}}
+  {{- $years := slice -}}
+  {{- range $zooms -}}
+    {{- $z := . -}}
+    {{- range $ys -}}
+      {{- if and (ge . $z.from) (le . $z.to) -}}
+        {{- $years = $years | append (dict "pos" (index $at (string .)) "label" (printf "'%02d" (mod . 100))) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
   {{- /* Decade years, centred on their ticks: a dot whose leader would
          cross one keeps its label above. $decHalf is half a year's width
-         (11px mono against 600px), plus a little. */ -}}
+         (11px mono against 600px), plus a little. A decade sits between
+         the positions of the years either side of it. */ -}}
   {{- $decHalf := 3.0 -}}
   {{- $decades := slice -}}
   {{- $every := cond (gt $span 80.0) 20 10 -}}
   {{- range seq $start 10 $end -}}
-    {{- $p := div (mul (float (sub . $start)) 100) $span -}}
-    {{- $named := eq (mod (sub . $start) $every) 0 -}}
-    {{- $decades = $decades | append (dict "year" . "pos" $p "named" $named) -}}
+    {{- $d := . -}}
+    {{- $lo := $start }}{{ $loAt := 0.0 }}{{ $hi := $end }}{{ $hiAt := 100.0 -}}
+    {{- range $ys -}}
+      {{- if le . $d }}{{ $lo = . }}{{ $loAt = index $at (string .) }}{{ end -}}
+      {{- if and (gt . $d) (eq $hi $end) }}{{ $hi = . }}{{ $hiAt = index $at (string .) }}{{ end -}}
+    {{- end -}}
+    {{- if eq $lo $d }}{{ $hiAt = $loAt }}{{ $hi = add $lo 1 }}{{ end -}}
+    {{- $p := add $loAt (div (mul (float (sub $d $lo)) (sub $hiAt $loAt)) (float (sub $hi $lo))) -}}
+    {{- $covered := false -}}
+    {{- range $years }}{{ if lt (math.Abs (sub .pos $p)) $gap }}{{ $covered = true }}{{ end }}{{ end -}}
+    {{- range $zooms }}{{ if and (gt $d .from) (lt $d .to) }}{{ $covered = true }}{{ end }}{{ end -}}
+    {{- if not $covered -}}
+      {{- $named := eq (mod (sub $d $start) $every) 0 -}}
+      {{- $decades = $decades | append (dict "year" $d "pos" $p "named" $named) -}}
+    {{- end -}}
   {{- end -}}
   {{- $up := slice }}{{ $down := slice -}}
   {{- $side := "up" -}}
   {{- $marks := slice -}}
   {{- range . -}}
-    {{- $pos := div (mul (float (sub .year $start)) 100) $span -}}
+    {{- $pos := index $at (string .year) -}}
     {{- if eq $side "down" -}}
       {{- range where $decades "named" true -}}
         {{- if and (ge $pos (sub .pos $decHalf)) (le $pos (add .pos $decHalf)) }}{{ $side = "up" }}{{ end -}}
@@ -92,6 +157,10 @@
   {{- end -}}
   <figure class="tline" style="--up:{{ len $up }};--down:{{ len $down }}">
     <div class="tline-track">
+      {{- range $zooms }}
+      {{- $l := sub (index $at (string .from)) (div $gap 2) }}
+      <span class="tline-zoom" aria-hidden="true" style="left:{{ printf "%.1f" $l }}%;width:{{ printf "%.1f" (sub (add (index $at (string .to)) (div $gap 2)) $l) }}%"></span>
+      {{- end }}
       <ol class="tline-list">
         {{- range $marks }}
         <li class="tline-mark {{ .side }}{{ with .edge }} {{ . }}{{ end }}{{ if .faint }} faint{{ end }}" style="left:{{ printf "%.1f" .pos }}%;--row:{{ .row }}">
@@ -102,6 +171,9 @@
         {{- end }}
       </ol>
       <div class="tline-ticks" aria-hidden="true">
+        {{- range $years }}
+        <span class="tline-tick short" style="left:{{ printf "%.1f" .pos }}%">{{ .label }}</span>
+        {{- end }}
         {{- range $decades }}
         <span class="tline-tick" style="left:{{ printf "%.1f" .pos }}%">{{ if .named }}{{ .year }}{{ end }}</span>
         {{- end }}

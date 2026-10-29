@@ -4,7 +4,8 @@
    to its dot; the figure's --up and --down are the row counts on each side.
    Labels sit on the page background above every leader, so a leader that
    passes a nearer row's label breaks there instead of crossing its text.
-   Decade ticks cross the track, their years centred just under them,
+   Years closer than the cluster gap sit on a wider band (.tline-zoom),
+   each with a short tick ('95). Decade ticks cross the track, their years centred just under them,
    below-track labels past them. Faint entries are hollow. Under 640px it's a vertical
    list with each year inline. Every selector starts with .tline, so it
    outranks post-single's and warped.css's list and code rules. */
@@ -53,9 +54,19 @@
   content: ""; position: absolute; left: 50%; top: -10px; width: 1px; height: 9px; margin-left: -0.5px;
   background: var(--secondary);
 }
+/* A zoomed span: a wider band under its dots (before them in the track, so
+   its opacity doesn't lift it over them). Its short year ticks sit on the
+   page background above the leaders and under the dots, so a leader
+   passing one breaks there. */
+.tline .tline-zoom {
+  position: absolute; top: -3px; height: 8px; border-radius: 4px;
+  background: var(--tertiary); opacity: 0.6;
+}
+.tline .tline-tick.short { z-index: 1; background: var(--theme); }
 @media (max-width: 640px) {
   .tline { padding: 0; }
   .tline .tline-ticks,
+  .tline .tline-zoom,
   .tline .tline-mark::before { display: none; }
   .tline .tline-track { height: auto; margin: 0; background: none; }
   .tline .tline-list { display: flex; flex-direction: column; margin-left: 6px; border-left: 2px solid var(--tertiary); }

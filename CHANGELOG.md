@@ -2,6 +2,12 @@
 
 The w42 theme's changes, newest first. Versions are `major.minor.patch`, pre-1.0. Changes from before the fork's cleanup on 2026-10-15 are in the git history.
 
+## 0.10.0 — 2026-10-29
+
+### Added
+
+- Timeline years too close to read as separate dots (1995 and 1996 on a decade track) draw a little further apart, on a wider band, with a short year tick each ('95, '96). The rest of the track keeps its scale. Under 640px the list is unchanged.
+
 ## 0.9.0 — 2026-10-29
 
 ### Added
