@@ -2,6 +2,16 @@
 
 The w42 theme's changes, newest first. Versions are `major.minor.patch`, pre-1.0. Changes from before the fork's cleanup on 2026-10-15 are in the git history.
 
+## 0.11.3 — 2026-11-08
+
+### Changed
+
+- With no `copyright` set, the footer's copyright line names the site's `author` param ("© 2026 Bruce Alderson"), falling back to the site title.
+
+### Fixed
+
+- The copyright line's link to the about page no longer has a double slash in its URL.
+
 ## 0.11.2 — 2026-11-08
 
 ### Changed
