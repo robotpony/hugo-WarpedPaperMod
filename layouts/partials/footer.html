@@ -1,37 +1,32 @@
 {{- if not (.Param "hideFooter") }}
 <footer class="footer">
+    {{- /* The footer's items, joined with " · " so a separator only falls
+         between items that are there. */}}
+    {{- $items := slice }}
     {{- if not site.Params.footer.hideCopyright }}
         {{- if site.Copyright }}
-        <span>{{ site.Copyright | markdownify }}</span>
+            {{- $items = $items | append (printf "<span>%s</span>" (site.Copyright | markdownify)) }}
         {{- else }}
-        <span>&copy; {{ now.Year }} <a href="{{ "pages/about-warpedvisions-dot-org/" | absLangURL }}">{{ site.Params.author | default site.Title }}</a></span>
+            {{- $items = $items | append (printf "<span>&copy; %d <a href=\"%s\">%s</a></span>" now.Year ("pages/about-warpedvisions-dot-org/" | absLangURL) (site.Params.author | default site.Title | htmlEscape)) }}
         {{- end }}
-        {{- print " · "}}
-        <span>Built in Canada 🇨🇦</span>
-        {{- /* Which publish this page came from: the site's data/build.toml
-             (number = N) and the buildhash param (tools/publish.sh passes the
-             short commit); "dev" on the local server. Left out on a site
-             with no data/build.toml. */}}
-        {{- with hugo.Data.build }}
-        {{- print " · "}}
-        <span class="build">
-            {{- if hugo.IsServer }}Build dev
-            {{- else }}Build {{ with .series }}{{ . }}.{{ end }}{{ .number }}{{ with site.Params.buildhash }} · {{ . }}{{ end }}
-            {{- end -}}
-        </span>
-        {{- end }}
-        {{- print " · "}}
     {{- end }}
-
+    {{- $items = $items | append "<span>Built in Canada 🇨🇦</span>" }}
+    {{- /* Which publish this page came from: the site's data/build.toml
+         (series = S, number = N) and the buildhash param (tools/publish.sh
+         passes the short commit); "dev" on the local server. Left out on a
+         site with no data/build.toml. */}}
+    {{- with hugo.Data.build }}
+        {{- $build := "Build dev" }}
+        {{- if not hugo.IsServer }}
+            {{- $build = printf "Build %s%v" (cond (isset . "series") (printf "%v." .series) "") .number }}
+            {{- with site.Params.buildhash }}{{ $build = printf "%s · %s" $build . }}{{ end }}
+        {{- end }}
+        {{- $items = $items | append (printf "<span class=\"build\">%s</span>" $build) }}
+    {{- end }}
     {{- with site.Params.footer.text }}
-        <span>{{ . | markdownify }}</span>
-        {{- print " · "}}
+        {{- $items = $items | append (printf "<span>%s</span>" (. | markdownify)) }}
     {{- end }}
-
-    <span class="kudos">
-        Powered by
-        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a>
-    </span>
+    {{ delimit $items " · " | safeHTML }}
 </footer>
 {{- end }}
 

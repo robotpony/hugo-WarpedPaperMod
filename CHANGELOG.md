@@ -2,6 +2,16 @@
 
 The w42 theme's changes, newest first. Versions are `major.minor.patch`, pre-1.0. Changes from before the fork's cleanup on 2026-10-15 are in the git history.
 
+## 0.13.0 — 2026-11-08
+
+### Removed
+
+- The footer no longer reads "Powered by Hugo".
+
+### Changed
+
+- The footer puts " · " only between the items it shows, so it no longer ends with a stray separator. `footer.hideCopyright` now hides just the copyright line, leaving "Built in Canada 🇨🇦" and the build.
+
 ## 0.12.1 — 2026-11-08
 
 ### Changed
