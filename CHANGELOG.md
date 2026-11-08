@@ -2,6 +2,12 @@
 
 The w42 theme's changes, newest first. Versions are `major.minor.patch`, pre-1.0. Changes from before the fork's cleanup on 2026-10-15 are in the git history.
 
+## 0.12.0 — 2026-11-08
+
+### Added
+
+- The footer shows the build after "Built in Canada 🇨🇦": "Build N · hash" from the site's `data/build.toml` (`number = N`) and `buildhash` param, or "Build dev" on the dev server. A site with no `data/build.toml` shows nothing new.
+
 ## 0.11.3 — 2026-11-08
 
 ### Changed

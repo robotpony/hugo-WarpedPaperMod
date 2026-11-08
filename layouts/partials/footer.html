@@ -8,6 +8,18 @@
         {{- end }}
         {{- print " · "}}
         <span>Built in Canada 🇨🇦</span>
+        {{- /* Which publish this page came from: the site's data/build.toml
+             (number = N) and the buildhash param (tools/publish.sh passes the
+             short commit); "dev" on the local server. Left out on a site
+             with no data/build.toml. */}}
+        {{- with hugo.Data.build }}
+        {{- print " · "}}
+        <span class="build">
+            {{- if hugo.IsServer }}Build dev
+            {{- else }}Build {{ .number }}{{ with site.Params.buildhash }} · {{ . }}{{ end }}
+            {{- end -}}
+        </span>
+        {{- end }}
         {{- print " · "}}
     {{- end }}
 
