@@ -2,6 +2,12 @@
 
 The w42 theme's changes, newest first. Versions are `major.minor.patch`, pre-1.0. Changes from before the fork's cleanup on 2026-10-15 are in the git history.
 
+## 0.12.1 — 2026-11-08
+
+### Changed
+
+- The footer's build reads "Build 42.10" when the site's `data/build.toml` sets `series = 42` beside `number`, and "Build 10" as before when it doesn't.
+
 ## 0.12.0 — 2026-11-08
 
 ### Added

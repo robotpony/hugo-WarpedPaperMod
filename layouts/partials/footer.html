@@ -16,7 +16,7 @@
         {{- print " · "}}
         <span class="build">
             {{- if hugo.IsServer }}Build dev
-            {{- else }}Build {{ .number }}{{ with site.Params.buildhash }} · {{ . }}{{ end }}
+            {{- else }}Build {{ with .series }}{{ . }}.{{ end }}{{ .number }}{{ with site.Params.buildhash }} · {{ . }}{{ end }}
             {{- end -}}
         </span>
         {{- end }}
