@@ -1,10 +1,10 @@
-/* "Things I've made" (partials/projects_sidebar.html): a compact block below
+/* "Things I've made" (partials/projects_block.html): a compact block below
    the content at every width, icons and names only on phones */
 :root {
     --projects-rule: linear-gradient(90deg, #d68168, #d6a668, #68d6a1, #689fd6);
 }
 
-.projects-sidebar {
+.projects-block {
     margin: var(--gap) 0;
     padding: 4px 0 24px;
     /* the closing line matches the heading's: 2px, blended */
@@ -15,12 +15,12 @@
 }
 
 /* Above the pager, its rule closes the block, drawn the same way */
-.projects-sidebar:has(+ .page-footer) {
+.projects-block:has(+ .page-footer) {
     margin-bottom: 0;
     border-bottom: 0;
 }
 
-.projects-sidebar + .page-footer .pager {
+.projects-block + .page-footer .pager {
     border-top: 2px solid;
     border-image: var(--projects-rule) 1;
 }

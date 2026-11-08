@@ -94,7 +94,7 @@
   <a class="entry-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}"></a>
 </article>
 {{- end }}
-{{- partial "projects_sidebar.html" . }}
+{{- partial "projects_block.html" . }}
 {{- partial "reading.html" . }}
 
 {{- partial "pager.html" (dict "Paginator" $paginator "Older" (i18n "older_posts")) }}

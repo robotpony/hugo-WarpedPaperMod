@@ -36,6 +36,6 @@
   <a class="reading-more" href="{{ . }}">More on Goodreads →</a>
   {{- end }}
 </div>
-{{- partial "projects_sidebar.html" . }}
+{{- partial "projects_block.html" . }}
 {{- partial "pager.html" (dict "Paginator" $paginator "Older" (i18n "older_books")) }}
 {{- end }}

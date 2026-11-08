@@ -9,11 +9,11 @@
 
 /* The projects' content ends 24px above their closing line; the first label
    starts as far below it */
-.projects-sidebar:has(+ .reading) {
+.projects-block:has(+ .reading) {
     margin-bottom: 0;
 }
 
-.projects-sidebar + .reading {
+.projects-block + .reading {
     margin-top: 0;
     padding-top: 24px;
 }

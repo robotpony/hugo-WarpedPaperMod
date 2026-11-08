@@ -37,7 +37,7 @@ features = [
     "search",
 ]
 min_version = "0.158.0"
-version = "0.12.1"
+version = "0.12.2"
 
 [author]
 name = "Bruce Alderson"
