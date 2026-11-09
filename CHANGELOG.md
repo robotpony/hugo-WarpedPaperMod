@@ -2,6 +2,12 @@
 
 The w42 theme's changes, newest first. Versions are `major.minor.patch`, pre-1.0. Changes from before the fork's cleanup on 2026-10-15 are in the git history.
 
+## 0.13.1 — 2026-11-09
+
+### Fixed
+
+- A list card for a page with no summary, such as a section whose `_index.md` has only front matter, now shows its `description` instead of a blank gap, and a card with neither shows no text at all.
+
 ## 0.13.0 — 2026-11-08
 
 ### Removed
